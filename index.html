@@ -1,1 +1,1949 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Images/logo.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Baobab Online Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        :root {
+            /* Admin specific color palette derived from main colors */
+            --admin-primary: #1565C0;        /* Deep Blue */
+            --admin-secondary: #E53935;      /* Authority Red */
+            --admin-accent: #FF9800;         /* Amber */
+            --admin-success: #2E7D32;        /* Green from main palette */
+            --admin-warning: #F57C00;        /* Orange from main palette */
+            --admin-danger: #D32F2F;         /* Red */
+            
+            /* Supporting colors */
+            --admin-dark: #0D47A1;           /* Darker blue */
+            --admin-light: #E3F2FD;          /* Light blue */
+            --admin-muted: #455A64;          /* Blue grey */
+            --admin-surface: #FAFAFA;        /* Light grey */
+            
+            /* Base colors from main palette */
+            --canopy-green: #2E7D32;
+            --sunset-gold: #F57C00;
+            --trunk-gray: #5D4037;
+            --deep-charcoal: #263238;
+            --white: #FFFFFF;
+            --earth-cream: #FFF8E1;
+            
+            --transition-slow: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --transition-medium: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            
+            --shadow-sm: 0 2px 4px rgba(21, 101, 192, 0.1);
+            --shadow-md: 0 4px 8px rgba(21, 101, 192, 0.15);
+            --shadow-lg: 0 8px 16px rgba(21, 101, 192, 0.2);
+            --shadow-xl: 0 12px 24px rgba(21, 101, 192, 0.25);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--deep-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-dark) 100%);
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-dark));
+            color: var(--white);
+            border-color: var(--admin-primary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--admin-dark), var(--admin-primary));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--admin-secondary), #C62828);
+            color: var(--white);
+            border-color: var(--admin-secondary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-outlined {
+            background-color: transparent;
+            color: var(--admin-primary);
+            border-color: var(--admin-primary);
+        }
+        
+        .btn-outlined:hover {
+            background-color: var(--admin-primary);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md);
+            padding: 15px 0;
+            border-bottom: 3px solid var(--admin-primary);
+        }
+        
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 22px;
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .logo-text {
+            font-weight: 800;
+            font-size: 22px;
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            color: var(--deep-charcoal);
+            text-decoration: none;
+            padding: 8px 0;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--admin-primary);
+            transition: var(--transition-fast);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--admin-primary);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--admin-primary);
+            z-index: 1001;
+            transition: var(--transition-fast);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 90px 40px 40px;
+            transition: var(--transition-medium);
+            box-shadow: var(--shadow-xl);
+            overflow-y: auto;
+            border-left: 3px solid var(--admin-primary);
+        }
+        
+        .mobile-menu-panel.active {
+            right: 0;
+        }
+        
+        .mobile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mobile-link {
+            font-weight: 600;
+            color: var(--deep-charcoal);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--admin-light);
+            display: block;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+        
+        .mobile-link:hover {
+            color: var(--admin-primary);
+            padding-left: 15px;
+        }
+        
+        .mobile-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(21, 101, 192, 0.15);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-medium);
+            backdrop-filter: blur(8px);
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-dark) 50%, var(--admin-secondary) 100%);
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero-title {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 45px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-hero {
+            padding: 18px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .btn-white {
+            background-color: var(--white);
+            color: var(--admin-primary);
+            border-color: var(--white);
+        }
+        
+        .btn-white:hover {
+            background-color: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+        
+        /* Features Section */
+        .features-section {
+            background: var(--white);
+            padding: 120px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3.2rem;
+            color: var(--admin-primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--admin-muted);
+            margin-bottom: 80px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 45px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition-medium);
+            border: 2px solid transparent;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--admin-primary), var(--admin-secondary));
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--admin-primary);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .feature-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-dark));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2.5rem;
+            margin: 0 auto 30px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, var(--admin-secondary), #D32F2F);
+        }
+        
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, var(--admin-accent), var(--sunset-gold));
+        }
+        
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, var(--canopy-green), var(--admin-success));
+        }
+        
+        .feature-title {
+            font-size: 1.8rem;
+            color: var(--deep-charcoal);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .feature-description {
+            color: var(--admin-muted);
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+        
+        .feature-benefits {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .feature-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--admin-muted);
+        }
+        
+        .feature-benefits i {
+            color: var(--admin-primary);
+            font-size: 1.1rem;
+            width: 16px;
+        }
+        
+        /* Admin Tools Preview */
+        .admin-tools {
+            background: linear-gradient(135deg, var(--admin-light) 0%, var(--white) 100%);
+            padding: 120px 0;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .tool-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: var(--transition-medium);
+            border: 2px solid var(--admin-light);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--admin-primary);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+            color: var(--white);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .tool-title {
+            font-size: 1.3rem;
+            color: var(--deep-charcoal);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .tool-description {
+            color: var(--admin-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* Security Section */
+        .security-section {
+            background: linear-gradient(135deg, var(--deep-charcoal), var(--admin-muted));
+            color: var(--white);
+            padding: 100px 0;
+        }
+        
+        .security-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .security-text h2 {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+        
+        .security-text p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            line-height: 1.7;
+        }
+        
+        .security-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .security-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .security-icon {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: var(--admin-accent);
+        }
+        
+        .security-item-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .security-item-desc {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--admin-surface);
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-size: 3.5rem;
+            color: var(--admin-primary);
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.3rem;
+            color: var(--admin-muted);
+            margin-bottom: 45px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--deep-charcoal);
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h4 {
+            color: var(--admin-accent);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            transition: var(--transition-fast);
+        }
+        
+        .footer-link:hover {
+            color: var(--admin-accent);
+            padding-left: 8px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(21, 101, 192, 0.2);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
 
+        .modal-content {
+            background: var(--white);
+            border: 3px solid var(--admin-primary);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 550px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--admin-muted);
+            transition: var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            color: var(--admin-secondary);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            color: var(--admin-primary);
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--deep-charcoal);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--admin-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--admin-surface);
+            color: var(--deep-charcoal);
+            transition: var(--transition-fast);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--admin-primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-dark));
+            color: var(--white);
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-family: 'Inter', sans-serif;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-submit:hover {
+            background: linear-gradient(135deg, var(--admin-dark), var(--admin-primary));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-submit:disabled {
+            background: var(--admin-muted);
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: rgba(211, 47, 47, 0.1);
+            border: 2px solid var(--admin-danger);
+            color: var(--admin-danger);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: rgba(46, 125, 50, 0.1);
+            border: 2px solid var(--admin-success);
+            color: var(--admin-success);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--admin-muted);
+        }
+
+        .form-toggle a {
+            color: var(--admin-primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* Email Verification Notice */
+        .verification-notice {
+            background: linear-gradient(135deg, var(--admin-primary), var(--admin-dark));
+            color: var(--white);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border: 3px solid var(--admin-accent);
+        }
+
+        .verification-notice h4 {
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .verification-notice p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .verification-notice .email-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--admin-accent);
+        }
+
+        .resend-link {
+            color: var(--admin-accent);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .resend-link:hover {
+            color: var(--white);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu,
+            .nav-buttons {
+                display: none;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+
+            .security-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .cta-title {
+                font-size: 2.8rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .feature-card {
+                padding: 35px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .hero-buttons,
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+
+            .security-features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cta-title {
+                font-size: 2.4rem;
+            }
+            
+            .hero-subtitle,
+            .section-subtitle,
+            .cta-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn-hero {
+                padding: 16px 30px;
+                font-size: 1rem;
+            }
+            
+            .feature-icon {
+                width: 75px;
+                height: 75px;
+                font-size: 2.2rem;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+            }
+            
+            .mobile-menu-panel {
+                width: 300px;
+                padding: 80px 30px 30px;
+            }
+            
+            .logo-text {
+                font-size: 18px;
+            }
+
+            .modal-content {
+                padding: 35px;
+                margin: 10px;
+            }
+
+            .verification-notice {
+                padding: 30px;
+                margin: 20px 0;
+            }
+
+            .verification-notice .email-icon {
+                font-size: 3.5rem;
+                margin-bottom: 15px;
+            }
+
+            .verification-notice h4 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="logo-text">Admin Portal</div>
+                </div>
+                
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#features" class="nav-link">Platform Features</a></li>
+                    <li><a href="#tools" class="nav-link">Admin Tools</a></li>
+                    <li><a href="#security" class="nav-link">Security & Control</a></li>
+                    <li><a href="https://baobabonlineacademy.com" class="nav-link">Main Site</a></li>
+                </ul>
+                
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outlined" onclick="openLoginModal()">Admin Login</a>
+                    <a href="#" class="btn btn-primary" onclick="openRegistrationModal()">Register Admin</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-panel" id="mobileMenuPanel">
+        <ul class="mobile-menu">
+            <li><a href="#features" class="mobile-link">Platform Features</a></li>
+            <li><a href="#tools" class="mobile-link">Admin Tools</a></li>
+            <li><a href="#security" class="mobile-link">Security & Control</a></li>
+            <li><a href="https://baobabonlineacademy.com" class="mobile-link">Main Site</a></li>
+        </ul>
+        <div class="mobile-buttons">
+            <a href="#" class="btn btn-outlined" onclick="openLoginModal()">Admin Login</a>
+            <a href="#" class="btn btn-primary" onclick="openRegistrationModal()">Register Admin</a>
+        </div>
+    </div>
+    
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-crown"></i>
+                    Administrative Control Center • Authority & Excellence
+                </div>
+                <h1 class="hero-title">Command Excellence Across Every Learning Journey</h1>
+                <p class="hero-subtitle">
+                    Take complete administrative control of Baobab Online Academy with powerful management tools, 
+                    comprehensive analytics, and advanced oversight capabilities. Built for educational leaders 
+                    who demand precision, efficiency, and results.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-secondary btn-hero" onclick="openRegistrationModal()">
+                        <i class="fas fa-user-shield"></i>
+                        Create Admin Account
+                    </a>
+                    <a href="#features" class="btn btn-white btn-hero">
+                        <i class="fas fa-cogs"></i>
+                        Explore Platform
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title">Administrative Excellence Redefined</h2>
+            <p class="section-subtitle">
+                Comprehensive control and oversight tools designed for educational administrators who lead with vision, 
+                manage with precision, and drive results through data-driven decision making.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="feature-title">Complete User Management</h3>
+                    <p class="feature-description">
+                        Exercise full administrative control over all platform users with advanced role-based access, 
+                        comprehensive user profiles, and sophisticated permission management systems.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Multi-level administrative hierarchy</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced role and permission controls</li>
+                        <li><i class="fas fa-check-circle"></i> Bulk user operations and management</li>
+                        <li><i class="fas fa-check-circle"></i> Complete audit trails and activity logs</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Analytics Dashboard</h3>
+                    <p class="feature-description">
+                        Access real-time institutional insights with comprehensive analytics, performance metrics, 
+                        and predictive reporting tools that drive strategic educational decisions.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Real-time enrollment and revenue tracking</li>
+                        <li><i class="fas fa-check-circle"></i> Comprehensive academic performance analytics</li>
+                        <li><i class="fas fa-check-circle"></i> Predictive modeling and trend analysis</li>
+                        <li><i class="fas fa-check-circle"></i> Custom report generation and export</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="feature-title">Academic Operations Control</h3>
+                    <p class="feature-description">
+                        Orchestrate all academic operations with sophisticated curriculum management, 
+                        tutor oversight, and comprehensive lesson coordination capabilities.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Dynamic curriculum and subject management</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced tutor assignment algorithms</li>
+                        <li><i class="fas fa-check-circle"></i> Comprehensive lesson scheduling oversight</li>
+                        <li><i class="fas fa-check-circle"></i> Assessment creation and management tools</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <h3 class="feature-title">Security & Compliance Command</h3>
+                    <p class="feature-description">
+                        Maintain the highest security standards with comprehensive monitoring, 
+                        advanced compliance tools, and sophisticated data protection protocols.
+                    </p>
+                    <ul class="feature-benefits">
+                        <li><i class="fas fa-check-circle"></i> Real-time security monitoring and alerts</li>
+                        <li><i class="fas fa-check-circle"></i> Complete data privacy compliance tools</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced backup and recovery systems</li>
+                        <li><i class="fas fa-check-circle"></i> Comprehensive audit and reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Tools Section -->
+    <section class="admin-tools" id="tools">
+        <div class="container">
+            <h2 class="section-title">Powerful Administrative Tools</h2>
+            <p class="section-subtitle">
+                A comprehensive suite of administrative tools designed to streamline operations, 
+                enhance efficiency, and maintain excellence across all educational activities.
+            </p>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="tool-title">Data Management</h3>
+                    <p class="tool-description">
+                        Advanced data operations with bulk import/export, automated backups, and comprehensive data integrity checks.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="tool-title">Communication Hub</h3>
+                    <p class="tool-description">
+                        Centralized communication system with mass notifications, targeted messaging, and automated alerts.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="tool-title">Financial Oversight</h3>
+                    <p class="tool-description">
+                        Complete financial management with revenue tracking, billing oversight, and comprehensive financial reporting.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="tool-title">System Configuration</h3>
+                    <p class="tool-description">
+                        Platform-wide settings management with customizable workflows, automated processes, and system optimization.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="tool-title">Report Generation</h3>
+                    <p class="tool-description">
+                        Sophisticated reporting engine with custom templates, automated scheduling, and advanced data visualization.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="tool-title">Support Management</h3>
+                    <p class="tool-description">
+                        Integrated support ticketing system with prioritization, automated routing, and comprehensive tracking.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="security-section" id="security">
+        <div class="container">
+            <div class="security-content">
+                <div class="security-text">
+                    <h2>Uncompromising Security & Control</h2>
+                    <p>
+                        As an educational administrator, you demand the highest levels of security, compliance, 
+                        and control. Our platform delivers enterprise-grade protection with comprehensive 
+                        oversight capabilities.
+                    </p>
+                    <p>
+                        Every action is logged, every access is monitored, and every transaction is secured. 
+                        You maintain complete visibility and control over all platform operations while 
+                        ensuring the safety and privacy of all users.
+                    </p>
+                </div>
+                
+                <div class="security-features">
+                    <div class="security-item">
+                        <div class="security-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h4 class="security-item-title">Multi-Factor Auth</h4>
+                        <p class="security-item-desc">Advanced authentication protocols</p>
+                    </div>
+                    
+                    <div class="security-item">
+                        <div class="security-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4 class="security-item-title">Data Encryption</h4>
+                        <p class="security-item-desc">End-to-end encryption standards</p>
+                    </div>
+                    
+                    <div class="security-item">
+                        <div class="security-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h4 class="security-item-title">Complete Monitoring</h4>
+                        <p class="security-item-desc">Real-time activity oversight</p>
+                    </div>
+                    
+                    <div class="security-item">
+                        <div class="security-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h4 class="security-item-title">Compliance Ready</h4>
+                        <p class="security-item-desc">GDPR, COPPA compliant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="register">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Lead Educational Excellence?</h2>
+                <p class="cta-subtitle">
+                    Join the administrative team that's shaping the future of culturally-conscious education. 
+                    Take command of powerful tools designed for visionary educational leaders.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary btn-hero" onclick="openRegistrationModal()">
+                        <i class="fas fa-user-shield"></i>
+                        Create Admin Account
+                    </a>
+                    <a href="#" class="btn btn-outlined btn-hero" onclick="openLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Already an Administrator?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-shield-alt"></i> Administrative Resources</h4>
+                    <a href="#" class="footer-link">Admin Getting Started Guide</a>
+                    <a href="#" class="footer-link">Platform Management Best Practices</a>
+                    <a href="#" class="footer-link">Advanced Analytics Training</a>
+                    <a href="#" class="footer-link">Security Protocols Documentation</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4><i class="fas fa-cogs"></i> System & Compliance</h4>
+                    <a href="#" class="footer-link">Data Protection Policy</a>
+                    <a href="#" class="footer-link">Security Standards Documentation</a>
+                    <a href="#" class="footer-link">Compliance Framework</a>
+                    <a href="#" class="footer-link">Audit Trail Management</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4><i class="fas fa-headset"></i> Administrative Support</h4>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">
+                        <i class="fas fa-envelope"></i>
+                        admin@baobabonlineacademy.com
+                    </p>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">
+                        <i class="fas fa-phone"></i>
+                        +234 (0) 816 501 1291 (Priority Line)
+                    </p>
+                    <a href="#" class="footer-link">Admin Help Center</a>
+                    <a href="#" class="footer-link">24/7 Technical Support</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Baobab Online Academy Administrative Portal. Leading Educational Excellence Through Innovation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeRegistrationModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h3 class="modal-title">
+                <i class="fas fa-user-shield"></i>
+                Create Administrator Account
+            </h3>
+            
+            <div class="error-message" id="regErrorMessage"></div>
+            <div class="success-message" id="regSuccessMessage"></div>
+            
+            <form id="registrationForm" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label class="form-label">Administrative Email Address *</label>
+                    <input type="email" name="email" required class="form-input" placeholder="Enter your authorized admin email">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" name="full_name" required class="form-input" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Department *</label>
+                    <select name="department" required class="form-input">
+                        <option value="">Select your department</option>
+                        <option value="administration">Administration</option>
+                        <option value="academic">Academic Affairs</option>
+                        <option value="operations">Operations</option>
+                        <option value="support">Support Services</option>
+                        <option value="finance">Finance & Billing</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number *</label>
+                    <input type="tel" name="phone" required class="form-input" placeholder="Enter your direct phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Secure Password *</label>
+                    <input type="password" name="password" required class="form-input" placeholder="Create a strong password" minlength="8">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password *</label>
+                    <input type="password" name="confirmPassword" required class="form-input" placeholder="Confirm your password" minlength="8">
+                </div>
+                
+                <button type="submit" class="form-submit" id="regSubmitBtn">
+                    <span id="regSubmitText">Create Admin Account</span>
+                    <div class="loading-spinner" id="regLoadingSpinner"></div>
+                </button>
+            </form>
+            
+            <div class="form-toggle">
+                Already have an admin account? <a href="#" onclick="switchToLogin()">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeLoginModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h3 class="modal-title">
+                <i class="fas fa-sign-in-alt"></i>
+                Administrator Login
+            </h3>
+            
+            <div class="error-message" id="loginErrorMessage"></div>
+            <div class="success-message" id="loginSuccessMessage"></div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Administrative Email *</label>
+                    <input type="email" name="email" required class="form-input" placeholder="Enter your admin email address">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password *</label>
+                    <input type="password" name="password" required class="form-input" placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="form-submit" id="loginSubmitBtn">
+                    <span id="loginSubmitText">Access Admin Portal</span>
+                    <div class="loading-spinner" id="loginLoadingSpinner"></div>
+                </button>
+            </form>
+            
+            <div class="form-toggle">
+                Need admin access? <a href="#" onclick="switchToRegistration()">Request Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeVerificationModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="verification-notice">
+                <div class="email-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <h4>🛡️ Secure Admin Verification Required!</h4>
+                <p><strong>We've sent a secure verification link to your administrative email.</strong></p>
+                <p>Please check your inbox and click the verification link to activate your administrator account with full platform access.</p>
+                <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 20px;">
+                    Don't see the email? Check your spam folder or 
+                    <span class="resend-link" onclick="resendVerificationEmail()">
+                        click here to resend verification
+                    </span>
+                </p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-primary" onclick="closeVerificationModal()">
+                    <i class="fas fa-check-shield"></i>
+                    I'll Verify My Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURATION SECTION =====
+        const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M0.-oy'}';
+        
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: 'axzjFvaj8oDzIdLHB',     // Replace with your EmailJS public key
+            SERVICE_ID: 'service_02brniu',       // Replace with your EmailJS service ID
+            TEMPLATE_ID: 'template_admin_verify' // Replace with your EmailJS template ID for admin verification
+        };
+        
+        // Initialize services
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+
+        // Store admin data for verification email
+        let pendingAdminData = null;
+
+        // ===== MOBILE MENU FUNCTIONALITY =====
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function toggleMenu() {
+            mobileMenuPanel.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenuPanel.classList.contains('active') ? 'hidden' : 'auto';
+            
+            if (mobileMenuPanel.classList.contains('active')) {
+                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+        
+        function closeMenu() {
+            mobileMenuPanel.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking on mobile links
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // ===== MODAL FUNCTIONS =====
+        function openRegistrationModal() {
+            document.getElementById('registrationModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            clearMessages();
+        }
+
+        function closeRegistrationModal() {
+            document.getElementById('registrationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            clearMessages();
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            clearMessages();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            clearMessages();
+        }
+
+        function openVerificationModal() {
+            document.getElementById('verificationModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVerificationModal() {
+            document.getElementById('verificationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function switchToLogin() {
+            closeRegistrationModal();
+            openLoginModal();
+        }
+
+        function switchToRegistration() {
+            closeLoginModal();
+            openRegistrationModal();
+        }
+
+        function clearMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const successMessages = document.querySelectorAll('.success-message');
+            
+            errorMessages.forEach(msg => {
+                msg.style.display = 'none';
+                msg.textContent = '';
+            });
+            
+            successMessages.forEach(msg => {
+                msg.style.display = 'none';
+                msg.textContent = '';
+            });
+        }
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+        }
+
+        // ===== EMAIL VERIFICATION FUNCTIONS =====
+        async function sendAdminVerificationEmail(adminData) {
+            try {
+                // Generate verification token
+                const verificationToken = btoa(`${adminData.email}-${Date.now()}-${Math.random()}`);
+                
+                // Create verification link
+                const verificationLink = `${window.location.origin}/admin-verify-email.html?token=${verificationToken}&email=${encodeURIComponent(adminData.email)}`;
+                
+                // Prepare email data
+                const emailData = {
+                    to_email: adminData.email,
+                    to_name: adminData.fullName,
+                    from_name: 'Baobab Online Academy Admin Portal',
+                    subject: 'Administrative Account Verification - Baobab Online Academy',
+                    admin_name: adminData.fullName,
+                    department: adminData.department,
+                    verification_link: verificationLink,
+                    portal_url: window.location.origin,
+                    support_email: 'admin@baobabacademy.com',
+                    current_year: new Date().getFullYear()
+                };
+
+                // Send email via EmailJS
+                const response = await emailjs.send(
+                    EMAILJS_CONFIG.SERVICE_ID,
+                    EMAILJS_CONFIG.TEMPLATE_ID,
+                    emailData
+                );
+
+                console.log('Admin verification email sent successfully!', response);
+                return true;
+            } catch (error) {
+                console.error('Failed to send admin verification email:', error);
+                return false;
+            }
+        }
+
+        async function resendVerificationEmail() {
+            if (!pendingAdminData) {
+                alert('No pending verification found. Please try registering again.');
+                return;
+            }
+
+            try {
+                const emailSent = await sendAdminVerificationEmail(pendingAdminData);
+                if (emailSent) {
+                    alert('Admin verification email resent successfully! Please check your inbox.');
+                } else {
+                    alert('Failed to resend verification email. Please contact technical support.');
+                }
+            } catch (error) {
+                alert('Failed to resend verification email. Please contact technical support.');
+            }
+        }
+
+        // ===== REGISTRATION FUNCTION =====
+        async function handleRegistration(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('regSubmitBtn');
+            const submitText = document.getElementById('regSubmitText');
+            const loadingSpinner = document.getElementById('regLoadingSpinner');
+            
+            // Show loading state
+            submitText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            clearMessages();
+            
+            try {
+                const formData = new FormData(event.target);
+                const email = formData.get('email').toLowerCase().trim();
+                const fullName = formData.get('full_name').trim();
+                const department = formData.get('department').trim();
+                const phone = formData.get('phone').trim();
+                const password = formData.get('password');
+                const confirmPassword = formData.get('confirmPassword');
+                
+                // Validate passwords match
+                if (password !== confirmPassword) {
+                    throw new Error('Passwords do not match');
+                }
+                
+                // Validate password strength
+                if (password.length < 8) {
+                    throw new Error('Password must be at least 8 characters long');
+                }
+                
+                // Check if email is authorized for admin access
+                const { data: authorizedEmail, error: authCheckError } = await supabase
+                    .from('authorized_admin_emails')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('is_used', false)
+                    .single();
+                
+                if (authCheckError || !authorizedEmail) {
+                    throw new Error('This email is not authorized for administrative access. Please contact the system administrator at admin@baobabacademy.com');
+                }
+                
+                // Create admin user account
+                const { data: authData, error: signUpError } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        emailRedirectTo: `${window.location.origin}/admin-dashboard.html`,
+                        data: {
+                            full_name: fullName,
+                            phone: phone,
+                            department: department,
+                            role: 'admin'
+                        }
+                    }
+                });
+                
+                if (signUpError) {
+                    throw new Error(signUpError.message);
+                }
+                
+                // Store admin data for potential resend
+                pendingAdminData = {
+                    email: email,
+                    fullName: fullName,
+                    phone: phone,
+                    department: department,
+                    userId: authData.user?.id
+                };
+                
+                // Create admin profile
+                if (authData.user) {
+                    const { error: profileError } = await supabase
+                        .from('admin_profiles')
+                        .insert([
+                            {
+                                user_id: authData.user.id,
+                                full_name: fullName,
+                                email: email,
+                                phone: phone,
+                                role: 'admin',
+                                permissions: {
+                                    department: department,
+                                    access_level: authorizedEmail.access_level || 'admin',
+                                    created_at: new Date().toISOString()
+                                }
+                            }
+                        ]);
+                    
+                    if (profileError) {
+                        console.error('Admin profile creation error:', profileError);
+                    }
+                }
+                
+                // Mark admin email as used
+                const { error: updateError } = await supabase
+                    .from('authorized_admin_emails')
+                    .update({
+                        is_used: true,
+                        used_at: new Date().toISOString()
+                    })
+                    .eq('email', email);
+                
+                if (updateError) {
+                    console.error('Failed to mark admin email as used:', updateError);
+                }
+                
+                // Send verification email via EmailJS
+                const emailSent = await sendAdminVerificationEmail(pendingAdminData);
+                
+                // Reset form and show verification modal
+                event.target.reset();
+                closeRegistrationModal();
+                openVerificationModal();
+                
+                if (!emailSent) {
+                    console.warn('Admin verification email failed to send, but account was created');
+                }
+                
+            } catch (error) {
+                console.error('Admin registration error:', error);
+                showError('regErrorMessage', error.message);
+            } finally {
+                // Reset button state
+                submitText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ===== LOGIN FUNCTION =====
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('loginSubmitBtn');
+            const submitText = document.getElementById('loginSubmitText');
+            const loadingSpinner = document.getElementById('loginLoadingSpinner');
+            
+            // Show loading state
+            submitText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            clearMessages();
+            
+            try {
+                const formData = new FormData(event.target);
+                const email = formData.get('email').toLowerCase().trim();
+                const password = formData.get('password');
+                
+                // Sign in admin user
+                const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (signInError) {
+                    throw new Error(signInError.message);
+                }
+                
+                // Check if email is verified
+                if (!authData.user.email_confirmed_at) {
+                    showError('loginErrorMessage', 'Please verify your administrative email address before accessing the admin portal. Check your inbox for the verification link.');
+                    return;
+                }
+                
+                // Verify admin privileges
+                const { data: adminProfile, error: adminCheckError } = await supabase
+                    .from('admin_profiles')
+                    .select('*')
+                    .eq('user_id', authData.user.id)
+                    .single();
+                
+                if (adminCheckError || !adminProfile) {
+                    throw new Error('Administrative privileges not found. Please contact system administrator.');
+                }
+                
+                showSuccess('loginSuccessMessage', 'Administrative access granted! Redirecting to admin dashboard...');
+                event.target.reset();
+                
+                // Redirect to admin dashboard
+                setTimeout(() => {
+                    closeLoginModal();
+                    window.location.href = '/admin-dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Admin login error:', error);
+                showError('loginErrorMessage', error.message);
+            } finally {
+                // Reset button state
+                submitText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ===== CHECK AUTHENTICATION STATUS =====
+        async function checkAuthStatus() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (user && user.email_confirmed_at) {
+                console.log('Admin user is logged in and verified:', user);
+            }
+        }
+
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '#login' || href === '#register') {
+                    e.preventDefault();
+                    return;
+                }
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ===== INTERACTIVE EFFECTS =====
+        document.querySelectorAll('.feature-card, .tool-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // ===== CLOSE MODALS ON OUTSIDE CLICK =====
+        document.getElementById('registrationModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeRegistrationModal();
+            }
+        });
+
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeLoginModal();
+            }
+        });
+
+        document.getElementById('verificationModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeVerificationModal();
+            }
+        });
+
+        // ===== INITIALIZE ON PAGE LOAD =====
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+        });
+    </script>
+</body>
+</html>
