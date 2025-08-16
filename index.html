@@ -1510,9 +1510,9 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
         
         const EMAILJS_CONFIG = {
-            PUBLIC_KEY: '62ifMTeKlPeL4TG1X',     // Replace with your EmailJS public key
-            SERVICE_ID: 'service_4waxldg',       // Replace with your EmailJS service ID
-            TEMPLATE_ID: 'template_3wekoib' // Replace with your EmailJS template ID for admin verification
+            PUBLIC_KEY: '62ifMTeKlPeL4TG1X',
+            SERVICE_ID: 'service_4waxldg',
+            TEMPLATE_ID: 'template_3wekoib'
         };
         
         // Initialize services
@@ -1629,13 +1629,9 @@
         // ===== EMAIL VERIFICATION FUNCTIONS =====
         async function sendAdminVerificationEmail(adminData) {
             try {
-                // Generate verification token
                 const verificationToken = btoa(`${adminData.email}-${Date.now()}-${Math.random()}`);
-                
-                // Create verification link
                 const verificationLink = `${window.location.origin}/admin-verify-email.html?token=${verificationToken}&email=${encodeURIComponent(adminData.email)}`;
                 
-                // Prepare email data
                 const emailData = {
                     to_email: adminData.email,
                     to_name: adminData.fullName,
@@ -1649,7 +1645,6 @@
                     current_year: new Date().getFullYear()
                 };
 
-                // Send email via EmailJS
                 const response = await emailjs.send(
                     EMAILJS_CONFIG.SERVICE_ID,
                     EMAILJS_CONFIG.TEMPLATE_ID,
@@ -1659,7 +1654,7 @@
                 console.log('Admin verification email sent successfully!', response);
                 return true;
             } catch (error) {
-                console.error('Failed to send admin verification email:', error);
+                console.error('Failed to send admin verification email:', error, error?.text || error?.message);
                 return false;
             }
         }
@@ -1679,6 +1674,63 @@
                 }
             } catch (error) {
                 alert('Failed to resend verification email. Please contact technical support.');
+            }
+        }
+
+        // ===== SUPABASE RPC FUNCTIONS =====
+        async function checkEmailAuthorization(email) {
+            try {
+                const { data, error } = await supabase.rpc('is_admin_email_authorized', { p_email: email });
+                
+                if (error) {
+                    console.error('Email authorization check error:', error);
+                    throw new Error('Authorization check failed. Please contact the system administrator.');
+                }
+                
+                return data === true;
+            } catch (error) {
+                console.error('RPC call error:', error);
+                throw new Error('Unable to verify email authorization. Please contact technical support.');
+            }
+        }
+
+        async function markEmailAsUsed(email) {
+            try {
+                const { data, error } = await supabase.rpc('mark_admin_email_used', { p_email: email });
+                
+                if (error) {
+                    console.warn('Failed to mark email as used via RPC:', error);
+                    return false;
+                }
+                
+                return data === true;
+            } catch (error) {
+                console.warn('RPC call to mark email as used failed:', error);
+                return false;
+            }
+        }
+
+        async function createAdminProfile(userData) {
+            try {
+                const { data, error } = await supabase.rpc('create_admin_profile', {
+                    p_user_id: userData.userId,
+                    p_email: userData.email,
+                    p_full_name: userData.fullName,
+                    p_phone: userData.phone,
+                    p_role: 'admin',
+                    p_department: userData.department,
+                    p_access_level: 'admin'
+                });
+                
+                if (error) {
+                    console.error('Admin profile creation error:', error);
+                    return false;
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('RPC call to create admin profile failed:', error);
+                return false;
             }
         }
 
@@ -1715,16 +1767,10 @@
                     throw new Error('Password must be at least 8 characters long');
                 }
                 
-                // Check if email is authorized for admin access
-                const { data: authorizedEmail, error: authCheckError } = await supabase
-                    .from('authorized_admin_emails')
-                    .select('*')
-                    .eq('email', email)
-                    .eq('is_used', false)
-                    .single();
-                
-                if (authCheckError || !authorizedEmail) {
-                    throw new Error('This email is not authorized for administrative access. Please contact the system administrator at admin@baobabacademy.com');
+                // Check if email is authorized for admin access using RPC
+                const isAuthorized = await checkEmailAuthorization(email);
+                if (!isAuthorized) {
+                    throw new Error('This email is not authorized for administrative access. Please contact the system administrator at admin@baobabonlineacademy.com');
                 }
                 
                 // Create admin user account
@@ -1755,41 +1801,25 @@
                     userId: authData.user?.id
                 };
                 
-                // Create admin profile
+                // Create admin profile using RPC
                 if (authData.user) {
-                    const { error: profileError } = await supabase
-                        .from('admin_profiles')
-                        .insert([
-                            {
-                                user_id: authData.user.id,
-                                full_name: fullName,
-                                email: email,
-                                phone: phone,
-                                role: 'admin',
-                                permissions: {
-                                    department: department,
-                                    access_level: authorizedEmail.access_level || 'admin',
-                                    created_at: new Date().toISOString()
-                                }
-                            }
-                        ]);
+                    const profileCreated = await createAdminProfile({
+                        userId: authData.user.id,
+                        email: email,
+                        fullName: fullName,
+                        phone: phone,
+                        department: department
+                    });
                     
-                    if (profileError) {
-                        console.error('Admin profile creation error:', profileError);
+                    if (!profileCreated) {
+                        console.warn('Admin profile creation failed, but account was created');
                     }
                 }
                 
                 // Mark admin email as used
-                const { error: updateError } = await supabase
-                    .from('authorized_admin_emails')
-                    .update({
-                        is_used: true,
-                        used_at: new Date().toISOString()
-                    })
-                    .eq('email', email);
-                
-                if (updateError) {
-                    console.error('Failed to mark admin email as used:', updateError);
+                const emailMarked = await markEmailAsUsed(email);
+                if (!emailMarked) {
+                    console.warn('Failed to mark email as used, but account was created');
                 }
                 
                 // Send verification email via EmailJS
