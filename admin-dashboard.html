@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - Baobab Online Academy</title>
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary: #0066FF;
+      --primary-hover: #0052CC;
+      --primary-light: #E6F2FF;
+      --secondary: #1DB584;
+      --secondary-hover: #16A076;
+      --secondary-light: #E6F9F4;
+      --accent: #FF6B35;
+      --accent-hover: #E55A2B;
+      --accent-light: #FFF0ED;
+      --warning: #FFB800;
+      --warning-light: #FFF8E1;
+      --success: #00C851;
+      --success-light: #E8F5E8;
+      --danger: #FF4444;
+      --danger-light: #FFEBEE;
+      
+      --gray-50: #F8FAFC;
+      --gray-100: #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-300: #CBD5E1;
+      --gray-400: #94A3B8;
+      --gray-500: #64748B;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1E293B;
+      --gray-900: #0F172A;
+      
+      --white: #FFFFFF;
+      --black: #000000;
+      
+      --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      
+      --border-radius: 12px;
+      --border-radius-lg: 16px;
+      --border-radius-xl: 20px;
+      
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--gray-800);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: var(--border-radius);
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .menu-toggle:hover {
+      background: var(--gray-200);
+      color: var(--gray-800);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--danger), var(--accent));
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--danger), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 2rem;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 1rem 0 3rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--border-radius-lg);
+      background: var(--white);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      font-size: 1.125rem;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .notification-btn {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: var(--border-radius);
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-btn:hover {
+      background: var(--gray-200);
+      color: var(--gray-800);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 20px;
+      height: 20px;
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      border-radius: var(--border-radius-lg);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-profile:hover {
+      background: var(--gray-100);
+    }
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--border-radius);
+      background: linear-gradient(135deg, var(--danger), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--gray-800);
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    /* Layout */
+    .app-layout {
+      display: flex;
+      min-height: calc(100vh - 72px);
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      gap: 2rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 320px;
+      flex-shrink: 0;
+      padding: 2rem 0;
+    }
+
+    .sidebar-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-500);
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--border-radius);
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-icon {
+      font-size: 1.125rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-count {
+      margin-left: auto;
+      background: var(--gray-200);
+      color: var(--gray-600);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 50px;
+      min-width: 1.5rem;
+      text-align: center;
+    }
+
+    .nav-link.active .nav-count {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 2rem 0;
+      min-width: 0;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Dashboard Overview */
+    .dashboard-header {
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .dashboard-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+    }
+
+    .stat-card.accent::before {
+      background: var(--accent);
+    }
+
+    .stat-card.success::before {
+      background: var(--success);
+    }
+
+    .stat-card.warning::before {
+      background: var(--warning);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .stat-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-600);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+    }
+
+    .stat-icon.primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    .stat-icon.accent {
+      background: linear-gradient(135deg, var(--accent), var(--warning));
+    }
+
+    .stat-icon.success {
+      background: linear-gradient(135deg, var(--success), var(--secondary));
+    }
+
+    .stat-icon.warning {
+      background: linear-gradient(135deg, var(--warning), var(--accent));
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--gray-800);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .stat-change {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .stat-change.positive {
+      color: var(--success);
+    }
+
+    .stat-change.negative {
+      color: var(--danger);
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-200);
+      color: var(--gray-800);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--secondary), var(--secondary-hover));
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #E53E3E);
+      color: white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .quick-action {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-lg);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--gray-800);
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+    }
+
+    .quick-action:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      color: var(--primary);
+    }
+
+    .quick-action-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .quick-action-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quick-action-desc {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* Recent Activity */
+    .activity-list {
+      list-style: none;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .activity-item:hover {
+      background: var(--gray-50);
+    }
+
+    .activity-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--border-radius);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-text {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .activity-time {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--gray-700);
+      font-size: 0.95rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--border-radius);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background: var(--white);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--border-radius);
+      font-size: 0.95rem;
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    textarea.form-input {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow: auto;
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .table th {
+      background: var(--gray-50);
+      padding: 1rem 1.25rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    .table tbody tr {
+      transition: var(--transition);
+    }
+
+    .table tbody tr:hover {
+      background: var(--gray-50);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.375rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.25px;
+    }
+
+    .badge-success {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .badge-warning {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .badge-danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .badge-primary {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .badge-secondary {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-2xl);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: var(--border-radius);
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--gray-200);
+      color: var(--gray-700);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    /* Loading states */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem;
+      color: var(--gray-500);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--gray-200);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--gray-500);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--gray-300);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .app-layout {
+        padding: 0 1rem;
+        gap: 1.5rem;
+      }
+
+      .sidebar {
+        width: 280px;
+      }
+
+      .search-container {
+        margin: 0 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 1rem;
+      }
+
+      .search-container {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .app-layout {
+        flex-direction: column;
+        padding: 0 1rem;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 72px;
+        left: -320px;
+        height: calc(100vh - 72px);
+        width: 300px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        z-index: 1200;
+        transition: var(--transition-slow);
+        padding: 1rem;
+        overflow-y: auto;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1100;
+        display: none;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .main-content {
+        padding: 1rem 0;
+      }
+
+      .dashboard-title {
+        font-size: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .card-header {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .card-content {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-header {
+        padding: 1rem;
+      }
+
+      .card-content {
+        padding: 1rem;
+      }
+    }
+
+    /* Chart containers */
+    .chart-container {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      height: 300px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="#dashboard" class="brand">
+          <div class="brand-icon">
+            <i class="fas fa-tree"></i>
+          </div>
+          <div class="brand-text">Baobab Admin Portal</div>
+        </a>
+      </div>
+
+      <div class="search-container">
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="search" class="search-input" id="globalSearch" placeholder="Search users, lessons, reports...">
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="notification-btn" id="notificationBtn">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationCount" style="display: none;">0</span>
+        </button>
+        
+        <div class="user-profile" id="userProfile">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-info">
+            <div class="user-name" id="userName">Administrator</div>
+            <div class="user-role">Admin</div>
+          </div>
+          <i class="fas fa-chevron-down" style="color: var(--gray-400); font-size: 0.8rem;"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Overview</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <i class="fas fa-chart-pie nav-icon"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#analytics" class="nav-link" data-section="analytics">
+                <i class="fas fa-chart-line nav-icon"></i>
+                Analytics
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">User Management</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#parents" class="nav-link" data-section="parents">
+                <i class="fas fa-users nav-icon"></i>
+                Parents
+                <span class="nav-count" id="parentsCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#tutors" class="nav-link" data-section="tutors">
+                <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                Tutors
+                <span class="nav-count" id="tutorsCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#children" class="nav-link" data-section="children">
+                <i class="fas fa-child nav-icon"></i>
+                Children
+                <span class="nav-count" id="childrenCount">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Academic</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#subjects" class="nav-link" data-section="subjects">
+                <i class="fas fa-book nav-icon"></i>
+                Subjects
+                <span class="nav-count" id="subjectsCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#lessons" class="nav-link" data-section="lessons">
+                <i class="fas fa-calendar-alt nav-icon"></i>
+                Lessons
+                <span class="nav-count" id="lessonsCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#assignments" class="nav-link" data-section="assignments">
+                <i class="fas fa-tasks nav-icon"></i>
+                Assignments
+                <span class="nav-count" id="assignmentsCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#assessments" class="nav-link" data-section="assessments">
+                <i class="fas fa-clipboard-check nav-icon"></i>
+                Assessments
+                <span class="nav-count" id="assessmentsCount">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Operations</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#billing" class="nav-link" data-section="billing">
+                <i class="fas fa-credit-card nav-icon"></i>
+                Billing
+                <span class="nav-count" id="billingCount">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#reports" class="nav-link" data-section="reports">
+                <i class="fas fa-file-alt nav-icon"></i>
+                Reports
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#settings" class="nav-link" data-section="settings">
+                <i class="fas fa-cog nav-icon"></i>
+                Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Account</div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="logoutLink">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="section active">
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Welcome back, Administrator! 👋</h1>
+          <p class="dashboard-subtitle">Here's what's happening with Baobab Online Academy today.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-title">Total Students</div>
+              <div class="stat-icon primary">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+            <div class="stat-number" id="totalStudents">0</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card accent">
+            <div class="stat-header">
+              <div class="stat-title">Active Lessons</div>
+              <div class="stat-icon accent">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+            </div>
+            <div class="stat-number" id="activeLessons">0</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+8% from last week</span>
+            </div>
+          </div>
+
+          <div class="stat-card success">
+            <div class="stat-header">
+              <div class="stat-title">Monthly Revenue</div>
+              <div class="stat-icon success">
+                <i class="fas fa-pound-sign"></i>
+              </div>
+            </div>
+            <div class="stat-number" id="monthlyRevenue">£0</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+23% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card warning">
+            <div class="stat-header">
+              <div class="stat-title">Average Rating</div>
+              <div class="stat-icon warning">
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            <div class="stat-number" id="averageRating">4.8</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+0.2 from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <a href="#children" class="quick-action" data-section="children">
+            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="quick-action-title">Add New Student</div>
+            <div class="quick-action-desc">Register a new student and assign them to tutors</div>
+          </a>
+
+          <a href="#tutors" class="quick-action" data-section="tutors">
+            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--accent), var(--warning));">
+              <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="quick-action-title">Manage Tutors</div>
+            <div class="quick-action-desc">Add tutors, view schedules, and manage assignments</div>
+          </a>
+
+          <a href="#lessons" class="quick-action" data-section="lessons">
+            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--success), var(--secondary));">
+              <i class="fas fa-calendar-plus"></i>
+            </div>
+            <div class="quick-action-title">Schedule Lesson</div>
+            <div class="quick-action-desc">Create new lessons and manage the calendar</div>
+          </a>
+
+          <a href="#reports" class="quick-action" data-section="reports">
+            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="quick-action-title">View Reports</div>
+            <div class="quick-action-desc">Access detailed analytics and performance reports</div>
+          </a>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                <i class="fas fa-clock"></i>
+              </div>
+              Recent Activity
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-secondary" id="refreshActivity">
+                <i class="fas fa-refresh"></i>
+                Refresh
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <ul class="activity-list" id="activityList">
+              <!-- Activity items will be loaded here -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+          <div class="chart-container">
+            <canvas id="enrollmentChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Other sections will be added here as we build them -->
+      <section id="parents" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                <i class="fas fa-users"></i>
+              </div>
+              Parent Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addParentBtn">
+                <i class="fas fa-plus"></i>
+                Add Parent
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="loading">
+              <div class="spinner"></div>
+              Loading parents...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Additional sections will be added in subsequent responses -->
+    </main>
+  </div>
+
+  <script>
+    // Supabase setup
+    const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // State
+    let currentUser = null;
+    let adminProfile = null;
+    let dashboardData = {
+      stats: {},
+      charts: {},
+      activity: []
+    };
+
+    // UI elements
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    // Mobile menu functionality
+    function toggleSidebar(open) {
+      const show = open ?? !sidebar.classList.contains('active');
+      sidebar.classList.toggle('active', show);
+      sidebarOverlay.classList.toggle('active', show);
+      document.body.style.overflow = show ? 'hidden' : '';
+      menuToggle.innerHTML = show ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    }
+
+    menuToggle?.addEventListener('click', () => toggleSidebar());
+    sidebarOverlay?.addEventListener('click', () => toggleSidebar(false));
+
+    // Navigation functionality
+    function setActive(sectionId) {
+      // Update sections
+      document.querySelectorAll('.section').forEach(s => 
+        s.classList.toggle('active', s.id === sectionId)
+      );
+      
+      // Update nav links
+      document.querySelectorAll('.nav-link').forEach(a => 
+        a.classList.toggle('active', a.dataset.section === sectionId)
+      );
+      
+      loadSection(sectionId);
+      toggleSidebar(false);
+    }
+
+    function routeFromHash() {
+      const id = (location.hash || '#dashboard').replace('#', '');
+      setActive(id);
+    }
+
+    window.addEventListener('hashchange', routeFromHash);
+
+    // Add click handlers for navigation
+    document.querySelectorAll('[data-section]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = link.dataset.section;
+        location.hash = '#' + section;
+      });
+    });
+
+    // Helper functions
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP'
+      }).format(amount);
+    }
+
+    function formatDate(date) {
+      return new Date(date).toLocaleDateString('en-GB');
+    }
+
+    function formatTime(date) {
+      return new Date(date).toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function getInitials(name) {
+      if (!name) return 'A';
+      return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    // Auth functions
+    async function ensureAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        // Redirect to admin login page
+        location.href = '/admin-login.html';
+        return null;
+      }
+      
+      currentUser = session.user;
+      
+      // Check if user is admin
+      const { data: adminProfile } = await supabase
+        .from('admin_profiles')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .single();
+        
+      if (!adminProfile) {
+        alert('Access denied. Admin privileges required.');
+        await supabase.auth.signOut();
+        location.href = '/admin-login.html';
+        return null;
+      }
+      
+      return currentUser;
+    }
+
+    async function loadAdminProfile() {
+      const { data: profile } = await supabase
+        .from('admin_profiles')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .single();
+        
+      if (profile) {
+        adminProfile = profile;
+        document.getElementById('userName').textContent = profile.full_name || 'Administrator';
+        document.getElementById('userAvatar').textContent = getInitials(profile.full_name);
+      }
+    }
+
+    // Dashboard data loading
+    async function loadDashboardStats() {
+      try {
+        // Load total students (children)
+        const { data: children, count: childrenCount } = await supabase
+          .from('children')
+          .select('*', { count: 'exact' });
+        document.getElementById('totalStudents').textContent = childrenCount || 0;
+        document.getElementById('childrenCount').textContent = childrenCount || 0;
+
+        // Load active lessons (scheduled for today and future)
+        const today = new Date().toISOString().split('T')[0];
+        const { data: lessons, count: lessonsCount } = await supabase
+          .from('lessons')
+          .select('*', { count: 'exact' })
+          .gte('scheduled_at', today)
+          .eq('status', 'scheduled');
+        document.getElementById('activeLessons').textContent = lessonsCount || 0;
+        document.getElementById('lessonsCount').textContent = lessonsCount || 0;
+
+        // Load monthly revenue
+        const currentMonth = new Date().toISOString().slice(0, 7);
+        const { data: billing } = await supabase
+          .from('billing_records')
+          .select('amount')
+          .eq('status', 'paid')
+          .gte('paid_at', currentMonth + '-01');
+        
+        const revenue = billing?.reduce((sum, record) => sum + Number(record.amount), 0) || 0;
+        document.getElementById('monthlyRevenue').textContent = formatCurrency(revenue);
+
+        // Load other counts
+        const { count: parentsCount } = await supabase
+          .from('parent_profiles')
+          .select('*', { count: 'exact' });
+        document.getElementById('parentsCount').textContent = parentsCount || 0;
+
+        const { count: tutorsCount } = await supabase
+          .from('tutor_profiles')
+          .select('*', { count: 'exact' });
+        document.getElementById('tutorsCount').textContent = tutorsCount || 0;
+
+        const { count: subjectsCount } = await supabase
+          .from('subjects')
+          .select('*', { count: 'exact' })
+          .eq('is_active', true);
+        document.getElementById('subjectsCount').textContent = subjectsCount || 0;
+
+        const { count: assessmentsCount } = await supabase
+          .from('assessments')
+          .select('*', { count: 'exact' });
+        document.getElementById('assessmentsCount').textContent = assessmentsCount || 0;
+
+        const { count: billingCount } = await supabase
+          .from('billing_records')
+          .select('*', { count: 'exact' })
+          .eq('status', 'pending');
+        document.getElementById('billingCount').textContent = billingCount || 0;
+
+      } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+      }
+    }
+
+    async function loadRecentActivity() {
+      try {
+        const activityList = document.getElementById('activityList');
+        
+        // Create mock activity data (in real app, you'd have an activity log table)
+        const activities = [
+          {
+            user: 'John Smith',
+            action: 'enrolled their child in Mathematics',
+            time: '2 hours ago',
+            avatar: 'JS'
+          },
+          {
+            user: 'Sarah Wilson',
+            action: 'completed a lesson with Emma Thompson',
+            time: '3 hours ago',
+            avatar: 'SW'
+          },
+          {
+            user: 'Admin',
+            action: 'added new tutor Michael Davis',
+            time: '5 hours ago',
+            avatar: 'AD'
+          },
+          {
+            user: 'Lisa Brown',
+            action: 'submitted payment for January',
+            time: '1 day ago',
+            avatar: 'LB'
+          },
+          {
+            user: 'System',
+            action: 'generated monthly reports',
+            time: '2 days ago',
+            avatar: 'SY'
+          }
+        ];
+
+        activityList.innerHTML = activities.map(activity => `
+          <li class="activity-item">
+            <div class="activity-avatar">${activity.avatar}</div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>${activity.user}</strong> ${activity.action}
+              </div>
+              <div class="activity-time">${activity.time}</div>
+            </div>
+          </li>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error loading recent activity:', error);
+      }
+    }
+
+    async function loadDashboardCharts() {
+      // Enrollment chart
+      const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+      new Chart(enrollmentCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'New Enrollments',
+            data: [12, 19, 8, 15, 22, 18],
+            borderColor: '#0066FF',
+            backgroundColor: 'rgba(0, 102, 255, 0.1)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly Enrollments',
+              font: { size: 16, weight: '600' }
+            },
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      // Revenue chart
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue',
+            data: [3200, 4100, 2800, 3900, 4800, 4200],
+            backgroundColor: 'rgba(29, 181, 132, 0.8)',
+            borderColor: '#1DB584',
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly Revenue (£)',
+              font: { size: 16, weight: '600' }
+            },
+            legend: { display: false }
+          },
+          scales: {
+            y: { 
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return '£' + value;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Section loading
+    async function loadSection(sectionId) {
+      switch (sectionId) {
+        case 'dashboard':
+          await loadDashboardStats();
+          await loadRecentActivity();
+          setTimeout(loadDashboardCharts, 100); // Small delay to ensure canvas is ready
+          break;
+        case 'parents':
+          // Load parents section
+          break;
+        case 'tutors':
+          // Load tutors section
+          break;
+        case 'children':
+          // Load children section
+          break;
+        // Add other sections as needed
+      }
+    }
+
+    // Event listeners
+    document.getElementById('logoutLink')?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await supabase.auth.signOut();
+      location.href = '/admin-login.html';
+    });
+
+    document.getElementById('refreshActivity')?.addEventListener('click', loadRecentActivity);
+
+    document.getElementById('notificationBtn')?.addEventListener('click', () => {
+      alert('Notifications coming soon!');
+    });
+
+    // Auth listener
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        location.href = '/admin-login.html';
+      }
+    });
+
+    // Initialize app
+    (async function init() {
+      const user = await ensureAuth();
+      if (!user) return;
+
+      await loadAdminProfile();
+      
+      // Initial route
+      routeFromHash();
+    })();
+  </script>
+</body>
+</html>
