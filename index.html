@@ -1721,7 +1721,7 @@
                     .select('*')
                     .eq('email', email)
                     .eq('is_used', false)
-                    .maybesingle();
+                    .single();
                 
                 if (authCheckError || !authorizedEmail) {
                     throw new Error('This email is not authorized for administrative access. Please contact the system administrator at admin@baobabacademy.com');
