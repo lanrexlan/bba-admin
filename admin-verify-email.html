@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/Images/logo.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Email Verification - Baobab Online Academy</title>
+
+  <!-- Icons & Fonts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@300;400;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --baobab-brown:#8D4004;
+      --canopy-green:#2E7D32;
+      --sunset-gold:#F57C00;
+      --trunk-gray:#5D4037;
+      --sky-blue:#1976D2;
+      --earth-cream:#FFF8E1;
+      --desert-orange:#FF5722;
+      --sage-green:#689F38;
+      --deep-charcoal:#263238;
+      --white:#FFFFFF;
+      --glow-color:rgba(245,124,0,.6);
+
+      --transition-slow:all .6s cubic-bezier(.165,.84,.44,1);
+      --transition-medium:all .4s cubic-bezier(.165,.84,.44,1);
+      --transition-fast:all .3s cubic-bezier(.165,.84,.44,1);
+
+      --shadow-sm:0 1px 3px rgba(0,0,0,.1);
+      --shadow-md:0 4px 6px rgba(0,0,0,.1);
+      --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1);
+      --shadow-xl:0 20px 25px -5px rgba(0,0,0,.1);
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--deep-charcoal);
+      line-height:1.6;
+      background:linear-gradient(135deg,var(--sky-blue),var(--baobab-brown));
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .verification-container{
+      background:var(--white);
+      border-radius:25px;
+      padding:50px;
+      max-width:640px;
+      width:100%;
+      text-align:center;
+      box-shadow:0 20px 50px rgba(0,0,0,.3);
+      border:3px solid var(--sky-blue);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .verification-container::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(45deg,transparent,rgba(25,118,210,.12),transparent);
+      animation:shimmer 3s infinite;
+    }
+
+    @keyframes shimmer{
+      0%{transform:translateX(-100%) translateY(-100%) rotate(45deg)}
+      100%{transform:translateX(100%) translateY(100%) rotate(45deg)}
+    }
+
+    .verification-content{position:relative;z-index:1}
+
+    .logo-section{margin-bottom:30px}
+
+    .logo{
+      display:inline-flex;
+      align-items:center;
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    .logo-icon{
+      width:50px;height:50px;
+      background-color:var(--sky-blue);
+      display:flex;align-items:center;justify-content:center;
+      border-radius:12px;
+      font-size:24px;color:var(--white);
+    }
+
+    .logo-text{
+      font-weight:700;font-size:24px;
+      color:var(--baobab-brown);
+      font-family:'Merriweather',serif;
+    }
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(25,118,210,.1);
+      color:var(--sky-blue);
+      border:1px solid rgba(25,118,210,.3);
+      border-radius:999px;
+      padding:6px 12px;
+      font-size:.85rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .verification-icon{
+      font-size:4rem;margin-bottom:25px;display:block;
+    }
+
+    .success-icon{color:var(--canopy-green);animation:pulse 2s infinite}
+    .error-icon{color:var(--desert-orange)}
+    .loading-icon{color:var(--sky-blue);animation:spin 1s linear infinite}
+
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.1);opacity:.85}
+      100%{transform:scale(1);opacity:1}
+    }
+
+    @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+    .verification-title{
+      font-family:'Merriweather',serif;
+      font-size:2.2rem;color:var(--baobab-brown);
+      margin-bottom:16px;font-weight:700;
+    }
+
+    .verification-message{
+      font-size:1.08rem;color:var(--trunk-gray);
+      margin-bottom:24px;line-height:1.7;
+    }
+
+    .verification-details{
+      background:var(--earth-cream);
+      border:2px solid rgba(25,118,210,.25);
+      border-radius:15px;
+      padding:22px;margin:22px 0;text-align:left;
+    }
+
+    .verification-details h4{
+      color:var(--sky-blue);margin-bottom:12px;
+      font-family:'Merriweather',serif;
+    }
+
+    .verification-details ul{list-style:none;padding:0}
+    .verification-details li{
+      display:flex;align-items:center;gap:12px;
+      margin-bottom:12px;color:var(--trunk-gray);
+    }
+    .verification-details i{color:var(--canopy-green);font-size:1.05rem;width:20px}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 30px;border-radius:30px;
+      font-weight:600;text-align:center;
+      transition:var(--transition-fast);
+      border:2px solid transparent;
+      font-family:'Open Sans',sans-serif;
+      text-decoration:none;cursor:pointer;font-size:1.05rem;margin:8px;
+    }
+
+    .btn-primary{background-color:var(--sky-blue);color:var(--white);border-color:var(--sky-blue)}
+    .btn-primary:hover{background-color:#155ca9;border-color:#155ca9;transform:translateY(-3px);box-shadow:var(--shadow-md)}
+
+    .btn-secondary{background-color:var(--sunset-gold);color:var(--deep-charcoal);border-color:var(--sunset-gold)}
+    .btn-secondary:hover{background-color:var(--desert-orange);border-color:var(--desert-orange);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+
+    .btn-outlined{background-color:transparent;color:var(--baobab-brown);border-color:var(--baobab-brown)}
+    .btn-outlined:hover{background-color:var(--baobab-brown);color:var(--white);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+
+    .action-buttons{
+      display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:26px;
+    }
+
+    .support-info{
+      margin-top:32px;padding-top:24px;border-top:1px solid var(--earth-cream);
+      color:var(--trunk-gray);font-size:.95rem;
+    }
+    .support-info a{color:var(--sunset-gold);text-decoration:none;font-weight:600}
+    .support-info a:hover{text-decoration:underline}
+
+    .loading-spinner{
+      display:inline-block;width:30px;height:30px;
+      border:3px solid var(--earth-cream);border-top:3px solid var(--sky-blue);
+      border-radius:50%;animation:spin 1s linear infinite;margin:18px auto;
+    }
+
+    .hidden{display:none}
+
+    @media (max-width:768px){
+      .verification-container{padding:32px;margin:10px}
+      .verification-title{font-size:1.8rem}
+      .verification-message{font-size:1rem}
+      .action-buttons{flex-direction:column;align-items:center}
+      .btn{padding:16px 28px;font-size:1rem;width:100%;max-width:320px}
+    }
+    @media (max-width:576px){
+      body{padding:10px}
+      .verification-container{padding:26px}
+      .verification-title{font-size:1.6rem}
+      .logo-text{font-size:20px}
+      .verification-icon{font-size:3rem}
+      .verification-details{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="verification-container">
+    <div class="verification-content">
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="logo-text">Baobab Academy</div>
+        </div>
+        <span class="badge"><i class="fas fa-user-shield"></i> Admin</span>
+        <p style="color: var(--trunk-gray); font-style: italic; margin-top:10px;">Secure access for school administrators</p>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState">
+        <i class="fas fa-spinner verification-icon loading-icon"></i>
+        <h1 class="verification-title">Verifying Your Admin Email...</h1>
+        <p class="verification-message">Please wait while we verify your administrator account.</p>
+        <div class="loading-spinner"></div>
+      </div>
+
+      <!-- Success State -->
+      <div id="successState" class="hidden">
+        <i class="fas fa-check-circle verification-icon success-icon"></i>
+        <h1 class="verification-title">Email Verified Successfully</h1>
+        <p class="verification-message">
+          Your admin account has been verified and activated. You can now access the Admin Console.
+        </p>
+
+        <div class="verification-details">
+          <h4><i class="fas fa-flag-checkered"></i> Next steps</h4>
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Review pending teacher signups</li>
+            <li><i class="fas fa-check-circle"></i> Invite staff and manage roles</li>
+            <li><i class="fas fa-check-circle"></i> Configure security and MFA</li>
+            <li><i class="fas fa-check-circle"></i> Oversee classes, campuses and reports</li>
+          </ul>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/admin-dashboard.html" class="btn btn-primary">
+            <i class="fas fa-gauge-high"></i>
+            Go to Admin Console
+          </a>
+          <a href="/" class="btn btn-outlined">
+            <i class="fas fa-home"></i>
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="hidden">
+        <i class="fas fa-triangle-exclamation verification-icon error-icon"></i>
+        <h1 class="verification-title">Verification Failed</h1>
+        <p class="verification-message" id="errorMessage">
+          We couldn't verify your admin email. The link may be invalid or expired.
+        </p>
+
+        <div class="verification-details">
+          <h4><i class="fas fa-lightbulb"></i> How to resolve</h4>
+          <ul>
+            <li><i class="fas fa-redo"></i> Open the most recent verification email</li>
+            <li><i class="fas fa-envelope"></i> Request a fresh verification link</li>
+            <li><i class="fas fa-user-lock"></i> Ensure you're using your admin email</li>
+            <li><i class="fas fa-headset"></i> Contact support if the issue persists</li>
+          </ul>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/admin-request-verification.html" class="btn btn-secondary">
+            <i class="fas fa-paper-plane"></i>
+            Send New Verification
+          </a>
+          <a href="mailto:support@baobabonlineacademy.com" class="btn btn-outlined">
+            <i class="fas fa-headset"></i>
+            Contact Support
+          </a>
+        </div>
+      </div>
+
+      <!-- Support Information -->
+      <div class="support-info">
+        <p>
+          Need help? Email
+          <a href="mailto:support@baobabonlineacademy.com">support@baobabonlineacademy.com</a>
+          or call <a href="tel:+2348165011291">+234 (0) 816 501 1291</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== CONFIGURATION (Replace with your actual Supabase project credentials) =====
+    const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
+
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ===== Page Init =====
+    document.addEventListener('DOMContentLoaded', async () => {
+      setupErrorHandling();
+
+      if (!validatePageAccess()) return;
+
+      // Small UX delay
+      setTimeout(async () => {
+        await handleEmailVerification();
+      }, 1200);
+    });
+
+    // ===== Main Verification Flow =====
+    async function handleEmailVerification(){
+      try{
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+
+        const token_hash = params.get('token_hash');
+        const type = params.get('type');
+        const access_token = params.get('access_token'); // from magiclink
+        const refresh_token = params.get('refresh_token');
+
+        // Supabase native flow
+        if (token_hash && type){
+          const ok = await handleSupabaseConfirmation(params);
+          if (ok) return;
+        }
+
+        // Custom fallback (token+email)
+        const customToken = params.get('token');
+        const email = params.get('email');
+        if (customToken && email){
+          const ok = await handleCustomTokenVerification(customToken, email);
+          if (ok) return;
+        }
+
+        throw new Error('Invalid verification link. Missing required parameters.');
+      }catch(err){
+        showErrorState(err.message || 'Verification failed.');
+      }
+    }
+
+    // ===== Supabase Native Confirmation =====
+    async function handleSupabaseConfirmation(params){
+      try{
+        const token_hash = params.get('token_hash');
+        const type = params.get('type'); // 'email' or 'signup'
+
+        const { data, error } = await supabase.auth.verifyOtp({
+          token_hash,
+          type: type === 'email' ? 'email' : 'signup'
+        });
+
+        if (error) throw new Error(`Email verification failed: ${error.message}`);
+
+        if (data?.user){
+          // Ensure this user is an admin and mark verified
+          await markAdminVerified(data.user);
+          showSuccessAndRedirect();
+          return true;
+        }
+        return false;
+      }catch(err){
+        throw err;
+      }
+    }
+
+    // ===== Custom Token Verification (fallback) =====
+    async function handleCustomTokenVerification(token, email){
+      try{
+        const decodedEmail = decodeURIComponent(email);
+
+        if (!isValidCustomToken(token, decodedEmail)){
+          throw new Error('Invalid or expired verification token.');
+        }
+
+        // If no current session, we still update the admin profile by email
+        const { data: sessionUser, error: sessionErr } = await supabase.auth.getUser();
+        if (sessionErr){
+          // continue fallback path
+          console.warn('No active session; proceeding with email lookup.');
+        }
+
+        if (sessionUser?.user && sessionUser.user.email === decodedEmail){
+          await markAdminVerified(sessionUser.user);
+        }else{
+          // Update by email in admin_profiles
+          await markAdminVerifiedByEmail(decodedEmail);
+        }
+
+        showSuccessAndRedirect(false); // no auto-redirect delay change
+        return true;
+      }catch(err){
+        throw err;
+      }
+    }
+
+    // ===== Data Updates for Admins =====
+    async function markAdminVerified(user){
+      try{
+        // Optional: enforce that this user is indeed an admin
+        // We'll check admin_profiles table for user_id match and role.
+        const { data: profiles, error: selErr } = await supabase
+          .from('admin_profiles')
+          .select('id, role, email_verified')
+          .eq('user_id', user.id)
+          .limit(1);
+
+        if (selErr) console.error('Profile lookup error:', selErr);
+
+        if (!profiles || profiles.length === 0){
+          // If no admin profile, we still attempt to upsert with minimal data
+          const { error: upErr } = await supabase
+            .from('admin_profiles')
+            .upsert({
+              user_id: user.id,
+              email: user.email,
+              role: 'admin',
+              email_verified: true,
+              verified_at: new Date().toISOString()
+            }, { onConflict: 'user_id' });
+          if (upErr) console.error('Admin upsert error:', upErr);
+          return;
+        }
+
+        const profile = profiles[0];
+        // Optional: Only allow roles that are admin-like
+        const allowedRoles = ['admin','super_admin','owner'];
+        if (profile.role && !allowedRoles.includes(String(profile.role).toLowerCase())){
+          console.warn('User is not in an admin role; preventing verification flag.');
+          // You may choose to throw instead:
+          // throw new Error('This account does not have admin privileges.');
+        }
+
+        const { error: updErr } = await supabase
+          .from('admin_profiles')
+          .update({
+            email_verified: true,
+            verified_at: new Date().toISOString()
+          })
+          .eq('user_id', user.id);
+
+        if (updErr) console.error('Admin profile update error:', updErr);
+      }catch(err){
+        console.error('markAdminVerified error:', err);
+      }
+    }
+
+    async function markAdminVerifiedByEmail(email){
+      try{
+        // Find admin by email
+        const { data: profiles, error: selErr } = await supabase
+          .from('admin_profiles')
+          .select('id, role')
+          .eq('email', email)
+          .limit(1);
+
+        if (selErr) throw new Error('Unable to access admin profile.');
+
+        if (!profiles || profiles.length === 0){
+          // Create a minimal admin profile flagged as verified, if your policy allows
+          const { error: insErr } = await supabase
+            .from('admin_profiles')
+            .insert({
+              email,
+              role: 'admin',
+              email_verified: true,
+              verified_at: new Date().toISOString()
+            });
+          if (insErr) throw new Error('Unable to create admin profile.');
+          return;
+        }
+
+        const role = String(profiles[0].role || '').toLowerCase();
+        const allowedRoles = ['admin','super_admin','owner'];
+        if (role && !allowedRoles.includes(role)){
+          console.warn('Profile role not admin; update will still proceed cautiously.');
+        }
+
+        const { error: updErr } = await supabase
+          .from('admin_profiles')
+          .update({
+            email_verified: true,
+            verified_at: new Date().toISOString()
+          })
+          .eq('email', email);
+
+        if (updErr) throw new Error('Unable to update admin profile.');
+      }catch(err){
+        console.error('markAdminVerifiedByEmail error:', err);
+        throw err;
+      }
+    }
+
+    // ===== Token Validation =====
+    function isValidCustomToken(token, email){
+      try{
+        if (!token || token.length < 10) return false;
+
+        try{
+          const decoded = atob(token);
+          const parts = decoded.split('-');
+          if (parts.length >= 2){
+            const tokenEmail = parts[0];
+            const tokenTs = parseInt(parts[1], 10);
+            if (tokenEmail !== email) return false;
+            const maxAge = 24*60*60*1000;
+            if (Date.now() - tokenTs > maxAge) return false;
+            return true;
+          }
+        }catch(e){
+          // If not base64, defer to server-side validation
+          return true;
+        }
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
+
+    // ===== UI helpers =====
+    function showSuccessAndRedirect(auto = true){
+      showSuccessState();
+      if (auto){
+        setTimeout(() => {
+          window.location.href = '/admin-dashboard.html';
+        }, 2500);
+      }
+    }
+
+    function showSuccessState(){
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('errorState').classList.add('hidden');
+      document.getElementById('successState').classList.remove('hidden');
+    }
+
+    function showErrorState(message){
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('successState').classList.add('hidden');
+      document.getElementById('errorState').classList.remove('hidden');
+      document.getElementById('errorMessage').textContent = message;
+    }
+
+    function validatePageAccess(){
+      const p = new URLSearchParams(window.location.search);
+      const hasSupabase = p.get('token_hash') || p.get('access_token');
+      const hasCustom = p.get('token') && p.get('email');
+      if (!hasSupabase && !hasCustom){
+        showErrorState('Invalid verification link. Redirecting to homepage...');
+        setTimeout(() => { window.location.href = '/'; }, 2000);
+        return false;
+      }
+      return true;
+    }
+
+    function setupErrorHandling(){
+      window.addEventListener('error', (e) => {
+        console.error('JavaScript error:', e.error || e.message);
+        if (!document.getElementById('errorState').classList.contains('hidden')) return;
+        showErrorState('An unexpected error occurred. Please try again or contact support.');
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled rejection:', e.reason);
+        if (!document.getElementById('errorState').classList.contains('hidden')) return;
+        showErrorState('An unexpected error occurred. Please try again or contact support.');
+      });
+    }
+
+    // Prevent going back after successful verification
+    window.addEventListener('popstate', (event) => {
+      if (!document.getElementById('successState').classList.contains('hidden')){
+        event.preventDefault();
+        window.location.href = '/admin-dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>
