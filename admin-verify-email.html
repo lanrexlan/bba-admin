@@ -311,8 +311,8 @@
     </div>
   </div>
 
-  <script>
-    // ===== CONFIGURATION (Replace with your actual Supabase project credentials) =====
+<script>
+    // ===== CONFIGURATION =====
     const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
 
@@ -339,7 +339,7 @@
 
         const token_hash = params.get('token_hash');
         const type = params.get('type');
-        const access_token = params.get('access_token'); // from magiclink
+        const access_token = params.get('access_token');
         const refresh_token = params.get('refresh_token');
 
         // Supabase native flow
@@ -358,6 +358,7 @@
 
         throw new Error('Invalid verification link. Missing required parameters.');
       }catch(err){
+        console.error('Verification error:', err);
         showErrorState(err.message || 'Verification failed.');
       }
     }
@@ -366,23 +367,36 @@
     async function handleSupabaseConfirmation(params){
       try{
         const token_hash = params.get('token_hash');
-        const type = params.get('type'); // 'email' or 'signup'
+        const type = params.get('type');
+
+        console.log('Handling Supabase confirmation with token_hash:', token_hash, 'type:', type);
 
         const { data, error } = await supabase.auth.verifyOtp({
           token_hash,
           type: type === 'email' ? 'email' : 'signup'
         });
 
-        if (error) throw new Error(`Email verification failed: ${error.message}`);
+        if (error) {
+          console.error('Supabase verification error:', error);
+          throw new Error(`Email verification failed: ${error.message}`);
+        }
 
         if (data?.user){
-          // Ensure this user is an admin and mark verified
-          await markAdminVerified(data.user);
-          showSuccessAndRedirect();
-          return true;
+          console.log('Supabase verification successful for user:', data.user.email);
+          
+          // Use RPC to mark admin as verified
+          const result = await callMarkAdminVerifiedRPC(data.user.email);
+          
+          if (result.success) {
+            showSuccessAndRedirect();
+            return true;
+          } else {
+            throw new Error(result.error || 'Failed to create admin profile');
+          }
         }
         return false;
       }catch(err){
+        console.error('Supabase confirmation error:', err);
         throw err;
       }
     }
@@ -391,128 +405,63 @@
     async function handleCustomTokenVerification(token, email){
       try{
         const decodedEmail = decodeURIComponent(email);
+        console.log('Handling custom token verification for email:', decodedEmail);
 
         if (!isValidCustomToken(token, decodedEmail)){
           throw new Error('Invalid or expired verification token.');
         }
 
-        // If no current session, we still update the admin profile by email
-        const { data: sessionUser, error: sessionErr } = await supabase.auth.getUser();
-        if (sessionErr){
-          // continue fallback path
-          console.warn('No active session; proceeding with email lookup.');
+        // Use RPC to mark admin as verified
+        const result = await callMarkAdminVerifiedRPC(decodedEmail);
+        
+        if (result.success) {
+          showSuccessAndRedirect(false);
+          return true;
+        } else {
+          throw new Error(result.error || 'Failed to verify admin account');
         }
-
-        if (sessionUser?.user && sessionUser.user.email === decodedEmail){
-          await markAdminVerified(sessionUser.user);
-        }else{
-          // Update by email in admin_profiles
-          await markAdminVerifiedByEmail(decodedEmail);
-        }
-
-        showSuccessAndRedirect(false); // no auto-redirect delay change
-        return true;
       }catch(err){
+        console.error('Custom token verification error:', err);
         throw err;
       }
     }
 
-    // ===== Data Updates for Admins =====
-    async function markAdminVerified(user){
-      try{
-        // Optional: enforce that this user is indeed an admin
-        // We'll check admin_profiles table for user_id match and role.
-        const { data: profiles, error: selErr } = await supabase
-          .from('admin_profiles')
-          .select('id, role, email_verified')
-          .eq('user_id', user.id)
-          .limit(1);
-
-        if (selErr) console.error('Profile lookup error:', selErr);
-
-        if (!profiles || profiles.length === 0){
-          // If no admin profile, we still attempt to upsert with minimal data
-          const { error: upErr } = await supabase
-            .from('admin_profiles')
-            .upsert({
-              user_id: user.id,
-              email: user.email,
-              role: 'admin',
-              email_verified: true,
-              verified_at: new Date().toISOString()
-            }, { onConflict: 'user_id' });
-          if (upErr) console.error('Admin upsert error:', upErr);
-          return;
+    // ===== NEW: Call RPC Function =====
+    async function callMarkAdminVerifiedRPC(email) {
+      try {
+        console.log('Calling mark_admin_verified_by_email RPC for:', email);
+        
+        const { data, error } = await supabase.rpc('mark_admin_verified_by_email', { 
+          p_email: email 
+        });
+        
+        if (error) {
+          console.error('RPC error:', error);
+          return {
+            success: false,
+            error: `Database error: ${error.message}`
+          };
         }
-
-        const profile = profiles[0];
-        // Optional: Only allow roles that are admin-like
-        const allowedRoles = ['admin','super_admin','owner'];
-        if (profile.role && !allowedRoles.includes(String(profile.role).toLowerCase())){
-          console.warn('User is not in an admin role; preventing verification flag.');
-          // You may choose to throw instead:
-          // throw new Error('This account does not have admin privileges.');
+        
+        console.log('RPC response:', data);
+        
+        if (data && typeof data === 'object' && data.success === false) {
+          return data; // Return the error from the function
         }
-
-        const { error: updErr } = await supabase
-          .from('admin_profiles')
-          .update({
-            email_verified: true,
-            verified_at: new Date().toISOString()
-          })
-          .eq('user_id', user.id);
-
-        if (updErr) console.error('Admin profile update error:', updErr);
-      }catch(err){
-        console.error('markAdminVerified error:', err);
+        
+        return data || { success: true };
+        
+      } catch (error) {
+        console.error('RPC call failed:', error);
+        return {
+          success: false,
+          error: 'Unable to verify admin account. Please contact support.'
+        };
       }
     }
 
-    async function markAdminVerifiedByEmail(email){
-      try{
-        // Find admin by email
-        const { data: profiles, error: selErr } = await supabase
-          .from('admin_profiles')
-          .select('id, role')
-          .eq('email', email)
-          .limit(1);
-
-        if (selErr) throw new Error('Unable to access admin profile.');
-
-        if (!profiles || profiles.length === 0){
-          // Create a minimal admin profile flagged as verified, if your policy allows
-          const { error: insErr } = await supabase
-            .from('admin_profiles')
-            .insert({
-              email,
-              role: 'admin',
-              email_verified: true,
-              verified_at: new Date().toISOString()
-            });
-          if (insErr) throw new Error('Unable to create admin profile.');
-          return;
-        }
-
-        const role = String(profiles[0].role || '').toLowerCase();
-        const allowedRoles = ['admin','super_admin','owner'];
-        if (role && !allowedRoles.includes(role)){
-          console.warn('Profile role not admin; update will still proceed cautiously.');
-        }
-
-        const { error: updErr } = await supabase
-          .from('admin_profiles')
-          .update({
-            email_verified: true,
-            verified_at: new Date().toISOString()
-          })
-          .eq('email', email);
-
-        if (updErr) throw new Error('Unable to update admin profile.');
-      }catch(err){
-        console.error('markAdminVerifiedByEmail error:', err);
-        throw err;
-      }
-    }
+    // ===== REMOVED: Direct database operations (markAdminVerified, markAdminVerifiedByEmail) =====
+    // These functions have been replaced with the RPC call above
 
     // ===== Token Validation =====
     function isValidCustomToken(token, email){
@@ -526,7 +475,7 @@
             const tokenEmail = parts[0];
             const tokenTs = parseInt(parts[1], 10);
             if (tokenEmail !== email) return false;
-            const maxAge = 24*60*60*1000;
+            const maxAge = 24*60*60*1000; // 24 hours
             if (Date.now() - tokenTs > maxAge) return false;
             return true;
           }
@@ -581,6 +530,7 @@
         if (!document.getElementById('errorState').classList.contains('hidden')) return;
         showErrorState('An unexpected error occurred. Please try again or contact support.');
       });
+      
       window.addEventListener('unhandledrejection', (e) => {
         console.error('Unhandled rejection:', e.reason);
         if (!document.getElementById('errorState').classList.contains('hidden')) return;
@@ -595,6 +545,6 @@
         window.location.href = '/admin-dashboard.html';
       }
     });
-  </script>
+</script>
 </body>
 </html>
