@@ -49,9 +49,9 @@
       --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
       --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
       
-      --border-radius: 12px;
-      --border-radius-lg: 16px;
-      --border-radius-xl: 20px;
+      --border-radius: 8px;
+      --border-radius-lg: 12px;
+      --border-radius-xl: 16px;
       
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,11 +90,11 @@
     .header-content {
       max-width: 1600px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 72px;
+      height: 64px;
     }
 
     .header-left {
@@ -105,8 +105,8 @@
 
     .menu-toggle {
       display: none;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border: none;
       background: var(--gray-100);
       border-radius: var(--border-radius);
@@ -123,26 +123,26 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
       text-decoration: none;
     }
 
     .brand-icon {
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, var(--danger), var(--accent));
       border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.25rem;
+      font-size: 1rem;
       box-shadow: var(--shadow-md);
     }
 
     .brand-text {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 800;
       background: linear-gradient(135deg, var(--danger), var(--accent));
       -webkit-background-clip: text;
@@ -152,7 +152,7 @@
 
     .search-container {
       flex: 1;
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 2rem;
     }
 
@@ -162,12 +162,12 @@
 
     .search-input {
       width: 100%;
-      height: 48px;
-      padding: 0 1rem 0 3rem;
+      height: 40px;
+      padding: 0 1rem 0 2.5rem;
       border: 2px solid var(--gray-200);
       border-radius: var(--border-radius-lg);
       background: var(--white);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: var(--transition);
       outline: none;
     }
@@ -179,23 +179,23 @@
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--gray-400);
-      font-size: 1.125rem;
+      font-size: 1rem;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .notification-btn {
       position: relative;
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border: none;
       background: var(--gray-100);
       border-radius: var(--border-radius);
@@ -216,12 +216,12 @@
       position: absolute;
       top: -2px;
       right: -2px;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       background: var(--danger);
       color: white;
       border-radius: 50%;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -232,8 +232,8 @@
     .user-profile {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem;
+      gap: 0.5rem;
+      padding: 0.25rem;
       border-radius: var(--border-radius-lg);
       transition: var(--transition);
       cursor: pointer;
@@ -244,8 +244,8 @@
     }
 
     .user-avatar {
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
       border-radius: var(--border-radius);
       background: linear-gradient(135deg, var(--danger), var(--accent));
       display: flex;
@@ -253,7 +253,7 @@
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.9rem;
       box-shadow: var(--shadow-sm);
     }
 
@@ -264,12 +264,12 @@
 
     .user-name {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       color: var(--gray-800);
     }
 
     .user-role {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--danger);
       font-weight: 600;
     }
@@ -277,18 +277,18 @@
     /* Layout */
     .app-layout {
       display: flex;
-      min-height: calc(100vh - 72px);
+      min-height: calc(100vh - 64px);
       max-width: 1600px;
       margin: 0 auto;
-      padding: 0 1.5rem;
-      gap: 2rem;
+      padding: 0 1rem;
+      gap: 1.5rem;
     }
 
     /* Sidebar */
     .sidebar {
-      width: 320px;
+      width: 280px;
       flex-shrink: 0;
-      padding: 2rem 0;
+      padding: 1.5rem 0;
     }
 
     .sidebar-nav {
@@ -296,12 +296,12 @@
       backdrop-filter: blur(20px);
       border-radius: var(--border-radius-xl);
       box-shadow: var(--shadow-lg);
-      padding: 1.5rem;
+      padding: 1rem;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .nav-section {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .nav-section:last-child {
@@ -309,13 +309,13 @@
     }
 
     .nav-section-title {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--gray-500);
-      margin-bottom: 1rem;
-      padding: 0 1rem;
+      margin-bottom: 0.75rem;
+      padding: 0 0.75rem;
     }
 
     .nav-list {
@@ -332,13 +332,13 @@
     .nav-link {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
+      gap: 0.75rem;
+      padding: 0.75rem;
       border-radius: var(--border-radius);
       color: var(--gray-600);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       transition: var(--transition);
       position: relative;
     }
@@ -346,7 +346,7 @@
     .nav-link:hover {
       color: var(--primary);
       background: var(--primary-light);
-      transform: translateX(4px);
+      transform: translateX(2px);
     }
 
     .nav-link.active {
@@ -356,8 +356,8 @@
     }
 
     .nav-icon {
-      font-size: 1.125rem;
-      width: 20px;
+      font-size: 1rem;
+      width: 16px;
       text-align: center;
     }
 
@@ -365,11 +365,11 @@
       margin-left: auto;
       background: var(--gray-200);
       color: var(--gray-600);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 0.25rem 0.5rem;
+      padding: 0.125rem 0.375rem;
       border-radius: 50px;
-      min-width: 1.5rem;
+      min-width: 1.25rem;
       text-align: center;
     }
 
@@ -381,7 +381,7 @@
     /* Main Content */
     .main-content {
       flex: 1;
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       min-width: 0;
     }
 
@@ -401,27 +401,27 @@
 
     /* Dashboard Overview */
     .dashboard-header {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .dashboard-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 800;
       color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .dashboard-subtitle {
-      font-size: 1.125rem;
+      font-size: 1rem;
       color: rgba(255, 255, 255, 0.8);
     }
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .stat-card {
@@ -429,7 +429,7 @@
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: var(--border-radius-xl);
-      padding: 2rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow-lg);
       transition: var(--transition);
       position: relative;
@@ -437,7 +437,7 @@
     }
 
     .stat-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-xl);
     }
 
@@ -447,7 +447,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 3px;
       background: var(--primary);
     }
 
@@ -467,23 +467,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .stat-title {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--gray-600);
     }
 
     .stat-icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       color: white;
     }
 
@@ -504,7 +504,7 @@
     }
 
     .stat-number {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--gray-800);
       margin-bottom: 0.5rem;
@@ -514,8 +514,8 @@
     .stat-change {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
+      gap: 0.25rem;
+      font-size: 0.75rem;
       font-weight: 600;
     }
 
@@ -534,12 +534,12 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: var(--border-radius-xl);
       box-shadow: var(--shadow-lg);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       overflow: hidden;
     }
 
     .card-header {
-      padding: 1.5rem 2rem;
+      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--gray-200);
       display: flex;
       align-items: center;
@@ -551,33 +551,33 @@
     .card-title {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      font-size: 1.25rem;
+      gap: 0.75rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--gray-800);
     }
 
     .card-icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       box-shadow: var(--shadow-md);
     }
 
     .card-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
 
     .card-content {
-      padding: 2rem;
+      padding: 1.5rem;
     }
 
     /* Buttons */
@@ -585,11 +585,11 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
+      padding: 0.625rem 1.25rem;
       border: none;
       border-radius: var(--border-radius);
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-decoration: none;
       cursor: pointer;
       transition: var(--transition);
@@ -631,16 +631,16 @@
     }
 
     .btn-sm {
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
     }
 
     /* Quick Actions */
     .quick-actions {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .quick-action {
@@ -648,7 +648,7 @@
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: var(--border-radius-lg);
-      padding: 1.5rem;
+      padding: 1.25rem;
       text-decoration: none;
       color: var(--gray-800);
       transition: var(--transition);
@@ -662,25 +662,25 @@
     }
 
     .quick-action-icon {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
       color: white;
     }
 
     .quick-action-title {
       font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0.375rem;
     }
 
     .quick-action-desc {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: var(--gray-600);
       line-height: 1.4;
     }
@@ -693,8 +693,8 @@
     .activity-item {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem;
+      gap: 0.75rem;
+      padding: 0.75rem;
       border-radius: var(--border-radius);
       margin-bottom: 0.5rem;
       transition: var(--transition);
@@ -705,8 +705,8 @@
     }
 
     .activity-avatar {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: var(--border-radius);
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
@@ -714,7 +714,7 @@
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
     .activity-content {
@@ -723,33 +723,40 @@
 
     .activity-text {
       font-weight: 500;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.125rem;
+      font-size: 0.85rem;
     }
 
     .activity-time {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--gray-500);
     }
 
     /* Forms */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .form-label {
       display: block;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.375rem;
       color: var(--gray-700);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
     }
 
     .form-input {
       width: 100%;
-      padding: 0.875rem 1rem;
+      padding: 0.75rem;
       border: 2px solid var(--gray-200);
       border-radius: var(--border-radius);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       transition: var(--transition);
       background: var(--white);
     }
@@ -762,16 +769,16 @@
 
     .form-select {
       width: 100%;
-      padding: 0.875rem 1rem;
+      padding: 0.75rem;
       border: 2px solid var(--gray-200);
       border-radius: var(--border-radius);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       background: var(--white);
       cursor: pointer;
     }
 
     textarea.form-input {
-      min-height: 120px;
+      min-height: 100px;
       resize: vertical;
     }
 
@@ -787,14 +794,15 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
+      min-width: 600px;
     }
 
     .table th {
       background: var(--gray-50);
-      padding: 1rem 1.25rem;
+      padding: 0.75rem 1rem;
       text-align: left;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: var(--gray-600);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -805,9 +813,10 @@
     }
 
     .table td {
-      padding: 1rem 1.25rem;
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--gray-100);
       vertical-align: middle;
+      font-size: 0.85rem;
     }
 
     .table tbody tr {
@@ -822,9 +831,9 @@
     .badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.375rem 0.75rem;
+      padding: 0.25rem 0.5rem;
       border-radius: 50px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.25px;
@@ -877,14 +886,14 @@
       border-radius: var(--border-radius-xl);
       box-shadow: var(--shadow-2xl);
       width: 100%;
-      max-width: 600px;
+      max-width: 500px;
       max-height: 90vh;
       overflow: auto;
       position: relative;
     }
 
     .modal-header {
-      padding: 2rem 2rem 1rem;
+      padding: 1.25rem 1.5rem 1rem;
       border-bottom: 1px solid var(--gray-200);
       display: flex;
       align-items: center;
@@ -892,14 +901,14 @@
     }
 
     .modal-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--gray-800);
     }
 
     .modal-close {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border: none;
       background: var(--gray-100);
       border-radius: var(--border-radius);
@@ -917,7 +926,7 @@
     }
 
     .modal-body {
-      padding: 2rem;
+      padding: 1.5rem;
     }
 
     /* Loading states */
@@ -925,16 +934,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      padding: 2rem;
+      gap: 0.75rem;
+      padding: 1.5rem;
       color: var(--gray-500);
     }
 
     .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid var(--gray-200);
-      border-top: 3px solid var(--primary);
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--gray-200);
+      border-top: 2px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -945,25 +954,41 @@
 
     .empty-state {
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 2rem 1rem;
       color: var(--gray-500);
     }
 
     .empty-state i {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
       color: var(--gray-300);
+    }
+
+    /* Charts */
+    .chart-container {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      height: 250px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     /* Responsive Design */
     @media (max-width: 1024px) {
       .app-layout {
-        padding: 0 1rem;
-        gap: 1.5rem;
+        gap: 1rem;
       }
 
       .sidebar {
-        width: 280px;
+        width: 260px;
       }
 
       .search-container {
@@ -973,7 +998,12 @@
 
     @media (max-width: 768px) {
       .header-content {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+        height: 56px;
+      }
+
+      .brand-text {
+        display: none;
       }
 
       .search-container {
@@ -986,15 +1016,15 @@
 
       .app-layout {
         flex-direction: column;
-        padding: 0 1rem;
+        padding: 0 0.75rem;
       }
 
       .sidebar {
         position: fixed;
-        top: 72px;
-        left: -320px;
-        height: calc(100vh - 72px);
-        width: 300px;
+        top: 56px;
+        left: -280px;
+        height: calc(100vh - 56px);
+        width: 260px;
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(20px);
         z-index: 1200;
@@ -1025,12 +1055,12 @@
       }
 
       .dashboard-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
       }
 
       .stats-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.75rem;
       }
 
       .quick-actions {
@@ -1038,47 +1068,62 @@
       }
 
       .card-header {
-        padding: 1rem 1.5rem;
+        padding: 1rem;
         flex-direction: column;
         align-items: stretch;
-        gap: 1rem;
+        gap: 0.75rem;
       }
 
       .card-content {
-        padding: 1.5rem;
+        padding: 1rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-container {
+        height: 200px;
+      }
+
+      .modal-content {
+        max-width: 95vw;
       }
     }
 
     @media (max-width: 480px) {
-      .card-header {
+      .header-content {
+        padding: 0 0.5rem;
+      }
+
+      .app-layout {
+        padding: 0 0.5rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+
+      .card-header,
+      .card-content,
+      .modal-body {
+        padding: 0.75rem;
+      }
+
+      .stats-grid {
+        gap: 0.5rem;
+      }
+
+      .stat-card {
         padding: 1rem;
       }
 
-      .card-content {
-        padding: 1rem;
-      }
-    }
-
-    /* Chart containers */
-    .chart-container {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      height: 300px;
-    }
-
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .charts-grid {
-        grid-template-columns: 1fr;
+      .stat-number {
+        font-size: 1.75rem;
       }
     }
   </style>
@@ -1121,7 +1166,7 @@
             <div class="user-name" id="userName">Administrator</div>
             <div class="user-role">Admin</div>
           </div>
-          <i class="fas fa-chevron-down" style="color: var(--gray-400); font-size: 0.8rem;"></i>
+          <i class="fas fa-chevron-down" style="color: var(--gray-400); font-size: 0.7rem;"></i>
         </div>
       </div>
     </div>
@@ -1271,7 +1316,7 @@
             <div class="stat-number" id="totalStudents">0</div>
             <div class="stat-change positive">
               <i class="fas fa-arrow-up"></i>
-              <span>+12% from last month</span>
+              <span>Active students</span>
             </div>
           </div>
 
@@ -1285,7 +1330,7 @@
             <div class="stat-number" id="activeLessons">0</div>
             <div class="stat-change positive">
               <i class="fas fa-arrow-up"></i>
-              <span>+8% from last week</span>
+              <span>Scheduled lessons</span>
             </div>
           </div>
 
@@ -1299,21 +1344,21 @@
             <div class="stat-number" id="monthlyRevenue">£0</div>
             <div class="stat-change positive">
               <i class="fas fa-arrow-up"></i>
-              <span>+23% from last month</span>
+              <span>This month</span>
             </div>
           </div>
 
           <div class="stat-card warning">
             <div class="stat-header">
-              <div class="stat-title">Average Rating</div>
+              <div class="stat-title">Total Tutors</div>
               <div class="stat-icon warning">
-                <i class="fas fa-star"></i>
+                <i class="fas fa-chalkboard-teacher"></i>
               </div>
             </div>
-            <div class="stat-number" id="averageRating">4.8</div>
+            <div class="stat-number" id="totalTutors">0</div>
             <div class="stat-change positive">
               <i class="fas fa-arrow-up"></i>
-              <span>+0.2 from last month</span>
+              <span>Active tutors</span>
             </div>
           </div>
         </div>
@@ -1387,7 +1432,7 @@
         </div>
       </section>
 
-      <!-- Other sections will be added here as we build them -->
+      <!-- Parents Section -->
       <section id="parents" class="section">
         <div class="card">
           <div class="card-header">
@@ -1405,16 +1450,435 @@
             </div>
           </div>
           <div class="card-content">
-            <div class="loading">
-              <div class="spinner"></div>
-              Loading parents...
+            <div id="parentsTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading parents...
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Additional sections will be added in subsequent responses -->
+      <!-- Tutors Section -->
+      <section id="tutors" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--accent), var(--warning));">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              Tutor Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addTutorBtn">
+                <i class="fas fa-plus"></i>
+                Add Tutor
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="tutorsTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading tutors...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Children Section -->
+      <section id="children" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--success), var(--secondary));">
+                <i class="fas fa-child"></i>
+              </div>
+              Student Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addChildBtn">
+                <i class="fas fa-plus"></i>
+                Add Student
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="childrenTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading students...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Subjects Section -->
+      <section id="subjects" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                <i class="fas fa-book"></i>
+              </div>
+              Subject Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addSubjectBtn">
+                <i class="fas fa-plus"></i>
+                Add Subject
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="subjectsTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading subjects...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lessons Section -->
+      <section id="lessons" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              Lesson Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addLessonBtn">
+                <i class="fas fa-plus"></i>
+                Schedule Lesson
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="lessonsTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading lessons...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Assessments Section -->
+      <section id="assessments" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--success), var(--secondary));">
+                <i class="fas fa-clipboard-check"></i>
+              </div>
+              Assessment Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addAssessmentBtn">
+                <i class="fas fa-plus"></i>
+                Add Assessment
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="assessmentsTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading assessments...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Billing Section -->
+      <section id="billing" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--warning), var(--accent));">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              Billing Management
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" id="addBillingBtn">
+                <i class="fas fa-plus"></i>
+                Create Invoice
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="billingTableContainer">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading billing records...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--gray-600), var(--gray-700));">
+                <i class="fas fa-cog"></i>
+              </div>
+              System Settings
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Academy Name</label>
+                <input type="text" class="form-input" value="Baobab Online Academy" id="academyName">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Contact Email</label>
+                <input type="email" class="form-input" value="admin@baobabacademy.com" id="contactEmail">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Default Lesson Duration (minutes)</label>
+                <input type="number" class="form-input" value="60" id="defaultDuration">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Time Zone</label>
+                <select class="form-select" id="timeZone">
+                  <option value="Europe/London">Europe/London (GMT)</option>
+                  <option value="America/New_York">America/New_York (EST)</option>
+                  <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+              <button class="btn btn-primary" id="saveSettingsBtn">
+                <i class="fas fa-save"></i>
+                Save Settings
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+  </div>
+
+  <!-- Modals -->
+  <!-- Add Parent Modal -->
+  <div class="modal" id="addParentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Parent</h3>
+        <button class="modal-close" id="closeParentModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addParentForm">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" name="full_name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" class="form-input" name="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" name="phone">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea class="form-input" name="address"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emergency Contact</label>
+            <input type="text" class="form-input" name="emergency_contact">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notes</label>
+            <textarea class="form-input" name="notes"></textarea>
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Save Parent
+            </button>
+            <button type="button" class="btn btn-secondary" id="cancelParentBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Child Modal -->
+  <div class="modal" id="addChildModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Student</h3>
+        <button class="modal-close" id="closeChildModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addChildForm">
+          <div class="form-group">
+            <label class="form-label">Parent *</label>
+            <select class="form-select" name="parent_id" required id="childParentSelect">
+              <option value="">Select a parent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Student Name *</label>
+            <input type="text" class="form-input" name="name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" class="form-input" name="date_of_birth">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grade Level</label>
+            <input type="text" class="form-input" name="grade_level">
+          </div>
+          <div class="form-group">
+            <label class="form-label">School</label>
+            <input type="text" class="form-input" name="school">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medical Info</label>
+            <textarea class="form-input" name="medical_info"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Learning Preferences</label>
+            <textarea class="form-input" name="learning_preferences"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Emergency Contact</label>
+            <input type="text" class="form-input" name="emergency_contact">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notes</label>
+            <textarea class="form-input" name="notes"></textarea>
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Save Student
+            </button>
+            <button type="button" class="btn btn-secondary" id="cancelChildBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Tutor Modal -->
+  <div class="modal" id="addTutorModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Tutor</h3>
+        <button class="modal-close" id="closeTutorModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addTutorForm">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" name="full_name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" class="form-input" name="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" name="phone">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea class="form-input" name="address"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bio</label>
+            <textarea class="form-input" name="bio"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qualifications</label>
+            <textarea class="form-input" name="qualifications"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hourly Rate (£)</label>
+            <input type="number" class="form-input" name="hourly_rate" step="0.01">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hire Date</label>
+            <input type="date" class="form-input" name="hire_date">
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Save Tutor
+            </button>
+            <button type="button" class="btn btn-secondary" id="cancelTutorBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Subject Modal -->
+  <div class="modal" id="addSubjectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Subject</h3>
+        <button class="modal-close" id="closeSubjectModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addSubjectForm">
+          <div class="form-group">
+            <label class="form-label">Subject Name *</label>
+            <input type="text" class="form-input" name="name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-input" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Color Code</label>
+            <input type="color" class="form-input" name="color_code" value="#0066FF">
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              Save Subject
+            </button>
+            <button type="button" class="btn btn-secondary" id="cancelSubjectBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1426,10 +1890,14 @@
     // State
     let currentUser = null;
     let adminProfile = null;
-    let dashboardData = {
-      stats: {},
-      charts: {},
-      activity: []
+    let appData = {
+      parents: [],
+      children: [],
+      tutors: [],
+      subjects: [],
+      lessons: [],
+      assessments: [],
+      billing: []
     };
 
     // UI elements
@@ -1451,12 +1919,10 @@
 
     // Navigation functionality
     function setActive(sectionId) {
-      // Update sections
       document.querySelectorAll('.section').forEach(s => 
         s.classList.toggle('active', s.id === sectionId)
       );
       
-      // Update nav links
       document.querySelectorAll('.nav-link').forEach(a => 
         a.classList.toggle('active', a.dataset.section === sectionId)
       );
@@ -1472,7 +1938,6 @@
 
     window.addEventListener('hashchange', routeFromHash);
 
-    // Add click handlers for navigation
     document.querySelectorAll('[data-section]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1493,11 +1958,8 @@
       return new Date(date).toLocaleDateString('en-GB');
     }
 
-    function formatTime(date) {
-      return new Date(date).toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+    function formatDateTime(date) {
+      return new Date(date).toLocaleString('en-GB');
     }
 
     function getInitials(name) {
@@ -1505,18 +1967,24 @@
       return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
     }
 
+    function showError(message) {
+      alert('Error: ' + message);
+    }
+
+    function showSuccess(message) {
+      alert('Success: ' + message);
+    }
+
     // Auth functions
     async function ensureAuth() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        // Redirect to admin login page
         location.href = '/admin-login.html';
         return null;
       }
       
       currentUser = session.user;
       
-      // Check if user is admin
       const { data: adminProfile } = await supabase
         .from('admin_profiles')
         .select('*')
@@ -1547,64 +2015,64 @@
       }
     }
 
-    // Dashboard data loading
+    // Data loading functions
+    async function loadAllData() {
+      try {
+        const [parentsRes, childrenRes, tutorsRes, subjectsRes, lessonsRes, assessmentsRes, billingRes] = await Promise.all([
+          supabase.from('parent_profiles').select('*').order('created_at', { ascending: false }),
+          supabase.from('children').select('*, parent_profiles(full_name)').order('created_at', { ascending: false }),
+          supabase.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
+          supabase.from('subjects').select('*').order('name'),
+          supabase.from('lessons').select('*, children(name), tutor_profiles(full_name), subjects(name)').order('scheduled_at', { ascending: false }),
+          supabase.from('assessments').select('*, children(name), subjects(name), tutor_profiles(full_name)').order('conducted_at', { ascending: false }),
+          supabase.from('billing_records').select('*, parent_profiles(full_name), children(name)').order('created_at', { ascending: false })
+        ]);
+
+        appData.parents = parentsRes.data || [];
+        appData.children = childrenRes.data || [];
+        appData.tutors = tutorsRes.data || [];
+        appData.subjects = subjectsRes.data || [];
+        appData.lessons = lessonsRes.data || [];
+        appData.assessments = assessmentsRes.data || [];
+        appData.billing = billingRes.data || [];
+
+        updateCounts();
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    }
+
+    function updateCounts() {
+      document.getElementById('parentsCount').textContent = appData.parents.length;
+      document.getElementById('childrenCount').textContent = appData.children.length;
+      document.getElementById('tutorsCount').textContent = appData.tutors.length;
+      document.getElementById('subjectsCount').textContent = appData.subjects.length;
+      document.getElementById('lessonsCount').textContent = appData.lessons.length;
+      document.getElementById('assessmentsCount').textContent = appData.assessments.length;
+      document.getElementById('billingCount').textContent = appData.billing.filter(b => b.status === 'pending').length;
+    }
+
     async function loadDashboardStats() {
       try {
-        // Load total students (children)
-        const { data: children, count: childrenCount } = await supabase
-          .from('children')
-          .select('*', { count: 'exact' });
-        document.getElementById('totalStudents').textContent = childrenCount || 0;
-        document.getElementById('childrenCount').textContent = childrenCount || 0;
-
-        // Load active lessons (scheduled for today and future)
-        const today = new Date().toISOString().split('T')[0];
-        const { data: lessons, count: lessonsCount } = await supabase
-          .from('lessons')
-          .select('*', { count: 'exact' })
-          .gte('scheduled_at', today)
-          .eq('status', 'scheduled');
-        document.getElementById('activeLessons').textContent = lessonsCount || 0;
-        document.getElementById('lessonsCount').textContent = lessonsCount || 0;
-
-        // Load monthly revenue
-        const currentMonth = new Date().toISOString().slice(0, 7);
-        const { data: billing } = await supabase
-          .from('billing_records')
-          .select('amount')
-          .eq('status', 'paid')
-          .gte('paid_at', currentMonth + '-01');
+        // Total students
+        document.getElementById('totalStudents').textContent = appData.children.length;
         
-        const revenue = billing?.reduce((sum, record) => sum + Number(record.amount), 0) || 0;
-        document.getElementById('monthlyRevenue').textContent = formatCurrency(revenue);
+        // Active lessons (future lessons)
+        const now = new Date().toISOString();
+        const activeLessons = appData.lessons.filter(l => 
+          l.scheduled_at > now && l.status === 'scheduled'
+        ).length;
+        document.getElementById('activeLessons').textContent = activeLessons;
 
-        // Load other counts
-        const { count: parentsCount } = await supabase
-          .from('parent_profiles')
-          .select('*', { count: 'exact' });
-        document.getElementById('parentsCount').textContent = parentsCount || 0;
+        // Monthly revenue
+        const currentMonth = new Date().toISOString().slice(0, 7);
+        const monthlyRevenue = appData.billing
+          .filter(b => b.status === 'paid' && b.paid_at?.startsWith(currentMonth))
+          .reduce((sum, b) => sum + Number(b.amount), 0);
+        document.getElementById('monthlyRevenue').textContent = formatCurrency(monthlyRevenue);
 
-        const { count: tutorsCount } = await supabase
-          .from('tutor_profiles')
-          .select('*', { count: 'exact' });
-        document.getElementById('tutorsCount').textContent = tutorsCount || 0;
-
-        const { count: subjectsCount } = await supabase
-          .from('subjects')
-          .select('*', { count: 'exact' })
-          .eq('is_active', true);
-        document.getElementById('subjectsCount').textContent = subjectsCount || 0;
-
-        const { count: assessmentsCount } = await supabase
-          .from('assessments')
-          .select('*', { count: 'exact' });
-        document.getElementById('assessmentsCount').textContent = assessmentsCount || 0;
-
-        const { count: billingCount } = await supabase
-          .from('billing_records')
-          .select('*', { count: 'exact' })
-          .eq('status', 'pending');
-        document.getElementById('billingCount').textContent = billingCount || 0;
+        // Total tutors
+        document.getElementById('totalTutors').textContent = appData.tutors.length;
 
       } catch (error) {
         console.error('Error loading dashboard stats:', error);
@@ -1615,51 +2083,51 @@
       try {
         const activityList = document.getElementById('activityList');
         
-        // Create mock activity data (in real app, you'd have an activity log table)
-        const activities = [
-          {
-            user: 'John Smith',
-            action: 'enrolled their child in Mathematics',
-            time: '2 hours ago',
-            avatar: 'JS'
-          },
-          {
-            user: 'Sarah Wilson',
-            action: 'completed a lesson with Emma Thompson',
-            time: '3 hours ago',
-            avatar: 'SW'
-          },
-          {
-            user: 'Admin',
-            action: 'added new tutor Michael Davis',
-            time: '5 hours ago',
-            avatar: 'AD'
-          },
-          {
-            user: 'Lisa Brown',
-            action: 'submitted payment for January',
-            time: '1 day ago',
-            avatar: 'LB'
-          },
-          {
-            user: 'System',
-            action: 'generated monthly reports',
-            time: '2 days ago',
-            avatar: 'SY'
-          }
-        ];
+        // Get recent activities from various tables
+        const activities = [];
+        
+        // Recent lessons
+        appData.lessons.slice(0, 3).forEach(lesson => {
+          activities.push({
+            user: lesson.tutor_profiles?.full_name || 'Unknown Tutor',
+            action: `had a lesson with ${lesson.children?.name || 'a student'}`,
+            time: formatDateTime(lesson.scheduled_at),
+            avatar: getInitials(lesson.tutor_profiles?.full_name)
+          });
+        });
 
-        activityList.innerHTML = activities.map(activity => `
-          <li class="activity-item">
-            <div class="activity-avatar">${activity.avatar}</div>
-            <div class="activity-content">
-              <div class="activity-text">
-                <strong>${activity.user}</strong> ${activity.action}
-              </div>
-              <div class="activity-time">${activity.time}</div>
+        // Recent enrollments
+        appData.children.slice(0, 2).forEach(child => {
+          activities.push({
+            user: child.parent_profiles?.full_name || 'Unknown Parent',
+            action: `enrolled ${child.name} as a new student`,
+            time: formatDateTime(child.created_at),
+            avatar: getInitials(child.parent_profiles?.full_name)
+          });
+        });
+
+        activities.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+        if (activities.length === 0) {
+          activityList.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-clock"></i>
+              <p>No recent activity</p>
             </div>
-          </li>
-        `).join('');
+          `;
+        } else {
+          activityList.innerHTML = activities.slice(0, 5).map(activity => `
+            <li class="activity-item">
+              <div class="activity-avatar">${activity.avatar}</div>
+              <div class="activity-content">
+                <div class="activity-text">
+                  <strong>${activity.user}</strong> ${activity.action}
+                </div>
+                <div class="activity-time">${activity.time}</div>
+              </div>
+            </li>
+          `).join('');
+        }
 
       } catch (error) {
         console.error('Error loading recent activity:', error);
@@ -1669,13 +2137,31 @@
     async function loadDashboardCharts() {
       // Enrollment chart
       const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+      
+      // Calculate enrollments by month
+      const enrollmentsByMonth = {};
+      appData.children.forEach(child => {
+        const month = child.enrollment_date?.slice(0, 7) || new Date().toISOString().slice(0, 7);
+        enrollmentsByMonth[month] = (enrollmentsByMonth[month] || 0) + 1;
+      });
+
+      const last6Months = [];
+      for (let i = 5; i >= 0; i--) {
+        const date = new Date();
+        date.setMonth(date.getMonth() - i);
+        last6Months.push(date.toISOString().slice(0, 7));
+      }
+
+      const enrollmentData = last6Months.map(month => enrollmentsByMonth[month] || 0);
+      const enrollmentLabels = last6Months.map(month => new Date(month).toLocaleDateString('en-GB', { month: 'short' }));
+
       new Chart(enrollmentCtx, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          labels: enrollmentLabels,
           datasets: [{
             label: 'New Enrollments',
-            data: [12, 19, 8, 15, 22, 18],
+            data: enrollmentData,
             borderColor: '#0066FF',
             backgroundColor: 'rgba(0, 102, 255, 0.1)',
             tension: 0.4,
@@ -1689,7 +2175,7 @@
             title: {
               display: true,
               text: 'Monthly Enrollments',
-              font: { size: 16, weight: '600' }
+              font: { size: 14, weight: '600' }
             },
             legend: { display: false }
           },
@@ -1701,13 +2187,23 @@
 
       // Revenue chart
       const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      
+      // Calculate revenue by month
+      const revenueByMonth = {};
+      appData.billing.filter(b => b.status === 'paid').forEach(bill => {
+        const month = bill.paid_at?.slice(0, 7) || new Date().toISOString().slice(0, 7);
+        revenueByMonth[month] = (revenueByMonth[month] || 0) + Number(bill.amount);
+      });
+
+      const revenueData = last6Months.map(month => revenueByMonth[month] || 0);
+
       new Chart(revenueCtx, {
         type: 'bar',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          labels: enrollmentLabels,
           datasets: [{
             label: 'Revenue',
-            data: [3200, 4100, 2800, 3900, 4800, 4200],
+            data: revenueData,
             backgroundColor: 'rgba(29, 181, 132, 0.8)',
             borderColor: '#1DB584',
             borderWidth: 2,
@@ -1721,7 +2217,7 @@
             title: {
               display: true,
               text: 'Monthly Revenue (£)',
-              font: { size: 16, weight: '600' }
+              font: { size: 14, weight: '600' }
             },
             legend: { display: false }
           },
@@ -1739,28 +2235,645 @@
       });
     }
 
+    // Table rendering functions
+    function renderParentsTable() {
+      const container = document.getElementById('parentsTableContainer');
+      
+      if (appData.parents.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-users"></i>
+            <p>No parents found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Children</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.parents.map(parent => {
+                const childrenCount = appData.children.filter(c => c.parent_id === parent.id).length;
+                return `
+                  <tr>
+                    <td><strong>${parent.full_name || 'N/A'}</strong></td>
+                    <td>${parent.email || 'N/A'}</td>
+                    <td>${parent.phone || 'N/A'}</td>
+                    <td><span class="badge badge-primary">${childrenCount}</span></td>
+                    <td>${formatDate(parent.created_at)}</td>
+                    <td>
+                      <button class="btn btn-sm btn-secondary" onclick="editParent('${parent.id}')">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-danger" onclick="deleteParent('${parent.id}')">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderChildrenTable() {
+      const container = document.getElementById('childrenTableContainer');
+      
+      if (appData.children.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-child"></i>
+            <p>No students found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Parent</th>
+                <th>Grade Level</th>
+                <th>School</th>
+                <th>Status</th>
+                <th>Enrolled</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.children.map(child => `
+                <tr>
+                  <td><strong>${child.name}</strong></td>
+                  <td>${child.parent_profiles?.full_name || 'N/A'}</td>
+                  <td>${child.grade_level || 'N/A'}</td>
+                  <td>${child.school || 'N/A'}</td>
+                  <td><span class="badge badge-success">${child.status || 'active'}</span></td>
+                  <td>${formatDate(child.enrollment_date)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editChild('${child.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteChild('${child.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderTutorsTable() {
+      const container = document.getElementById('tutorsTableContainer');
+      
+      if (appData.tutors.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <p>No tutors found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Hourly Rate</th>
+                <th>Status</th>
+                <th>Hire Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.tutors.map(tutor => `
+                <tr>
+                  <td><strong>${tutor.full_name}</strong></td>
+                  <td>${tutor.email || 'N/A'}</td>
+                  <td>${tutor.phone || 'N/A'}</td>
+                  <td>${tutor.hourly_rate ? formatCurrency(tutor.hourly_rate) : 'N/A'}</td>
+                  <td><span class="badge badge-success">${tutor.status || 'active'}</span></td>
+                  <td>${tutor.hire_date ? formatDate(tutor.hire_date) : 'N/A'}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editTutor('${tutor.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteTutor('${tutor.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderSubjectsTable() {
+      const container = document.getElementById('subjectsTableContainer');
+      
+      if (appData.subjects.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-book"></i>
+            <p>No subjects found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Color</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.subjects.map(subject => `
+                <tr>
+                  <td><strong>${subject.name}</strong></td>
+                  <td>${subject.description || 'N/A'}</td>
+                  <td>
+                    <div style="width: 20px; height: 20px; background: ${subject.color_code}; border-radius: 4px; display: inline-block;"></div>
+                    ${subject.color_code}
+                  </td>
+                  <td><span class="badge ${subject.is_active ? 'badge-success' : 'badge-secondary'}">${subject.is_active ? 'Active' : 'Inactive'}</span></td>
+                  <td>${formatDate(subject.created_at)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editSubject('${subject.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteSubject('${subject.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderLessonsTable() {
+      const container = document.getElementById('lessonsTableContainer');
+      
+      if (appData.lessons.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-calendar-alt"></i>
+            <p>No lessons found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Student</th>
+                <th>Tutor</th>
+                <th>Subject</th>
+                <th>Scheduled</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.lessons.map(lesson => `
+                <tr>
+                  <td><strong>${lesson.title || 'Lesson'}</strong></td>
+                  <td>${lesson.children?.name || 'N/A'}</td>
+                  <td>${lesson.tutor_profiles?.full_name || 'N/A'}</td>
+                  <td>${lesson.subjects?.name || 'N/A'}</td>
+                  <td>${formatDateTime(lesson.scheduled_at)}</td>
+                  <td>${lesson.duration_minutes || 60} min</td>
+                  <td><span class="badge badge-primary">${lesson.status || 'scheduled'}</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editLesson('${lesson.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteLesson('${lesson.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderAssessmentsTable() {
+      const container = document.getElementById('assessmentsTableContainer');
+      
+      if (appData.assessments.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-clipboard-check"></i>
+            <p>No assessments found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Tutor</th>
+                <th>Grade</th>
+                <th>Type</th>
+                <th>Conducted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.assessments.map(assessment => `
+                <tr>
+                  <td><strong>${assessment.title}</strong></td>
+                  <td>${assessment.children?.name || 'N/A'}</td>
+                  <td>${assessment.subjects?.name || 'N/A'}</td>
+                  <td>${assessment.tutor_profiles?.full_name || 'N/A'}</td>
+                  <td>
+                    ${assessment.grade !== null ? 
+                      `<span class="badge badge-success">${assessment.grade}/${assessment.max_grade || 100}</span>` : 
+                      '<span class="badge badge-secondary">Not graded</span>'
+                    }
+                  </td>
+                  <td>${assessment.type || 'quiz'}</td>
+                  <td>${formatDateTime(assessment.conducted_at)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editAssessment('${assessment.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteAssessment('${assessment.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderBillingTable() {
+      const container = document.getElementById('billingTableContainer');
+      
+      if (appData.billing.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-credit-card"></i>
+            <p>No billing records found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Parent</th>
+                <th>Student</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${appData.billing.map(bill => `
+                <tr>
+                  <td><strong>${bill.description}</strong></td>
+                  <td>${bill.parent_profiles?.full_name || 'N/A'}</td>
+                  <td>${bill.children?.name || 'N/A'}</td>
+                  <td>${formatCurrency(bill.amount)}</td>
+                  <td>
+                    <span class="badge ${
+                      bill.status === 'paid' ? 'badge-success' :
+                      bill.status === 'pending' ? 'badge-warning' :
+                      'badge-danger'
+                    }">${bill.status}</span>
+                  </td>
+                  <td>${bill.due_date ? formatDate(bill.due_date) : 'N/A'}</td>
+                  <td>${formatDate(bill.created_at)}</td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editBilling('${bill.id}')">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteBilling('${bill.id}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
     // Section loading
     async function loadSection(sectionId) {
       switch (sectionId) {
         case 'dashboard':
           await loadDashboardStats();
           await loadRecentActivity();
-          setTimeout(loadDashboardCharts, 100); // Small delay to ensure canvas is ready
+          setTimeout(loadDashboardCharts, 100);
           break;
         case 'parents':
-          // Load parents section
+          renderParentsTable();
           break;
         case 'tutors':
-          // Load tutors section
+          renderTutorsTable();
           break;
         case 'children':
-          // Load children section
+          renderChildrenTable();
           break;
-        // Add other sections as needed
+        case 'subjects':
+          renderSubjectsTable();
+          break;
+        case 'lessons':
+          renderLessonsTable();
+          break;
+        case 'assessments':
+          renderAssessmentsTable();
+          break;
+        case 'billing':
+          renderBillingTable();
+          break;
       }
     }
 
-    // Event listeners
+    // Modal functions
+    function showModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function hideModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Form handling
+    async function loadParentsForSelect() {
+      const select = document.getElementById('childParentSelect');
+      select.innerHTML = '<option value="">Select a parent</option>';
+      appData.parents.forEach(parent => {
+        select.innerHTML += `<option value="${parent.id}">${parent.full_name}</option>`;
+      });
+    }
+
+    // Event listeners for modals
+    document.getElementById('addParentBtn').addEventListener('click', () => {
+      showModal('addParentModal');
+    });
+
+    document.getElementById('addChildBtn').addEventListener('click', () => {
+      loadParentsForSelect();
+      showModal('addChildModal');
+    });
+
+    document.getElementById('addTutorBtn').addEventListener('click', () => {
+      showModal('addTutorModal');
+    });
+
+    document.getElementById('addSubjectBtn').addEventListener('click', () => {
+      showModal('addSubjectModal');
+    });
+
+    // Close modal buttons
+    document.querySelectorAll('.modal-close, [id^="cancel"], [id^="close"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const modal = e.target.closest('.modal');
+        if (modal) modal.classList.remove('active');
+      });
+    });
+
+    // Form submissions
+    document.getElementById('addParentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const { error } = await supabase
+          .from('parent_profiles')
+          .insert([data]);
+        
+        if (error) throw error;
+        
+        showSuccess('Parent added successfully!');
+        hideModal('addParentModal');
+        e.target.reset();
+        await loadAllData();
+        renderParentsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    });
+
+    document.getElementById('addChildForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const { error } = await supabase
+          .from('children')
+          .insert([data]);
+        
+        if (error) throw error;
+        
+        showSuccess('Student added successfully!');
+        hideModal('addChildModal');
+        e.target.reset();
+        await loadAllData();
+        renderChildrenTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    });
+
+    document.getElementById('addTutorForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const { error } = await supabase
+          .from('tutor_profiles')
+          .insert([data]);
+        
+        if (error) throw error;
+        
+        showSuccess('Tutor added successfully!');
+        hideModal('addTutorModal');
+        e.target.reset();
+        await loadAllData();
+        renderTutorsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    });
+
+    document.getElementById('addSubjectForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const { error } = await supabase
+          .from('subjects')
+          .insert([data]);
+        
+        if (error) throw error;
+        
+        showSuccess('Subject added successfully!');
+        hideModal('addSubjectModal');
+        e.target.reset();
+        await loadAllData();
+        renderSubjectsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    });
+
+    // Delete functions (simplified - in production you'd want confirmation dialogs)
+    window.deleteParent = async (id) => {
+      if (!confirm('Are you sure you want to delete this parent?')) return;
+      
+      try {
+        const { error } = await supabase
+          .from('parent_profiles')
+          .delete()
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        showSuccess('Parent deleted successfully!');
+        await loadAllData();
+        renderParentsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    };
+
+    window.deleteChild = async (id) => {
+      if (!confirm('Are you sure you want to delete this student?')) return;
+      
+      try {
+        const { error } = await supabase
+          .from('children')
+          .delete()
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        showSuccess('Student deleted successfully!');
+        await loadAllData();
+        renderChildrenTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    };
+
+    window.deleteTutor = async (id) => {
+      if (!confirm('Are you sure you want to delete this tutor?')) return;
+      
+      try {
+        const { error } = await supabase
+          .from('tutor_profiles')
+          .delete()
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        showSuccess('Tutor deleted successfully!');
+        await loadAllData();
+        renderTutorsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    };
+
+    window.deleteSubject = async (id) => {
+      if (!confirm('Are you sure you want to delete this subject?')) return;
+      
+      try {
+        const { error } = await supabase
+          .from('subjects')
+          .delete()
+          .eq('id', id);
+        
+        if (error) throw error;
+        
+        showSuccess('Subject deleted successfully!');
+        await loadAllData();
+        renderSubjectsTable();
+      } catch (error) {
+        showError(error.message);
+      }
+    };
+
+    // Placeholder edit functions (you can implement these as needed)
+    window.editParent = (id) => alert('Edit parent functionality coming soon!');
+    window.editChild = (id) => alert('Edit student functionality coming soon!');
+    window.editTutor = (id) => alert('Edit tutor functionality coming soon!');
+    window.editSubject = (id) => alert('Edit subject functionality coming soon!');
+    window.editLesson = (id) => alert('Edit lesson functionality coming soon!');
+    window.editAssessment = (id) => alert('Edit assessment functionality coming soon!');
+    window.editBilling = (id) => alert('Edit billing functionality coming soon!');
+    window.deleteLesson = (id) => alert('Delete lesson functionality coming soon!');
+    window.deleteAssessment = (id) => alert('Delete assessment functionality coming soon!');
+    window.deleteBilling = (id) => alert('Delete billing functionality coming soon!');
+
+    // Other event listeners
     document.getElementById('logoutLink')?.addEventListener('click', async (e) => {
       e.preventDefault();
       await supabase.auth.signOut();
@@ -1771,6 +2884,13 @@
 
     document.getElementById('notificationBtn')?.addEventListener('click', () => {
       alert('Notifications coming soon!');
+    });
+
+    // Search functionality
+    document.getElementById('globalSearch')?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      // Implement search functionality here
+      console.log('Searching for:', query);
     });
 
     // Auth listener
@@ -1786,8 +2906,8 @@
       if (!user) return;
 
       await loadAdminProfile();
+      await loadAllData();
       
-      // Initial route
       routeFromHash();
     })();
   </script>
