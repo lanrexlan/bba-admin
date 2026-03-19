@@ -568,6 +568,7 @@
     }
 
     // --- Core Data Loading ---
+    // --- Core Data Loading ---
     async function loadAllData() {
       try {
         const { data: { session } } = await supabaseClient.auth.getSession();
@@ -584,15 +585,18 @@
           document.getElementById('profPhone').value = ap.phone || '';
         }
 
-        // Parallel Fetch unified tables
+        // Parallel Fetch raw tables WITHOUT Supabase Joins to prevent silent API errors
         const [pRes, cRes, tRes, sRes, lRes, aRes] = await Promise.all([
           supabaseClient.from('parent_profiles').select('*').order('created_at', { ascending: false }),
-          supabaseClient.from('children').select('*, parent_profiles(full_name)').order('created_at', { ascending: false }),
+          supabaseClient.from('children').select('*').order('created_at', { ascending: false }),
           supabaseClient.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
           supabaseClient.from('subjects').select('*').order('name'),
-          supabaseClient.from('lessons').select('*, children(name), tutor_profiles(full_name), subjects(name)').order('scheduled_at', { ascending: false }),
-          supabaseClient.from('assessments').select('*, children(name), tutor_profiles(full_name), subjects(name)').order('conducted_at', { ascending: false })
+          supabaseClient.from('lessons').select('*').order('scheduled_at', { ascending: false }),
+          supabaseClient.from('assessments').select('*').order('conducted_at', { ascending: false })
         ]);
+
+        // Log any silent errors to the console just in case
+        if (cRes.error) console.error("Children Fetch Error:", cRes.error);
 
         appData.parents = pRes.data || [];
         appData.children = cRes.data || [];
@@ -601,17 +605,42 @@
         appData.lessons = lRes.data || [];
         appData.assessments = aRes.data || [];
 
+        // --- IN-MEMORY JOINS (Bulletproof Matchmaking) ---
+        
+        // 1. Link Parents to Children
+        appData.children.forEach(c => {
+          c.parent_profiles = appData.parents.find(p => p.id === c.parent_id) || null;
+        });
+
+        // 2. Link Data to Lessons
+        appData.lessons.forEach(l => {
+          l.children = appData.children.find(c => c.id === l.child_id) || null;
+          l.tutor_profiles = appData.tutors.find(t => t.id === l.tutor_id) || null;
+          l.subjects = appData.subjects.find(s => s.id === l.subject_id) || null;
+        });
+
+        // 3. Link Data to Assessments
+        appData.assessments.forEach(a => {
+          a.children = appData.children.find(c => c.id === a.child_id) || null;
+          a.tutor_profiles = appData.tutors.find(t => t.id === a.tutor_id) || null;
+          a.subjects = appData.subjects.find(s => s.id === a.subject_id) || null;
+        });
+
         renderDashboards();
       } catch (err) { console.error(err); }
     }
 
     function renderDashboards() {
-      // 1. Fixed "0 Students" bug: Now safely counting all items, optionally filtering by active
+      // Safely count active students based on your exact schema
       let activeStudents = 0;
       appData.children.forEach(c => {
-        if(c.status && c.status.toLowerCase() === 'active') activeStudents++;
+        // If status is null, your schema defaults to active
+        const stat = c.status ? c.status.toLowerCase() : 'active';
+        if(stat === 'active') activeStudents++;
       });
-      document.getElementById('statStudents').innerText = appData.children.length; // Show total
+      
+      // Update Top Stats
+      document.getElementById('statStudents').innerText = activeStudents;
       
       const now = new Date().toISOString();
       document.getElementById('statLessons').innerText = appData.lessons.filter(l => l.status === 'scheduled' && l.scheduled_at > now).length;
@@ -631,7 +660,7 @@
       document.getElementById('parentsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Family Contact</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead><tbody>${appData.parents.map(p => `<tr><td><strong>${p.full_name}</strong></td><td>${p.email||'-'}</td><td>${p.phone||'-'}</td><td><button class="btn btn-sm btn-primary" onclick="viewFamilyTree('${p.id}')"><i class="fas fa-tree"></i> View Family</button> <button class="btn btn-sm btn-secondary" onclick="editParent('${p.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
 
       // Children Table
-      document.getElementById('childrenTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Guardian</th><th>Grade Level</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.children.map(c => `<tr><td><strong>${c.name}</strong></td><td>${c.parent_profiles?.full_name||'-'}</td><td>${c.grade_level||'-'}</td><td><span class="badge ${c.status?.toLowerCase()==='active'?'badge-success':'badge-gray'}">${c.status}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editChild('${c.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
+      document.getElementById('childrenTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Guardian</th><th>Grade Level</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.children.map(c => `<tr><td><strong>${c.name}</strong></td><td>${c.parent_profiles?.full_name||'-'}</td><td>${c.grade_level||'-'}</td><td><span class="badge ${(!c.status || c.status.toLowerCase()==='active')?'badge-success':'badge-gray'}">${c.status || 'Active'}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editChild('${c.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
 
       // Tutors Table
       document.getElementById('tutorsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Tutor Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.tutors.map(t => `<tr><td><strong>${t.full_name}</strong></td><td>${t.email||'-'}</td><td>${t.phone||'-'}</td><td><span class="badge ${t.status==='active'?'badge-success':(t.status==='pending'?'badge-warning':'badge-danger')}">${t.status}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editTutor('${t.id}')"><i class="fas fa-edit"></i> Manage</button></td></tr>`).join('')}</tbody></table>`;
