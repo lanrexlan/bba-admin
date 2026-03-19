@@ -29,11 +29,6 @@
       --text-dark:          #1f2937;
       --text-muted:         #6b7280;
       --border-color:       #e5e7eb;
-      
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      
       --radius-md: 0.5rem;
       --radius-lg: 1rem;
       --transition: all 0.2s ease-in-out;
@@ -43,121 +38,77 @@
     body { font-family: 'DM Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
     h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; color: var(--baobab-brown-dark); }
 
-    /* --- LAYOUT --- */
+    /* LAYOUT */
     .dashboard-wrapper { display: flex; height: 100vh; overflow: hidden; }
-    
-    /* --- SIDEBAR --- */
-    .sidebar { width: 280px; background: var(--white); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; transition: var(--transition); z-index: 50; }
+    .sidebar { width: 280px; background: var(--white); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 50; }
     .sidebar-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 1rem; }
     .brand-icon { width: 40px; height: 40px; background: var(--canopy-green); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.2rem; }
     .brand-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--baobab-brown-dark); line-height: 1.2; }
     .brand-sub { font-size: 0.7rem; color: var(--text-muted); font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
-    
     .sidebar-nav { flex: 1; overflow-y: auto; padding: 1.5rem 1rem; }
     .nav-group { margin-bottom: 2rem; }
     .nav-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; padding-left: 0.75rem; }
-    .nav-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: var(--text-dark); text-decoration: none; border-radius: var(--radius-md); font-weight: 500; font-size: 0.95rem; transition: var(--transition); cursor: pointer; }
+    .nav-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: var(--text-dark); text-decoration: none; border-radius: var(--radius-md); font-weight: 500; font-size: 0.95rem; cursor: pointer; }
     .nav-item:hover { background: var(--earth-cream); color: var(--canopy-green-dark); }
-    .nav-item.active { background: var(--canopy-green); color: var(--white); box-shadow: var(--shadow-md); }
-    .nav-item.active i { color: var(--white); }
-    .nav-item i { width: 20px; text-align: center; color: var(--text-muted); transition: var(--transition); }
-    
+    .nav-item.active { background: var(--canopy-green); color: var(--white); }
+    .nav-item i { width: 20px; text-align: center; }
     .sidebar-footer { padding: 1rem; border-top: 1px solid var(--border-color); }
 
-    /* --- MAIN CONTENT --- */
-    .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: var(--bg-light); }
-    
-    /* TOP HEADER */
-    .top-header { height: 72px; background: var(--white); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; }
-    .header-search { display: flex; align-items: center; background: var(--bg-light); border: 1px solid var(--border-color); border-radius: 50px; padding: 0.5rem 1.25rem; width: 350px; }
-    .header-search i { color: var(--text-muted); margin-right: 0.5rem; }
-    .header-search input { border: none; background: transparent; outline: none; width: 100%; font-family: 'DM Sans', sans-serif; }
-    .header-actions { display: flex; align-items: center; gap: 1.5rem; }
-    .admin-profile-btn { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.5rem; border-radius: var(--radius-md); transition: var(--transition); }
-    .admin-profile-btn:hover { background: var(--earth-cream); }
+    .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .top-header { height: 72px; background: var(--white); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: flex-end; padding: 0 2rem; }
+    .admin-profile-btn { display: flex; align-items: center; gap: 0.75rem; }
     .admin-avatar { width: 36px; height: 36px; background: var(--sunset-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; }
-    .admin-info { display: flex; flex-direction: column; }
-    .admin-name { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
-    .admin-role { font-size: 0.7rem; color: var(--text-muted); }
-
-    /* CONTENT AREA */
+    .admin-name { font-size: 0.85rem; font-weight: 700; }
+    
     .content-area { flex: 1; overflow-y: auto; padding: 2rem; }
-    .page-section { display: none; animation: fadeIn 0.3s ease; }
+    .page-section { display: none; }
     .page-section.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
     .page-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
     .page-title { font-size: 2rem; margin-bottom: 0.25rem; }
     .page-desc { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* --- CARDS & STATS --- */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .stat-card { background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 1.5rem; transition: var(--transition); }
-    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .stat-icon { width: 56px; height: 56px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-    .stat-icon.green { background: #e6f7ed; color: var(--canopy-green); }
-    .stat-icon.gold { background: #fef0e6; color: var(--sunset-gold); }
-    .stat-icon.brown { background: #f4ecea; color: var(--baobab-brown); }
-    .stat-info h4 { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-    .stat-info .value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--text-dark); line-height: 1; }
-
-    .data-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 2rem; overflow: hidden; }
-    .data-card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--white); }
-    .data-card-title { font-size: 1.1rem; font-weight: 700; font-family: 'Playfair Display', serif; display: flex; align-items: center; gap: 0.5rem; }
+    /* CARDS */
+    .data-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 2rem; overflow: hidden; }
     .data-card-body { padding: 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 1.5rem; }
+    .stat-icon { width: 56px; height: 56px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: #e6f7ed; color: var(--canopy-green); }
+    .stat-info h4 { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+    .stat-info .value { font-size: 2rem; font-weight: 700; line-height: 1; }
 
-    /* --- TABLES --- */
-    .table-responsive { overflow-x: auto; }
+    /* TABLES & BADGES */
     .table { width: 100%; border-collapse: collapse; text-align: left; }
-    .table th { padding: 1rem 1.5rem; background: #f9fafb; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); }
-    .table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; vertical-align: middle; }
-    .table tr:hover td { background: var(--bg-light); }
-    .table tr:last-child td { border-bottom: none; }
-
-    /* --- BADGES & BUTTONS --- */
-    .badge { display: inline-flex; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .table th { padding: 1rem 1.5rem; background: #f9fafb; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+    .table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+    .badge { display: inline-flex; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
     .badge-success { background: #def7ec; color: #1e8a53; border: 1px solid #b8ebcd;}
     .badge-warning { background: #fef0e6; color: #d95e14; border: 1px solid #fce3ce;}
     .badge-gray { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb;}
-    .badge-primary { background: #eef2ff; color: #2563eb; border: 1px solid #bfdbfe;}
+    .badge-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;}
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 1.25rem; font-size: 0.9rem; font-weight: 600; border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); border: 1px solid transparent; font-family: 'DM Sans', sans-serif; }
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; font-weight: 600; border-radius: var(--radius-md); cursor: pointer; border: 1px solid transparent; font-family: inherit; }
     .btn-primary { background: var(--canopy-green); color: var(--white); }
-    .btn-primary:hover { background: var(--canopy-green-dark); box-shadow: var(--shadow-md); }
-    .btn-secondary { background: var(--white); border-color: var(--border-color); color: var(--text-dark); }
-    .btn-secondary:hover { background: var(--bg-light); border-color: #d1d5db; }
+    .btn-secondary { background: var(--white); border-color: var(--border-color); }
     .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
 
-    /* --- MODALS --- */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(4px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; }
-    .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: var(--white); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s ease; }
-    .modal-overlay.active .modal-content { transform: scale(1); }
-    
+    /* MODALS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(17,24,39,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+    .modal-overlay.active { display: flex; }
+    .modal-content { background: var(--white); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
     .modal-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
     .modal-title { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; }
-    .modal-close { background: transparent; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); }
-    .modal-close:hover { color: var(--text-dark); transform: rotate(90deg); }
-    
+    .modal-close { background: transparent; border: none; font-size: 1.25rem; cursor: pointer; }
     .modal-body { padding: 2rem; }
     .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-color); background: #f8f9fa; display: flex; justify-content: flex-end; gap: 1rem; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
 
-    /* --- FORMS --- */
+    /* FORMS */
     .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .form-group { margin-bottom: 1.5rem; }
     .form-group.full { grid-column: 1 / -1; }
-    .form-label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
-    .form-control { width: 100%; padding: 0.65rem 1rem; border: 1px solid #d1d5db; border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text-dark); background: var(--white); transition: var(--transition); }
-    .form-control:focus { outline: none; border-color: var(--canopy-green); box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1); }
-    textarea.form-control { resize: vertical; min-height: 100px; }
-
-    /* --- FAMILY TREE SPECIFIC --- */
-    .family-tree-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border-color); }
-    .family-tree-icon { font-size: 3rem; color: var(--baobab-brown); margin-bottom: 1rem; }
-    .children-grid { display: grid; gap: 1rem; }
-    .child-card { border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; background: var(--bg-light); display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--canopy-green); }
-    .child-info h4 { margin-bottom: 0.25rem; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; }
-    .child-meta { font-size: 0.85rem; color: var(--text-muted); display: flex; gap: 1rem; }
+    .form-label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .form-control { width: 100%; padding: 0.65rem 1rem; border: 1px solid #d1d5db; border-radius: var(--radius-md); font-family: inherit; font-size: 0.95rem; }
+    .form-control:focus { outline: none; border-color: var(--canopy-green); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
   </style>
 </head>
 <body>
@@ -178,7 +129,8 @@
         </div>
         <div class="nav-group">
           <div class="nav-label">Operations</div>
-          <a class="nav-item" data-target="lessons"><i class="fas fa-calendar-day"></i> Schedule</a>
+          <a class="nav-item" data-target="schedules"><i class="fas fa-calendar-alt"></i> Weekly Timetable</a>
+          <a class="nav-item" data-target="billing"><i class="fas fa-file-invoice-dollar"></i> Billing & Invoices</a>
           <a class="nav-item" data-target="assessments"><i class="fas fa-star-half-stroke"></i> Assessments</a>
           <a class="nav-item" data-target="subjects"><i class="fas fa-book-open"></i> Subjects</a>
         </div>
@@ -190,330 +142,182 @@
         </div>
       </div>
       <div class="sidebar-footer">
-        <a class="nav-item" data-target="profile" style="color: var(--text-muted);"><i class="fas fa-cog"></i> Settings</a>
-        <a class="nav-item" onclick="logout()" style="color: #b91c1c; margin-top: 0.5rem;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a class="nav-item" onclick="logout()" style="color: #b91c1c;"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </div>
     </aside>
 
     <div class="main-wrapper">
       <header class="top-header">
-        <div class="header-search">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search directory...">
-        </div>
-        <div class="header-actions">
-          <div class="admin-profile-btn" onclick="document.querySelector('.nav-item[data-target=\'profile\']').click()">
-            <div class="admin-info" style="text-align: right;">
-              <span class="admin-name" id="topAdminName">Admin</span>
-              <span class="admin-role">Super Admin</span>
-            </div>
-            <div class="admin-avatar" id="topAdminInitial">A</div>
+        <div class="admin-profile-btn">
+          <div class="admin-info" style="text-align: right;">
+            <span class="admin-name" id="topAdminName">Admin</span>
+            <span class="admin-role">Super Admin</span>
           </div>
+          <div class="admin-avatar" id="topAdminInitial">A</div>
         </div>
       </header>
 
       <main class="content-area">
         <section id="dashboard" class="page-section active">
           <div class="page-header">
-            <div>
-              <h1 class="page-title">Command Center</h1>
-              <p class="page-desc">Overview of academy operations and matchmaking.</p>
-            </div>
+            <div><h1 class="page-title">Command Center</h1></div>
             <button class="btn btn-primary" onclick="loadAllData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
           </div>
-
           <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-icon green"><i class="fas fa-child"></i></div>
-              <div class="stat-info">
-                <h4>Total Students</h4>
-                <div class="value" id="statStudents">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon gold"><i class="fas fa-chalkboard-teacher"></i></div>
-              <div class="stat-info">
-                <h4>Active Tutors</h4>
-                <div class="value" id="statTutors">0</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon brown"><i class="fas fa-laptop-file"></i></div>
-              <div class="stat-info">
-                <h4>Scheduled Lessons</h4>
-                <div class="value" id="statLessons">0</div>
-              </div>
-            </div>
+            <div class="stat-card"><div class="stat-icon green"><i class="fas fa-child"></i></div><div class="stat-info"><h4>Total Students</h4><div class="value" id="statStudents">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background:#fef0e6; color:#F4A261"><i class="fas fa-chalkboard-teacher"></i></div><div class="stat-info"><h4>Active Tutors</h4><div class="value" id="statTutors">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background:#f4ecea; color:#6B3A2A"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h4>Weekly Classes</h4><div class="value" id="statClasses">0</div></div></div>
           </div>
-          
-          <div class="data-card">
-            <div class="data-card-header">
-              <div class="data-card-title"><i class="fas fa-exclamation-circle" style="color: var(--sunset-gold)"></i> Pending Actions</div>
-            </div>
-            <div class="data-card-body table-responsive" id="pendingActionsContainer"></div>
+        </section>
+
+        <section id="schedules" class="page-section">
+          <div class="page-header">
+            <div><h1 class="page-title">Weekly Timetable</h1><p class="page-desc">Manage recurring weekly class schedules.</p></div>
+            <button class="btn btn-primary" onclick="openScheduleModal()"><i class="fas fa-calendar-plus"></i> Add Class to Timetable</button>
           </div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="schedulesTableContainer"></div></div>
+        </section>
+
+        <section id="billing" class="page-section">
+          <div class="page-header">
+            <div><h1 class="page-title">Billing & Invoices</h1><p class="page-desc">Generate and manage family invoices.</p></div>
+            <button class="btn btn-primary" onclick="openBillingModal()"><i class="fas fa-plus"></i> Create Invoice</button>
+          </div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="billingTableContainer"></div></div>
         </section>
 
         <section id="parents" class="page-section">
           <div class="page-header">
-            <div><h1 class="page-title">Parent Directory</h1><p class="page-desc">Manage family accounts.</p></div>
-            <button class="btn btn-primary" onclick="openModal('parentModal'); document.getElementById('parentForm').reset(); document.getElementById('parentId').value='';"><i class="fas fa-plus"></i> Add Parent</button>
+            <div><h1 class="page-title">Parent Directory</h1></div>
+            <button class="btn btn-primary" onclick="openParentModal()"><i class="fas fa-plus"></i> Add Parent</button>
           </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="parentsTableContainer"></div></div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="parentsTableContainer"></div></div>
         </section>
 
         <section id="children" class="page-section">
           <div class="page-header">
-            <div><h1 class="page-title">Student Roster</h1><p class="page-desc">Manage student profiles.</p></div>
+            <div><h1 class="page-title">Student Roster</h1></div>
             <button class="btn btn-primary" onclick="openChildModal()"><i class="fas fa-plus"></i> Enroll Student</button>
           </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="childrenTableContainer"></div></div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="childrenTableContainer"></div></div>
         </section>
 
         <section id="tutors" class="page-section">
           <div class="page-header">
-            <div><h1 class="page-title">Tutor Directory</h1><p class="page-desc">Vetting, approval, and management.</p></div>
-            <button class="btn btn-primary" onclick="openModal('tutorModal'); document.getElementById('tutorForm').reset(); document.getElementById('tutorId').value='';"><i class="fas fa-plus"></i> Add Tutor</button>
+            <div><h1 class="page-title">Tutor Directory</h1></div>
+            <button class="btn btn-primary" onclick="openTutorModal()"><i class="fas fa-plus"></i> Add Tutor</button>
           </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="tutorsTableContainer"></div></div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="tutorsTableContainer"></div></div>
         </section>
 
         <section id="subjects" class="page-section">
           <div class="page-header">
-            <div><h1 class="page-title">Curriculum Subjects</h1><p class="page-desc">Manage academy subjects.</p></div>
-            <button class="btn btn-primary" onclick="openModal('subjectModal'); document.getElementById('subjectForm').reset(); document.getElementById('subjectId').value='';"><i class="fas fa-plus"></i> Add Subject</button>
+            <div><h1 class="page-title">Curriculum Subjects</h1></div>
+            <button class="btn btn-primary" onclick="openSubjectModal()"><i class="fas fa-plus"></i> Add Subject</button>
           </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="subjectsTableContainer"></div></div>
-        </section>
-
-        <section id="lessons" class="page-section">
-          <div class="page-header">
-            <div><h1 class="page-title">Master Schedule</h1><p class="page-desc">Assign tutors and Google Meet links.</p></div>
-            <button class="btn btn-primary" onclick="openLessonModal()"><i class="fas fa-calendar-plus"></i> Schedule Lesson</button>
-          </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="lessonsTableContainer"></div></div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="subjectsTableContainer"></div></div>
         </section>
 
         <section id="assessments" class="page-section">
           <div class="page-header">
-            <div><h1 class="page-title">Assessment Logs</h1><p class="page-desc">Track termly academic progress.</p></div>
+            <div><h1 class="page-title">Assessment Logs</h1></div>
             <button class="btn btn-primary" onclick="openAssessmentModal()"><i class="fas fa-star"></i> Log Assessment</button>
           </div>
-          <div class="data-card"><div class="data-card-body table-responsive" id="assessmentsTableContainer"></div></div>
+          <div class="data-card"><div class="data-card-body" style="overflow-x:auto;" id="assessmentsTableContainer"></div></div>
         </section>
 
-        <section id="profile" class="page-section">
-          <div class="page-header"><div><h1 class="page-title">Admin Profile</h1><p class="page-desc">Manage your personal settings.</p></div></div>
-          <div class="data-card" style="max-width: 600px;">
-            <div class="data-card-body" style="padding: 2rem;">
-              <form id="adminProfileForm">
-                <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-control" id="profName" required></div>
-                <div class="form-group"><label class="form-label">Email Address (Cannot change)</label><input type="email" class="form-control" id="profEmail" readonly style="background: #f3f4f6;"></div>
-                <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-control" id="profPhone"></div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Profile</button>
-              </form>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="scheduleModal">
+    <div class="modal-content">
+      <div class="modal-header"><h3 class="modal-title"><i class="fas fa-calendar-alt"></i> Weekly Class</h3><button class="modal-close" onclick="closeModal('scheduleModal')"><i class="fas fa-times"></i></button></div>
+      <form id="scheduleForm">
+        <div class="modal-body">
+          <input type="hidden" id="schId">
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Student *</label><select class="form-control" id="schChildId" required></select></div>
+            <div class="form-group"><label class="form-label">Tutor *</label><select class="form-control" id="schTutorId" required></select></div>
+            <div class="form-group full"><label class="form-label">Subject *</label><select class="form-control" id="schSubjectId" required></select></div>
+            <div class="form-group">
+              <label class="form-label">Day of the Week *</label>
+              <select class="form-control" id="schDay" required>
+                <option value="Monday">Every Monday</option><option value="Tuesday">Every Tuesday</option>
+                <option value="Wednesday">Every Wednesday</option><option value="Thursday">Every Thursday</option>
+                <option value="Friday">Every Friday</option><option value="Saturday">Every Saturday</option>
+                <option value="Sunday">Every Sunday</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Start Time *</label><input type="time" class="form-control" id="schTime" required></div>
+            <div class="form-group"><label class="form-label">Duration (Mins)</label><input type="number" class="form-control" id="schDuration" value="60"></div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-control" id="schStatus">
+                <option value="active">Active</option><option value="paused">Paused</option>
+              </select>
+            </div>
+            <div class="form-group full"><label class="form-label">Google Meet Link</label><input type="url" class="form-control" id="schUrl" placeholder="https://meet.google.com/..."></div>
+          </div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('scheduleModal')">Cancel</button><button type="submit" class="btn btn-primary">Save to Timetable</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="billingModal">
+    <div class="modal-content">
+      <div class="modal-header"><h3 class="modal-title"><i class="fas fa-file-invoice-dollar"></i> Create Invoice</h3><button class="modal-close" onclick="closeModal('billingModal')"><i class="fas fa-times"></i></button></div>
+      <form id="billingForm">
+        <div class="modal-body">
+          <input type="hidden" id="billId">
+          <div class="form-grid">
+            <div class="form-group full"><label class="form-label">Bill To (Parent) *</label><select class="form-control" id="billParentId" required></select></div>
+            <div class="form-group full"><label class="form-label">Description / Invoice Name *</label><input type="text" class="form-control" id="billDesc" placeholder="e.g. October Tuition Fees" required></div>
+            <div class="form-group"><label class="form-label">Amount (£) *</label><input type="number" class="form-control" id="billAmount" step="0.01" required></div>
+            <div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-control" id="billDue"></div>
+            <div class="form-group">
+              <label class="form-label">Payment Status</label>
+              <select class="form-control" id="billStatus">
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
+                <option value="overdue">Overdue</option>
+              </select>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('billingModal')">Cancel</button><button type="submit" class="btn btn-primary">Save Invoice</button></div>
+      </form>
     </div>
   </div>
 
   <div class="modal-overlay" id="familyModal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-users" style="color:var(--baobab-brown)"></i> Family Overview</h3>
-        <button class="modal-close" onclick="closeModal('familyModal')"><i class="fas fa-times"></i></button>
-      </div>
+      <div class="modal-header"><h3 class="modal-title"><i class="fas fa-users"></i> Family Overview</h3><button class="modal-close" onclick="closeModal('familyModal')"><i class="fas fa-times"></i></button></div>
       <div class="modal-body">
-        <div class="family-tree-header">
-          <div class="family-tree-icon"><i class="fas fa-tree"></i></div>
-          <h2 id="fmParentName" style="font-size: 1.5rem; margin-bottom:0.25rem;">Parent Name</h2>
-          <p id="fmParentContact" style="color: var(--text-muted); font-size: 0.9rem;">email@example.com | +44 123 456</p>
-        </div>
-        <h4 style="margin-bottom: 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted);">Enrolled Students</h4>
-        <div class="children-grid" id="fmChildrenList"></div>
+        <h2 id="fmParentName" style="text-align:center; font-size:1.5rem; margin-bottom:1rem;">Parent Name</h2>
+        <div id="fmChildrenList" style="display:grid; gap:1rem;"></div>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="parentModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-user-plus"></i> Parent Profile</h3>
-        <button class="modal-close" onclick="closeModal('parentModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="parentForm">
-        <div class="modal-body">
-          <input type="hidden" id="parentId">
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="parentName" required></div>
-            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-control" id="parentEmail"></div>
-            <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-control" id="parentPhone"></div>
-            <div class="form-group"><label class="form-label">Emergency Contact</label><input type="text" class="form-control" id="parentEmergency"></div>
-            <div class="form-group full"><label class="form-label">Address / Location</label><textarea class="form-control" id="parentAddress" rows="2"></textarea></div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('parentModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Parent</button></div>
-      </form>
-    </div>
-  </div>
+  <div class="modal-overlay" id="parentModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Parent Profile</h3><button class="modal-close" onclick="closeModal('parentModal')"><i class="fas fa-times"></i></button></div><form id="parentForm"><div class="modal-body"><input type="hidden" id="parentId"><div class="form-grid"><div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="parentName" required></div><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" id="parentEmail"></div><div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-control" id="parentPhone"></div></div></div><div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div></form></div></div>
+  <div class="modal-overlay" id="childModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Student Profile</h3><button class="modal-close" onclick="closeModal('childModal')"><i class="fas fa-times"></i></button></div><form id="childForm"><div class="modal-body"><input type="hidden" id="childId"><div class="form-group full"><label class="form-label">Parent *</label><select class="form-control" id="childParentId" required></select></div><div class="form-grid"><div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-control" id="childName" required></div><div class="form-group"><label class="form-label">Grade</label><input type="text" class="form-control" id="childGrade"></div><div class="form-group"><label class="form-label">Status</label><select class="form-control" id="childStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div></div></div><div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div></form></div></div>
+  <div class="modal-overlay" id="tutorModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Tutor Profile</h3><button class="modal-close" onclick="closeModal('tutorModal')"><i class="fas fa-times"></i></button></div><form id="tutorForm"><div class="modal-body"><input type="hidden" id="tutorId"><div class="form-grid"><div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-control" id="tutorName" required></div><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" id="tutorEmail"></div><div class="form-group"><label class="form-label">Status</label><select class="form-control" id="tutorStatus"><option value="pending">Pending</option><option value="active">Active</option><option value="suspended">Suspended</option></select></div></div></div><div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div></form></div></div>
+  <div class="modal-overlay" id="subjectModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Subject</h3><button class="modal-close" onclick="closeModal('subjectModal')"><i class="fas fa-times"></i></button></div><form id="subjectForm"><div class="modal-body"><input type="hidden" id="subjectId"><div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-control" id="subjectName" required></div></div><div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div></form></div></div>
+  <div class="modal-overlay" id="assessmentModal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Assessment</h3><button class="modal-close" onclick="closeModal('assessmentModal')"><i class="fas fa-times"></i></button></div><form id="assessmentForm"><div class="modal-body"><input type="hidden" id="assId"><div class="form-grid"><div class="form-group"><label class="form-label">Student *</label><select class="form-control" id="assChildId" required></select></div><div class="form-group"><label class="form-label">Tutor *</label><select class="form-control" id="assTutorId" required></select></div><div class="form-group"><label class="form-label">Subject *</label><select class="form-control" id="assSubjectId" required></select></div><div class="form-group full"><label class="form-label">Topic *</label><input type="text" class="form-control" id="assTitle" required></div><div class="form-group"><label class="form-label">Score</label><input type="number" class="form-control" id="assGrade" step="0.1"></div></div></div><div class="modal-footer"><button type="submit" class="btn btn-primary">Save</button></div></form></div></div>
 
-  <div class="modal-overlay" id="childModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-child-reaching"></i> Student Profile</h3>
-        <button class="modal-close" onclick="closeModal('childModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="childForm">
-        <div class="modal-body">
-          <input type="hidden" id="childId">
-          <div class="form-group full"><label class="form-label">Select Parent/Guardian *</label><select class="form-control" id="childParentId" required></select></div>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Student Name *</label><input type="text" class="form-control" id="childName" required></div>
-            <div class="form-group"><label class="form-label">Date of Birth</label><input type="date" class="form-control" id="childDob"></div>
-            <div class="form-group"><label class="form-label">Grade / Year Level</label><input type="text" class="form-control" id="childGrade"></div>
-            <div class="form-group">
-              <label class="form-label">Status</label>
-              <select class="form-control" id="childStatus">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('childModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Student</button></div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="tutorModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-chalkboard-user"></i> Tutor Profile</h3>
-        <button class="modal-close" onclick="closeModal('tutorModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="tutorForm">
-        <div class="modal-body">
-          <input type="hidden" id="tutorId">
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="tutorName" required></div>
-            <div class="form-group"><label class="form-label">Email Address *</label><input type="email" class="form-control" id="tutorEmail" required></div>
-            <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-control" id="tutorPhone"></div>
-            <div class="form-group">
-              <label class="form-label">Status</label>
-              <select class="form-control" id="tutorStatus">
-                <option value="pending">Pending Review</option>
-                <option value="active">Active (Approved)</option>
-                <option value="suspended">Suspended</option>
-              </select>
-            </div>
-            <div class="form-group full"><label class="form-label">Qualifications</label><textarea class="form-control" id="tutorQualifications" rows="2"></textarea></div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('tutorModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Tutor</button></div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="subjectModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-book"></i> Curriculum Subject</h3>
-        <button class="modal-close" onclick="closeModal('subjectModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="subjectForm">
-        <div class="modal-body">
-          <input type="hidden" id="subjectId">
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Subject Name *</label><input type="text" class="form-control" id="subjectName" required></div>
-            <div class="form-group"><label class="form-label">Theme Color</label><input type="color" class="form-control" id="subjectColor" value="#2D6A4F" style="padding:5px; height:45px; cursor:pointer;"></div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('subjectModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Subject</button></div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="assessmentModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-star"></i> Log Assessment</h3>
-        <button class="modal-close" onclick="closeModal('assessmentModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="assessmentForm">
-        <div class="modal-body">
-          <input type="hidden" id="assId">
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Student *</label><select class="form-control" id="assChildId" required></select></div>
-            <div class="form-group"><label class="form-label">Tutor *</label><select class="form-control" id="assTutorId" required></select></div>
-            <div class="form-group"><label class="form-label">Subject *</label><select class="form-control" id="assSubjectId" required></select></div>
-            <div class="form-group">
-              <label class="form-label">Academic Term *</label>
-              <select class="form-control" id="assType" required>
-                <option value="Autumn Half-Term">Autumn Half-Term</option>
-                <option value="Autumn End of Term">Autumn End of Term</option>
-                <option value="Spring Half-Term">Spring Half-Term</option>
-                <option value="Spring End of Term">Spring End of Term</option>
-                <option value="Summer Half-Term">Summer Half-Term</option>
-                <option value="End of Year Exam">End of Year Exam</option>
-                <option value="Quiz/Module">Quiz/Module</option>
-              </select>
-            </div>
-            <div class="form-group full"><label class="form-label">Assessment Title/Topic *</label><input type="text" class="form-control" id="assTitle" placeholder="e.g. Algebra Fundamentals" required></div>
-            <div class="form-group"><label class="form-label">Score Achieved</label><input type="number" class="form-control" id="assGrade" step="0.1"></div>
-            <div class="form-group"><label class="form-label">Max Score (Out of)</label><input type="number" class="form-control" id="assMax" value="100"></div>
-            <div class="form-group full"><label class="form-label">Tutor Feedback / Comments</label><textarea class="form-control" id="assFeedback" rows="3"></textarea></div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('assessmentModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Assessment</button></div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="lessonModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-calendar-check" style="color:var(--canopy-green)"></i> Match & Schedule</h3>
-        <button class="modal-close" onclick="closeModal('lessonModal')"><i class="fas fa-times"></i></button>
-      </div>
-      <form id="lessonForm">
-        <div class="modal-body">
-          <input type="hidden" id="lessonId">
-          <div class="form-group full"><label class="form-label">Lesson Topic (Optional)</label><input type="text" class="form-control" id="lesTitle"></div>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Student *</label><select class="form-control" id="lesChildId" required></select></div>
-            <div class="form-group"><label class="form-label">Assign Tutor *</label><select class="form-control" id="lesTutorId" required></select></div>
-            <div class="form-group full"><label class="form-label">Subject *</label><select class="form-control" id="lesSubjectId" required></select></div>
-            <div class="form-group"><label class="form-label">Date & Time *</label><input type="datetime-local" class="form-control" id="lesTime" required></div>
-            <div class="form-group"><label class="form-label">Duration (Mins)</label><input type="number" class="form-control" id="lesDuration" value="60"></div>
-            <div class="form-group full"><label class="form-label">Google Meet Link</label><input type="url" class="form-control" id="lesUrl" placeholder="https://meet.google.com/..." style="border-color: var(--sunset-gold); background: #fffcf8;"></div>
-            <div class="form-group">
-              <label class="form-label">Status</label>
-              <select class="form-control" id="lesStatus">
-                <option value="scheduled">Scheduled</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeModal('lessonModal')">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Save & Assign</button></div>
-      </form>
-    </div>
-  </div>
 
   <script>
     const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let appData = { parents: [], children: [], tutors: [], subjects: [], lessons: [], assessments: [] };
-    let adminProfile = null;
+    let appData = { parents: [], children: [], tutors: [], subjects: [], schedules: [], assessments: [], billing: [] };
 
-    // --- Navigation ---
+    // Sidebar Navigation
     document.querySelectorAll('.nav-item[data-target]').forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
         document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
         link.classList.add('active');
@@ -521,193 +325,131 @@
       });
     });
 
-    // --- Modals ---
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    // --- Formatters ---
-    function formatTime(iso) { return iso ? new Date(iso).toLocaleString('en-GB', { dateStyle:'short', timeStyle:'short' }) : '-'; }
     function populateSelect(id, arr, valKey, textKey) {
       document.getElementById(id).innerHTML = '<option value="">Select...</option>' + arr.map(i => `<option value="${i[valKey]}">${i[textKey]}</option>`).join('');
     }
 
-    // --- Core Data Loading (Bypass Joins to fix silent API errors) ---
     async function loadAllData() {
       try {
         const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) { window.location.href = '/admin-index.html'; return; }
 
         const { data: ap } = await supabaseClient.from('admin_profiles').select('*').eq('user_id', session.user.id).single();
-        if(ap) {
-          adminProfile = ap;
-          document.getElementById('topAdminName').innerText = ap.full_name;
-          document.getElementById('topAdminInitial').innerText = ap.full_name.charAt(0).toUpperCase();
-          document.getElementById('profName').value = ap.full_name;
-          document.getElementById('profEmail').value = ap.email;
-          document.getElementById('profPhone').value = ap.phone || '';
-        }
+        if(ap) document.getElementById('topAdminName').innerText = ap.full_name;
 
-        const [pRes, cRes, tRes, sRes, lRes, aRes] = await Promise.all([
+        // Fetch raw data without complex joins
+        const [pRes, cRes, tRes, sRes, schRes, aRes, bRes] = await Promise.all([
           supabaseClient.from('parent_profiles').select('*').order('created_at', { ascending: false }),
           supabaseClient.from('children').select('*').order('created_at', { ascending: false }),
           supabaseClient.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
           supabaseClient.from('subjects').select('*').order('name'),
-          supabaseClient.from('lessons').select('*').order('scheduled_at', { ascending: false }),
-          supabaseClient.from('assessments').select('*').order('conducted_at', { ascending: false })
+          supabaseClient.from('class_schedules').select('*').order('day_of_week'),
+          supabaseClient.from('assessments').select('*').order('conducted_at', { ascending: false }),
+          supabaseClient.from('billing_records').select('*').order('created_at', { ascending: false })
         ]);
 
         appData.parents = pRes.data || [];
         appData.children = cRes.data || [];
         appData.tutors = tRes.data || [];
         appData.subjects = sRes.data || [];
-        appData.lessons = lRes.data || [];
+        appData.schedules = schRes.data || [];
         appData.assessments = aRes.data || [];
+        appData.billing = bRes.data || [];
 
-        // In-Memory Joins
-        appData.children.forEach(c => c.parent_profiles = appData.parents.find(p => p.id === c.parent_id) || null);
-        appData.lessons.forEach(l => {
-          l.children = appData.children.find(c => c.id === l.child_id) || null;
-          l.tutor_profiles = appData.tutors.find(t => t.id === l.tutor_id) || null;
-          l.subjects = appData.subjects.find(s => s.id === l.subject_id) || null;
+        // In-Memory linking
+        appData.children.forEach(c => c.parent_profiles = appData.parents.find(p => p.id === c.parent_id));
+        appData.schedules.forEach(s => {
+          s.children = appData.children.find(c => c.id === s.child_id);
+          s.tutor_profiles = appData.tutors.find(t => t.id === s.tutor_id);
+          s.subjects = appData.subjects.find(sub => sub.id === s.subject_id);
         });
         appData.assessments.forEach(a => {
-          a.children = appData.children.find(c => c.id === a.child_id) || null;
-          a.tutor_profiles = appData.tutors.find(t => t.id === a.tutor_id) || null;
-          a.subjects = appData.subjects.find(s => s.id === a.subject_id) || null;
+          a.children = appData.children.find(c => c.id === a.child_id);
+          a.subjects = appData.subjects.find(s => s.id === a.subject_id);
         });
+        appData.billing.forEach(b => b.parent_profiles = appData.parents.find(p => p.id === b.parent_id));
 
         renderDashboards();
       } catch (err) { console.error(err); }
     }
 
     function renderDashboards() {
-      // Safely count active students
+      // Top Stats
       let activeStudents = 0;
-      appData.children.forEach(c => {
-        const stat = c.status ? c.status.toLowerCase() : 'active';
-        if(stat === 'active') activeStudents++;
-      });
+      appData.children.forEach(c => { if((c.status || 'active').toLowerCase() === 'active') activeStudents++; });
       document.getElementById('statStudents').innerText = activeStudents;
-      
-      const now = new Date().toISOString();
-      document.getElementById('statLessons').innerText = appData.lessons.filter(l => l.status === 'scheduled' && l.scheduled_at > now).length;
       document.getElementById('statTutors').innerText = appData.tutors.filter(t => t.status === 'active').length;
+      document.getElementById('statClasses').innerText = appData.schedules.filter(s => s.status === 'active').length;
 
-      // Pending Tutors
-      const pendingTutors = appData.tutors.filter(t => t.status === 'pending');
-      document.getElementById('pendingActionsContainer').innerHTML = pendingTutors.length > 0 
-        ? `<table class="table"><tbody>${pendingTutors.map(t => `<tr><td>New Tutor Application: <strong>${t.full_name}</strong></td><td style="text-align:right"><button class="btn btn-sm btn-primary" onclick="document.querySelector('.nav-item[data-target=\\'tutors\\']').click()">Review</button></td></tr>`).join('')}</tbody></table>`
-        : `<div style="padding:2rem; text-align:center; color:var(--text-muted)">No pending actions.</div>`;
-
-      // Parents Table
-      document.getElementById('parentsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Family Contact</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead><tbody>${appData.parents.map(p => `<tr><td><strong>${p.full_name}</strong></td><td>${p.email||'-'}</td><td>${p.phone||'-'}</td><td><button class="btn btn-sm btn-primary" onclick="viewFamilyTree('${p.id}')"><i class="fas fa-tree"></i> View Family</button> <button class="btn btn-sm btn-secondary" onclick="editParent('${p.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
-
-      // Children Table
-      document.getElementById('childrenTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Guardian</th><th>Grade Level</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.children.map(c => `<tr><td><strong>${c.name}</strong></td><td>${c.parent_profiles?.full_name||'-'}</td><td>${c.grade_level||'-'}</td><td><span class="badge ${(!c.status || c.status.toLowerCase()==='active')?'badge-success':'badge-gray'}">${c.status || 'Active'}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editChild('${c.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
-
-      // Tutors Table
-      document.getElementById('tutorsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Tutor Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.tutors.map(t => `<tr><td><strong>${t.full_name}</strong></td><td>${t.email||'-'}</td><td>${t.phone||'-'}</td><td><span class="badge ${t.status==='active'?'badge-success':(t.status==='pending'?'badge-warning':'badge-danger')}">${t.status}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editTutor('${t.id}')"><i class="fas fa-edit"></i> Manage</button></td></tr>`).join('')}</tbody></table>`;
-
-      // Subjects Table
-      document.getElementById('subjectsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Subject Name</th><th>Theme Color</th><th>Actions</th></tr></thead><tbody>${appData.subjects.map(s => `<tr><td><strong>${s.name}</strong></td><td><div style="width:20px;height:20px;background:${s.color_code};border-radius:4px;"></div></td><td><button class="btn btn-sm btn-secondary" onclick="editSubject('${s.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
-
-      // Lessons Table
-      document.getElementById('lessonsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Tutor</th><th>Subject</th><th>Date/Time</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.lessons.map(l => `<tr><td><strong>${l.children?.name||'-'}</strong></td><td>${l.tutor_profiles?.full_name||'-'}</td><td><span class="badge badge-gray">${l.subjects?.name||'-'}</span></td><td>${formatTime(l.scheduled_at)}</td><td><span class="badge ${l.status==='completed'?'badge-success':(l.status==='scheduled'?'badge-warning':'badge-danger')}">${l.status}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editLesson('${l.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
-
-      // Assessments Table
-      document.getElementById('assessmentsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Term/Type</th><th>Topic</th><th>Score</th><th>Actions</th></tr></thead><tbody>${appData.assessments.map(a => `<tr><td><strong>${a.children?.name||'-'}</strong><br><small style="color:var(--text-muted)">${a.subjects?.name||'-'}</small></td><td><span class="badge badge-primary">${a.type||'Quiz'}</span></td><td>${a.title}</td><td><strong>${a.grade}/${a.max_grade}</strong></td><td><button class="btn btn-sm btn-secondary" onclick="editAssessment('${a.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
+      // Parents
+      document.getElementById('parentsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Family</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead><tbody>${appData.parents.map(p => `<tr><td><strong>${p.full_name}</strong></td><td>${p.email||'-'}</td><td>${p.phone||'-'}</td><td><button class="btn btn-sm btn-secondary" onclick="viewFamilyTree('${p.id}')"><i class="fas fa-tree"></i> View Family</button> <button class="btn btn-sm btn-secondary" onclick="editParent('${p.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
+      // Children
+      document.getElementById('childrenTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Guardian</th><th>Grade</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.children.map(c => `<tr><td><strong>${c.name}</strong></td><td>${c.parent_profiles?.full_name||'-'}</td><td>${c.grade_level||'-'}</td><td><span class="badge ${(!c.status||c.status.toLowerCase()==='active')?'badge-success':'badge-gray'}">${c.status||'active'}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editChild('${c.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
+      // Tutors
+      document.getElementById('tutorsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Tutor</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead><tbody>${appData.tutors.map(t => `<tr><td><strong>${t.full_name}</strong></td><td>${t.email||'-'}</td><td><span class="badge ${t.status==='active'?'badge-success':(t.status==='pending'?'badge-warning':'badge-danger')}">${t.status}</span></td><td><button class="btn btn-sm btn-secondary" onclick="editTutor('${t.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
+      // Subjects
+      document.getElementById('subjectsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Subject Name</th><th>Actions</th></tr></thead><tbody>${appData.subjects.map(s => `<tr><td><strong>${s.name}</strong></td><td><button class="btn btn-sm btn-secondary" onclick="editSubject('${s.id}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`).join('')}</tbody></table>`;
+      // Schedules (Timetable)
+      document.getElementById('schedulesTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Tutor</th><th>Subject</th><th>Schedule (Weekly)</th><th>Meet Link</th><th>Actions</th></tr></thead><tbody>${appData.schedules.map(s => `<tr><td><strong>${s.children?.name||'-'}</strong></td><td>${s.tutor_profiles?.full_name||'-'}</td><td><span class="badge badge-gray">${s.subjects?.name||'-'}</span></td><td>Every <strong>${s.day_of_week}</strong> at ${s.start_time.substring(0,5)}</td><td>${s.meeting_url?`<a href="${s.meeting_url}" target="_blank" style="color:var(--canopy-green); font-weight:600">Join <i class="fas fa-external-link-alt"></i></a>`:'-'}</td><td><button class="btn btn-sm btn-secondary" onclick="editSchedule('${s.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
+      // Billing
+      document.getElementById('billingTableContainer').innerHTML = `<table class="table"><thead><tr><th>Parent</th><th>Description</th><th>Amount</th><th>Status</th><th>Due Date</th><th>Actions</th></tr></thead><tbody>${appData.billing.map(b => `<tr><td><strong>${b.parent_profiles?.full_name||'-'}</strong></td><td>${b.description}</td><td>£${b.amount}</td><td><span class="badge ${b.status==='paid'?'badge-success':(b.status==='pending'?'badge-warning':'badge-danger')}">${b.status}</span></td><td>${b.due_date||'-'}</td><td><button class="btn btn-sm btn-secondary" onclick="editBilling('${b.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
+      // Assessments
+      document.getElementById('assessmentsTableContainer').innerHTML = `<table class="table"><thead><tr><th>Student</th><th>Topic</th><th>Score</th><th>Actions</th></tr></thead><tbody>${appData.assessments.map(a => `<tr><td><strong>${a.children?.name||'-'}</strong></td><td>${a.title}</td><td><strong>${a.grade}/${a.max_grade}</strong></td><td><button class="btn btn-sm btn-secondary" onclick="editAssessment('${a.id}')"><i class="fas fa-edit"></i></button></td></tr>`).join('')}</tbody></table>`;
     }
 
-    // --- FAMILY TREE LOGIC ---
+    // --- SCHEDULE (TIMETABLE) CRUD ---
+    window.openScheduleModal = () => { document.getElementById('scheduleForm').reset(); document.getElementById('schId').value=''; populateSelect('schChildId', appData.children, 'id', 'name'); populateSelect('schTutorId', appData.tutors.filter(t=>t.status==='active'), 'id', 'full_name'); populateSelect('schSubjectId', appData.subjects, 'id', 'name'); openModal('scheduleModal'); }
+    document.getElementById('scheduleForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { child_id: document.getElementById('schChildId').value, tutor_id: document.getElementById('schTutorId').value, subject_id: document.getElementById('schSubjectId').value, day_of_week: document.getElementById('schDay').value, start_time: document.getElementById('schTime').value, duration_minutes: document.getElementById('schDuration').value, meeting_url: document.getElementById('schUrl').value, status: document.getElementById('schStatus').value };
+      const id = document.getElementById('schId').value;
+      if(id) await supabaseClient.from('class_schedules').update(payload).eq('id', id); else await supabaseClient.from('class_schedules').insert([payload]);
+      closeModal('scheduleModal'); loadAllData();
+    });
+    window.editSchedule = (id) => { const s=appData.schedules.find(x=>x.id===id); if(s){ populateSelect('schChildId', appData.children, 'id', 'name'); populateSelect('schTutorId', appData.tutors, 'id', 'full_name'); populateSelect('schSubjectId', appData.subjects, 'id', 'name'); document.getElementById('schId').value=s.id; document.getElementById('schChildId').value=s.child_id; document.getElementById('schTutorId').value=s.tutor_id; document.getElementById('schSubjectId').value=s.subject_id; document.getElementById('schDay').value=s.day_of_week; document.getElementById('schTime').value=s.start_time; document.getElementById('schDuration').value=s.duration_minutes; document.getElementById('schUrl').value=s.meeting_url||''; document.getElementById('schStatus').value=s.status; openModal('scheduleModal'); } }
+
+    // --- BILLING CRUD ---
+    window.openBillingModal = () => { document.getElementById('billingForm').reset(); document.getElementById('billId').value=''; populateSelect('billParentId', appData.parents, 'id', 'full_name'); openModal('billingModal'); }
+    document.getElementById('billingForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { parent_id: document.getElementById('billParentId').value, description: document.getElementById('billDesc').value, amount: document.getElementById('billAmount').value, due_date: document.getElementById('billDue').value||null, status: document.getElementById('billStatus').value };
+      const id = document.getElementById('billId').value;
+      if(id) await supabaseClient.from('billing_records').update(payload).eq('id', id); else await supabaseClient.from('billing_records').insert([payload]);
+      closeModal('billingModal'); loadAllData();
+    });
+    window.editBilling = (id) => { const b=appData.billing.find(x=>x.id===id); if(b){ populateSelect('billParentId', appData.parents, 'id', 'full_name'); document.getElementById('billId').value=b.id; document.getElementById('billParentId').value=b.parent_id; document.getElementById('billDesc').value=b.description; document.getElementById('billAmount').value=b.amount; document.getElementById('billDue').value=b.due_date||''; document.getElementById('billStatus').value=b.status; openModal('billingModal'); } }
+
+    // --- FAMILY TREE ---
     window.viewFamilyTree = (parentId) => {
-      const parent = appData.parents.find(p => p.id === parentId);
-      if(!parent) return;
+      const parent = appData.parents.find(p => p.id === parentId); if(!parent) return;
       document.getElementById('fmParentName').innerText = parent.full_name;
-      document.getElementById('fmParentContact').innerText = `${parent.email || 'No email'} | ${parent.phone || 'No phone'}`;
-      
       const kids = appData.children.filter(c => c.parent_id === parentId);
-      let html = '';
-      if(kids.length === 0) {
-        html = `<div style="text-align:center; padding:1rem; color:var(--text-muted)">No students enrolled yet.</div>`;
-      } else {
-        kids.forEach(k => {
-          html += `<div class="child-card"><div class="child-info"><h4>${k.name}</h4><div class="child-meta"><span><i class="fas fa-graduation-cap"></i> ${k.grade_level||'N/A'}</span> <span><i class="fas fa-circle" style="color:${k.status==='active'?'var(--canopy-green)':'#ccc'}; font-size:0.5rem; vertical-align:middle;"></i> ${k.status || 'active'}</span></div></div><button class="btn btn-sm btn-secondary" onclick="closeModal('familyModal'); editChild('${k.id}')">Manage</button></div>`;
-        });
-      }
-      document.getElementById('fmChildrenList').innerHTML = html;
+      document.getElementById('fmChildrenList').innerHTML = kids.length ? kids.map(k => `<div style="border:1px solid #e5e7eb; padding:1rem; border-radius:8px;"><strong>${k.name}</strong> - Grade: ${k.grade_level||'N/A'} - Status: ${k.status||'active'}</div>`).join('') : '<p>No students enrolled.</p>';
       openModal('familyModal');
     }
 
-    // --- FORM SUBMISSIONS (ALL MODALS CONNECTED) ---
-    
-    // Parents
-    document.getElementById('parentForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { full_name: document.getElementById('parentName').value, email: document.getElementById('parentEmail').value, phone: document.getElementById('parentPhone').value, emergency_contact: document.getElementById('parentEmergency').value, address: document.getElementById('parentAddress').value };
-      const id = document.getElementById('parentId').value;
-      if(id) await supabaseClient.from('parent_profiles').update(payload).eq('id', id); else await supabaseClient.from('parent_profiles').insert([payload]);
-      closeModal('parentModal'); loadAllData();
-    });
-    window.editParent = (id) => { const p=appData.parents.find(x=>x.id===id); if(p){ document.getElementById('parentId').value=p.id; document.getElementById('parentName').value=p.full_name; document.getElementById('parentEmail').value=p.email||''; document.getElementById('parentPhone').value=p.phone||''; document.getElementById('parentEmergency').value=p.emergency_contact||''; document.getElementById('parentAddress').value=p.address||''; openModal('parentModal'); } }
+    // --- OTHER CRUD BOILERPLATE ---
+    window.openParentModal=()=>{document.getElementById('parentForm').reset();document.getElementById('parentId').value='';openModal('parentModal');}
+    window.editParent=(id)=>{const p=appData.parents.find(x=>x.id===id);if(p){document.getElementById('parentId').value=p.id;document.getElementById('parentName').value=p.full_name;document.getElementById('parentEmail').value=p.email||'';document.getElementById('parentPhone').value=p.phone||'';openModal('parentModal');}}
+    document.getElementById('parentForm').addEventListener('submit',async(e)=>{e.preventDefault();const p={full_name:document.getElementById('parentName').value,email:document.getElementById('parentEmail').value,phone:document.getElementById('parentPhone').value};const id=document.getElementById('parentId').value;if(id)await supabaseClient.from('parent_profiles').update(p).eq('id',id);else await supabaseClient.from('parent_profiles').insert([p]);closeModal('parentModal');loadAllData();});
 
-    // Children
-    window.openChildModal = () => { document.getElementById('childForm').reset(); document.getElementById('childId').value=''; populateSelect('childParentId', appData.parents, 'id', 'full_name'); openModal('childModal'); }
-    document.getElementById('childForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { parent_id: document.getElementById('childParentId').value, name: document.getElementById('childName').value, date_of_birth: document.getElementById('childDob').value||null, grade_level: document.getElementById('childGrade').value, status: document.getElementById('childStatus').value };
-      const id = document.getElementById('childId').value;
-      if(id) await supabaseClient.from('children').update(payload).eq('id', id); else await supabaseClient.from('children').insert([payload]);
-      closeModal('childModal'); loadAllData();
-    });
-    window.editChild = (id) => { const c=appData.children.find(x=>x.id===id); if(c){ populateSelect('childParentId', appData.parents, 'id', 'full_name'); document.getElementById('childId').value=c.id; document.getElementById('childParentId').value=c.parent_id; document.getElementById('childName').value=c.name; document.getElementById('childDob').value=c.date_of_birth||''; document.getElementById('childGrade').value=c.grade_level||''; document.getElementById('childStatus').value=c.status?.toLowerCase()||'active'; openModal('childModal'); } }
+    window.openChildModal=()=>{document.getElementById('childForm').reset();document.getElementById('childId').value='';populateSelect('childParentId',appData.parents,'id','full_name');openModal('childModal');}
+    window.editChild=(id)=>{const c=appData.children.find(x=>x.id===id);if(c){populateSelect('childParentId',appData.parents,'id','full_name');document.getElementById('childId').value=c.id;document.getElementById('childParentId').value=c.parent_id;document.getElementById('childName').value=c.name;document.getElementById('childGrade').value=c.grade_level||'';document.getElementById('childStatus').value=c.status||'active';openModal('childModal');}}
+    document.getElementById('childForm').addEventListener('submit',async(e)=>{e.preventDefault();const p={parent_id:document.getElementById('childParentId').value,name:document.getElementById('childName').value,grade_level:document.getElementById('childGrade').value,status:document.getElementById('childStatus').value};const id=document.getElementById('childId').value;if(id)await supabaseClient.from('children').update(p).eq('id',id);else await supabaseClient.from('children').insert([p]);closeModal('childModal');loadAllData();});
 
-    // Tutors
-    document.getElementById('tutorForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { full_name: document.getElementById('tutorName').value, email: document.getElementById('tutorEmail').value, phone: document.getElementById('tutorPhone').value, status: document.getElementById('tutorStatus').value, qualifications: document.getElementById('tutorQualifications').value };
-      const id = document.getElementById('tutorId').value;
-      if(id) await supabaseClient.from('tutor_profiles').update(payload).eq('id', id); else await supabaseClient.from('tutor_profiles').insert([payload]);
-      closeModal('tutorModal'); loadAllData();
-    });
-    window.editTutor = (id) => { const t=appData.tutors.find(x=>x.id===id); if(t){ document.getElementById('tutorId').value=t.id; document.getElementById('tutorName').value=t.full_name; document.getElementById('tutorEmail').value=t.email||''; document.getElementById('tutorPhone').value=t.phone||''; document.getElementById('tutorStatus').value=t.status||'pending'; document.getElementById('tutorQualifications').value=t.qualifications||''; openModal('tutorModal'); } }
+    window.openTutorModal=()=>{document.getElementById('tutorForm').reset();document.getElementById('tutorId').value='';openModal('tutorModal');}
+    window.editTutor=(id)=>{const t=appData.tutors.find(x=>x.id===id);if(t){document.getElementById('tutorId').value=t.id;document.getElementById('tutorName').value=t.full_name;document.getElementById('tutorEmail').value=t.email||'';document.getElementById('tutorStatus').value=t.status||'pending';openModal('tutorModal');}}
+    document.getElementById('tutorForm').addEventListener('submit',async(e)=>{e.preventDefault();const p={full_name:document.getElementById('tutorName').value,email:document.getElementById('tutorEmail').value,status:document.getElementById('tutorStatus').value};const id=document.getElementById('tutorId').value;if(id)await supabaseClient.from('tutor_profiles').update(p).eq('id',id);else await supabaseClient.from('tutor_profiles').insert([p]);closeModal('tutorModal');loadAllData();});
 
-    // Subjects
-    document.getElementById('subjectForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { name: document.getElementById('subjectName').value, color_code: document.getElementById('subjectColor').value };
-      const id = document.getElementById('subjectId').value;
-      if(id) await supabaseClient.from('subjects').update(payload).eq('id', id); else await supabaseClient.from('subjects').insert([payload]);
-      closeModal('subjectModal'); loadAllData();
-    });
-    window.editSubject = (id) => { const s=appData.subjects.find(x=>x.id===id); if(s){ document.getElementById('subjectId').value=s.id; document.getElementById('subjectName').value=s.name; document.getElementById('subjectColor').value=s.color_code||'#2D6A4F'; openModal('subjectModal'); } }
+    window.openSubjectModal=()=>{document.getElementById('subjectForm').reset();document.getElementById('subjectId').value='';openModal('subjectModal');}
+    window.editSubject=(id)=>{const s=appData.subjects.find(x=>x.id===id);if(s){document.getElementById('subjectId').value=s.id;document.getElementById('subjectName').value=s.name;openModal('subjectModal');}}
+    document.getElementById('subjectForm').addEventListener('submit',async(e)=>{e.preventDefault();const p={name:document.getElementById('subjectName').value};const id=document.getElementById('subjectId').value;if(id)await supabaseClient.from('subjects').update(p).eq('id',id);else await supabaseClient.from('subjects').insert([p]);closeModal('subjectModal');loadAllData();});
 
-    // Lessons
-    window.openLessonModal = () => { document.getElementById('lessonForm').reset(); document.getElementById('lessonId').value=''; populateSelect('lesChildId', appData.children, 'id', 'name'); populateSelect('lesTutorId', appData.tutors.filter(t=>t.status==='active'), 'id', 'full_name'); populateSelect('lesSubjectId', appData.subjects, 'id', 'name'); openModal('lessonModal'); }
-    document.getElementById('lessonForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { title: document.getElementById('lesTitle').value, child_id: document.getElementById('lesChildId').value, tutor_id: document.getElementById('lesTutorId').value, subject_id: document.getElementById('lesSubjectId').value, scheduled_at: new Date(document.getElementById('lesTime').value).toISOString(), duration_minutes: document.getElementById('lesDuration').value, meeting_url: document.getElementById('lesUrl').value, status: document.getElementById('lesStatus').value };
-      const id = document.getElementById('lessonId').value;
-      if(id) await supabaseClient.from('lessons').update(payload).eq('id', id); else await supabaseClient.from('lessons').insert([payload]);
-      closeModal('lessonModal'); loadAllData();
-    });
-    window.editLesson = (id) => { const l=appData.lessons.find(x=>x.id===id); if(l){ populateSelect('lesChildId', appData.children, 'id', 'name'); populateSelect('lesTutorId', appData.tutors, 'id', 'full_name'); populateSelect('lesSubjectId', appData.subjects, 'id', 'name'); document.getElementById('lessonId').value=l.id; document.getElementById('lesTitle').value=l.title||''; document.getElementById('lesChildId').value=l.child_id; document.getElementById('lesTutorId').value=l.tutor_id; document.getElementById('lesSubjectId').value=l.subject_id; document.getElementById('lesTime').value=l.scheduled_at ? new Date(l.scheduled_at).toISOString().slice(0,16) : ''; document.getElementById('lesDuration').value=l.duration_minutes||60; document.getElementById('lesUrl').value=l.meeting_url||''; document.getElementById('lesStatus').value=l.status||'scheduled'; openModal('lessonModal'); } }
-
-    // Assessments
-    window.openAssessmentModal = () => { document.getElementById('assessmentForm').reset(); document.getElementById('assId').value=''; populateSelect('assChildId', appData.children, 'id', 'name'); populateSelect('assTutorId', appData.tutors.filter(t=>t.status==='active'), 'id', 'full_name'); populateSelect('assSubjectId', appData.subjects, 'id', 'name'); openModal('assessmentModal'); }
-    document.getElementById('assessmentForm').addEventListener('submit', async(e) => { e.preventDefault();
-      const payload = { title: document.getElementById('assTitle').value, type: document.getElementById('assType').value, child_id: document.getElementById('assChildId').value, tutor_id: document.getElementById('assTutorId').value, subject_id: document.getElementById('assSubjectId').value, grade: document.getElementById('assGrade').value, max_grade: document.getElementById('assMax').value, feedback: document.getElementById('assFeedback').value };
-      const id = document.getElementById('assId').value;
-      if(id) await supabaseClient.from('assessments').update(payload).eq('id', id); else await supabaseClient.from('assessments').insert([payload]);
-      closeModal('assessmentModal'); loadAllData();
-    });
-    window.editAssessment = (id) => { const a=appData.assessments.find(x=>x.id===id); if(a){ populateSelect('assChildId', appData.children, 'id', 'name'); populateSelect('assTutorId', appData.tutors, 'id', 'full_name'); populateSelect('assSubjectId', appData.subjects, 'id', 'name'); document.getElementById('assId').value=a.id; document.getElementById('assTitle').value=a.title; document.getElementById('assType').value=a.type||'Quiz/Module'; document.getElementById('assChildId').value=a.child_id; document.getElementById('assTutorId').value=a.tutor_id; document.getElementById('assSubjectId').value=a.subject_id; document.getElementById('assGrade').value=a.grade; document.getElementById('assMax').value=a.max_grade||100; document.getElementById('assFeedback').value=a.feedback||''; openModal('assessmentModal'); } }
-
-    // Profile Edit
-    document.getElementById('adminProfileForm').addEventListener('submit', async(e) => { e.preventDefault();
-      if(!adminProfile) return;
-      const payload = { full_name: document.getElementById('profName').value, phone: document.getElementById('profPhone').value };
-      await supabaseClient.from('admin_profiles').update(payload).eq('id', adminProfile.id);
-      alert('Profile updated securely.'); loadAllData();
-    });
+    window.openAssessmentModal=()=>{document.getElementById('assessmentForm').reset();document.getElementById('assId').value='';populateSelect('assChildId',appData.children,'id','name');populateSelect('assTutorId',appData.tutors.filter(t=>t.status==='active'),'id','full_name');populateSelect('assSubjectId',appData.subjects,'id','name');openModal('assessmentModal');}
+    window.editAssessment=(id)=>{const a=appData.assessments.find(x=>x.id===id);if(a){populateSelect('assChildId',appData.children,'id','name');populateSelect('assTutorId',appData.tutors,'id','full_name');populateSelect('assSubjectId',appData.subjects,'id','name');document.getElementById('assId').value=a.id;document.getElementById('assChildId').value=a.child_id;document.getElementById('assTutorId').value=a.tutor_id;document.getElementById('assSubjectId').value=a.subject_id;document.getElementById('assTitle').value=a.title;document.getElementById('assGrade').value=a.grade;openModal('assessmentModal');}}
+    document.getElementById('assessmentForm').addEventListener('submit',async(e)=>{e.preventDefault();const p={child_id:document.getElementById('assChildId').value,tutor_id:document.getElementById('assTutorId').value,subject_id:document.getElementById('assSubjectId').value,title:document.getElementById('assTitle').value,grade:document.getElementById('assGrade').value};const id=document.getElementById('assId').value;if(id)await supabaseClient.from('assessments').update(p).eq('id',id);else await supabaseClient.from('assessments').insert([p]);closeModal('assessmentModal');loadAllData();});
 
     window.logout = async () => { await supabaseClient.auth.signOut(); window.location.href = '/admin-index.html'; }
-    
-    // Boot
     loadAllData();
   </script>
 </body>
