@@ -35,11 +35,7 @@
       --border-light:       #EDD9C8;
       
       --primary: var(--canopy-green);
-      --primary-hover: var(--canopy-green-dark);
-      --primary-light: #e6f7ed;
       --secondary: var(--sunset-gold);
-      --secondary-hover: var(--sunset-gold-warm);
-      --accent: var(--baobab-brown);
       
       --success: #2D6A4F;
       --success-light: #e6f7ed;
@@ -48,16 +44,8 @@
       --danger: #D32F2F;
       --danger-light: #FFEBEE;
       
-      --gray-50: #fafafa;
-      --gray-100: #f5f5f5;
-      --gray-200: var(--border-light);
-      --gray-500: var(--text-medium);
-      --gray-600: var(--text-dark);
-      --gray-800: var(--deep-charcoal);
-      
       --shadow-sm: 0 2px 8px rgba(107,58,42,0.05);
       --shadow-md: 0 8px 24px rgba(107,58,42,0.1);
-      --shadow-lg: 0 12px 32px rgba(107,58,42,0.15);
       
       --border-radius: 12px;
       --border-radius-lg: 16px;
@@ -68,153 +56,78 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background-color: var(--earth-cream);
-      color: var(--gray-800);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--earth-cream); color: var(--deep-charcoal); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
     h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--baobab-brown-dark); }
 
-    /* Header */
-    .header {
-      position: sticky; top: 0; z-index: 1000;
-      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
-    }
-    .header-content {
-      max-width: 1600px; margin: 0 auto; padding: 0 1.5rem;
-      display: flex; align-items: center; justify-content: space-between; height: 70px;
-    }
+    /* HEADER */
+    .header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .header-content { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 70px; }
     .header-left { display: flex; align-items: center; gap: 1rem; }
-    .menu-toggle {
-      display: none; width: 40px; height: 40px; border: none; background: var(--earth-cream); 
-      border-radius: var(--border-radius); color: var(--canopy-green); cursor: pointer; transition: var(--transition);
-    }
-    .menu-toggle:hover { background: var(--border-light); }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: none; background: var(--earth-cream); border-radius: var(--border-radius); color: var(--canopy-green); cursor: pointer; transition: var(--transition); }
     .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-    .brand-icon {
-      width: 40px; height: 40px; background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));
-      border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; box-shadow: var(--shadow-sm);
-    }
+    .brand-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; box-shadow: var(--shadow-sm); }
     .brand-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 800; color: var(--baobab-brown-dark); }
     
     .search-container { flex: 1; max-width: 500px; margin: 0 2rem; }
     .search-wrapper { position: relative; }
-    .search-input {
-      width: 100%; height: 42px; padding: 0 1rem 0 2.8rem; border: 2px solid var(--border-light);
-      border-radius: 50px; background: var(--warm-white); font-size: .9rem; font-family: 'DM Sans', sans-serif; transition: var(--transition); outline: none;
-    }
+    .search-input { width: 100%; height: 42px; padding: 0 1rem 0 2.8rem; border: 2px solid var(--border-light); border-radius: 50px; background: var(--warm-white); font-size: .9rem; font-family: 'DM Sans', sans-serif; transition: var(--transition); outline: none; }
     .search-input:focus { border-color: var(--canopy-green); box-shadow: 0 0 0 3px var(--primary-light); }
-    .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gray-500); font-size: 1rem; }
+    .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-medium); font-size: 1rem; }
     
     .header-right { display: flex; align-items: center; gap: 1rem; }
-    .notification-btn {
-      position: relative; width: 42px; height: 42px; border: none; background: var(--earth-cream);
-      border-radius: 50%; color: var(--canopy-green-dark); cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center;
-    }
-    .notification-btn:hover { background: var(--border-light); }
-    .notification-badge {
-      position: absolute; top: 0; right: 0; width: 18px; height: 18px; background: var(--sunset-gold-warm); color: white; 
-      border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid white;
-    }
-    .user-profile { display: flex; align-items: center; gap: 0.75rem; padding: 0.35rem 0.75rem 0.35rem 0.35rem; border-radius: 50px; border: 1px solid var(--border-light); transition: var(--transition); cursor: pointer; background: var(--warm-white);}
-    .user-profile:hover { border-color: var(--canopy-green); }
-    .user-avatar {
-      width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));
-      display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;
-    }
+    .user-profile { display: flex; align-items: center; gap: 0.75rem; padding: 0.35rem 0.75rem 0.35rem 0.35rem; border-radius: 50px; border: 1px solid var(--border-light); background: var(--warm-white); }
+    .user-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; }
     .user-info { display: flex; flex-direction: column; }
     .user-name { font-weight: 700; font-size: 0.85rem; color: var(--baobab-brown-dark); line-height: 1.2;}
     .user-role { font-size: 0.7rem; color: var(--canopy-green); font-weight: 700; text-transform: uppercase; letter-spacing: .05em;}
 
-    /* Layout */
+    /* LAYOUT & SIDEBAR */
     .app-layout { display: flex; min-height: calc(100vh - 70px); max-width: 1600px; margin: 0 auto; padding: 1.5rem; gap: 2rem; }
-    
-    /* Sidebar */
     .sidebar { width: 260px; flex-shrink: 0; }
-    .sidebar-nav {
-      background: var(--warm-white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-sm); padding: 1.5rem 1rem; border: 1px solid var(--border-light);
-      position: sticky; top: 90px;
-    }
+    .sidebar-nav { background: var(--warm-white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-sm); padding: 1.5rem 1rem; border: 1px solid var(--border-light); position: sticky; top: 90px; }
     .nav-section { margin-bottom: 1.5rem; }
-    .nav-section:last-child { margin-bottom: 0; }
-    .nav-section-title {
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--text-light); margin-bottom: 0.75rem; padding: 0 0.75rem;
-    }
+    .nav-section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 0.75rem; padding: 0 0.75rem; }
     .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
-    .nav-link {
-      display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 10px;
-      color: var(--text-medium); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: var(--transition);
-    }
-    .nav-link:hover { color: var(--canopy-green-dark); background: var(--primary-light); }
+    .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 10px; color: var(--text-medium); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
+    .nav-link:hover { color: var(--canopy-green-dark); background: #e6f7ed; }
     .nav-link.active { color: white; background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark)); box-shadow: 0 4px 10px rgba(45,106,79,0.2); }
     .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
-    .nav-count {
-      margin-left: auto; background: var(--earth-cream); color: var(--baobab-brown-dark); font-size: 0.75rem; font-weight: 800;
-      padding: 0.15rem 0.5rem; border-radius: 50px; text-align: center; border: 1px solid var(--border-light);
-    }
+    .nav-count { margin-left: auto; background: var(--earth-cream); color: var(--baobab-brown-dark); font-size: 0.75rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 50px; border: 1px solid var(--border-light); }
     .nav-link.active .nav-count { background: rgba(255,255,255,0.2); color: white; border-color: transparent;}
 
-    /* Main Content */
+    /* MAIN CONTENT */
     .main-content { flex: 1; min-width: 0; }
-    .section { display: none; animation: fadeIn 0.4s ease; padding: 0;}
+    .section { display: none; animation: fadeIn 0.4s ease; }
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Dashboard Header */
     .dashboard-header { margin-bottom: 2rem; }
     .dashboard-title { font-size: 2.2rem; margin-bottom: 0.25rem; }
     .dashboard-subtitle { font-size: 1rem; color: var(--text-medium); }
     
-    /* Stats Grid */
+    /* STATS & CARDS */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .stat-card {
-      background: var(--warm-white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg);
-      padding: 1.5rem; box-shadow: var(--shadow-sm); transition: var(--transition); position: relative; overflow: hidden;
-    }
+    .stat-card { background: var(--warm-white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); transition: var(--transition); position: relative; overflow: hidden; }
     .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--canopy-green-light); }
     .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--canopy-green); }
     .stat-card.accent::before { background: var(--sunset-gold); }
-    .stat-card.success::before { background: var(--canopy-green-dark); }
-    .stat-card.warning::before { background: var(--baobab-brown); }
-    
     .stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
     .stat-title { font-size: 0.85rem; font-weight: 700; color: var(--text-medium); text-transform: uppercase; letter-spacing: .05em;}
     .stat-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; }
     .stat-icon.primary { background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark)); }
     .stat-icon.accent { background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm)); }
-    .stat-icon.success { background: linear-gradient(135deg, var(--canopy-green-light), var(--canopy-green)); }
-    .stat-icon.warning { background: linear-gradient(135deg, var(--baobab-brown-light), var(--baobab-brown)); }
-    
     .stat-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 800; color: var(--deep-charcoal); margin-bottom: 0.5rem; line-height: 1; }
-    .stat-change { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 600; color: var(--text-medium);}
-    .stat-change i { color: var(--canopy-green); }
 
-    /* Cards (Tables & Sections) */
-    .card {
-      background: var(--warm-white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-sm); margin-bottom: 2rem; overflow: hidden;
-    }
-    .card-header {
-      padding: 1.5rem; border-bottom: 1px solid var(--earth-cream-dark); background: #ffffff;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-    }
+    .card { background: var(--warm-white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 2rem; overflow: hidden; }
+    .card-header { padding: 1.5rem; border-bottom: 1px solid var(--earth-cream-dark); background: #ffffff; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .card-title { display: flex; align-items: center; gap: 0.75rem; font-size: 1.2rem; font-family: 'Playfair Display', serif; font-weight: 800; color: var(--baobab-brown-dark); }
-    .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; box-shadow: var(--shadow-sm); }
+    .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; }
     .card-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .card-content { padding: 1.5rem; background: var(--warm-white);}
 
-    /* Buttons */
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center;
-      padding: 0.7rem 1.25rem; border: 2px solid transparent; border-radius: 50px;
-      font-weight: 700; font-size: 0.85rem; text-decoration: none; cursor: pointer; transition: var(--transition);
-      font-family: 'DM Sans', sans-serif; white-space: nowrap;
-    }
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; justify-content: center; padding: 0.7rem 1.25rem; border: 2px solid transparent; border-radius: 50px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: var(--transition); font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     .btn-primary { background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark)); color: white; box-shadow: 0 4px 10px rgba(45,106,79,0.2); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(45,106,79,0.3); }
     .btn-secondary { background: var(--earth-cream); color: var(--baobab-brown-dark); border-color: var(--border-light); }
@@ -223,107 +136,73 @@
     .btn-danger:hover { background: var(--danger); color: white; }
     .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.75rem; border-radius: 8px;}
 
-    /* Quick Actions */
-    .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .quick-action {
-      background: var(--warm-white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg);
-      padding: 1.5rem; text-decoration: none; color: var(--gray-800); transition: var(--transition); box-shadow: var(--shadow-sm);
-    }
-    .quick-action:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--canopy-green); }
-    .quick-action-icon {
-      width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1rem; color: white; box-shadow: var(--shadow-sm);
-    }
-    .quick-action-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 0.35rem; color: var(--baobab-brown-dark); font-family: 'DM Sans', sans-serif;}
-    .quick-action-desc { font-size: 0.85rem; color: var(--text-medium); line-height: 1.5; }
-
-    /* Activity */
-    .activity-list { list-style: none; }
-    .activity-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; border-radius: 12px; border: 1px solid transparent; transition: var(--transition); margin-bottom: .5rem;}
-    .activity-item:hover { background: white; border-color: var(--border-light); box-shadow: var(--shadow-sm);}
-    .activity-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--earth-cream-dark), var(--sunset-gold)); display: flex; align-items: center; justify-content: center; color: var(--baobab-brown-dark); font-weight: 800; font-size: 0.9rem; flex-shrink: 0;}
-    .activity-content { flex: 1; padding-top: 2px;}
-    .activity-text { font-weight: 500; margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--deep-charcoal);}
-    .activity-time { font-size: 0.75rem; color: var(--text-light); font-weight: 600;}
-
-    /* Forms */
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-label { display: block; font-weight: 800; margin-bottom: 0.5rem; color: var(--baobab-brown-dark); font-size: 0.85rem; }
-    .form-input, .form-select { width: 100%; padding: 0.85rem 1rem; border: 2px solid var(--border-light); border-radius: 12px; font-size: 0.9rem; transition: var(--transition); background: var(--earth-cream); font-family: 'DM Sans', sans-serif; color: var(--deep-charcoal);}
-    .form-input:focus, .form-select:focus { outline: none; border-color: var(--canopy-green); background: white; box-shadow: 0 4px 10px rgba(45,106,79,0.1); }
-    textarea.form-input { min-height: 100px; resize: vertical; }
-
-    /* Tables */
+    /* TABLES */
     .table-container { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border-light); background: var(--white); }
     .table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; }
-    .table th {
-      background: var(--earth-cream); padding: 1rem; text-align: left; font-weight: 800; font-size: 0.8rem; color: var(--baobab-brown-dark);
-      text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid var(--border-light); position: sticky; top: 0; z-index: 10;
-    }
+    .table th { background: var(--earth-cream); padding: 1rem; text-align: left; font-weight: 800; font-size: 0.8rem; color: var(--baobab-brown-dark); text-transform: uppercase; border-bottom: 2px solid var(--border-light); }
     .table td { padding: 1rem; border-bottom: 1px solid var(--earth-cream-dark); vertical-align: middle; font-size: 0.9rem; color: var(--deep-charcoal);}
-    .table tbody tr { transition: var(--transition); }
     .table tbody tr:hover { background: var(--earth-cream); }
 
-    /* Badges */
+    /* BADGES */
     .badge { display: inline-flex; align-items: center; padding: 0.35rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
     .badge-success { background: var(--success-light); color: var(--success); border: 1px solid #b8ebcd;}
     .badge-warning { background: var(--warning-light); color: var(--warning); border: 1px solid #fce3ce;}
     .badge-danger { background: var(--danger-light); color: var(--danger); border: 1px solid #ffcdd2;}
-    .badge-primary { background: var(--primary-light); color: var(--primary); border: 1px solid #b8ebcd;}
     .badge-secondary { background: var(--earth-cream-dark); color: var(--text-medium); border: 1px solid var(--border-light);}
 
-    /* Modal */
+    /* ==========================================================
+       BEAUTIFUL MODAL FORMS 
+       ========================================================== */
     .modal { position: fixed; inset: 0; background: rgba(24, 18, 15, 0.8); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 1rem; }
     .modal.active { display: flex; animation: fadeIn .2s ease;}
-    .modal-content { background: var(--white); border-radius: var(--border-radius-xl); box-shadow: 0 24px 48px rgba(0,0,0,0.2); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative; border: 1px solid var(--border-light);}
-    .modal-header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--earth-cream-dark); display: flex; align-items: center; justify-content: space-between; }
-    .modal-title { font-size: 1.5rem; font-weight: 800; color: var(--baobab-brown-dark); font-family: 'Playfair Display', serif; display: flex; align-items: center; gap:.5rem;}
+    .modal-content { background: #ffffff; border-radius: var(--border-radius-xl); box-shadow: 0 24px 48px rgba(0,0,0,0.2); width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border-light);}
+    
+    .modal-header { padding: 2rem 2.5rem 1.5rem; border-bottom: 1px solid var(--earth-cream-dark); background: #fafafa; display: flex; align-items: center; justify-content: space-between; }
+    .modal-title { font-size: 1.5rem; font-weight: 800; color: var(--baobab-brown-dark); font-family: 'Playfair Display', serif; display: flex; align-items: center; gap:.75rem;}
     .modal-close { width: 36px; height: 36px; border: none; background: var(--earth-cream); border-radius: 50%; color: var(--text-medium); cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;}
     .modal-close:hover { background: #FFEBEE; color: var(--danger); }
-    .modal-body { padding: 2rem; }
+    
+    .modal-body { padding: 2rem 2.5rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: block; font-weight: 800; margin-bottom: 0.5rem; color: var(--baobab-brown-dark); font-size: 0.85rem; }
+    
+    /* Input Styling - Crisp and Readable */
+    .form-input, .form-select { 
+      width: 100%; padding: 0.85rem 1rem; border: 2px solid var(--border-light); 
+      border-radius: 12px; font-size: 0.95rem; transition: var(--transition); 
+      background: #ffffff; font-family: 'DM Sans', sans-serif; color: var(--deep-charcoal);
+    }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--canopy-green); box-shadow: 0 0 0 4px rgba(45,106,79,0.1); }
+    .form-input::placeholder { color: #a0938d; }
+    textarea.form-input { min-height: 100px; resize: vertical; }
+    
+    /* Meet Link Highlight */
+    .meet-input-group .form-input { border-color: var(--sunset-gold); background: #fdfaf6; }
+    .meet-input-group .form-input:focus { border-color: var(--canopy-green); background: #ffffff; }
 
-    /* Loading & Empty */
+    /* Loading & Empty states */
     .loading { display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 3rem; color: var(--canopy-green); font-weight: 700; }
     .spinner { width: 28px; height: 28px; border: 3px solid var(--border-light); border-top: 3px solid var(--canopy-green); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-medium); }
     .empty-state i { font-size: 3rem; margin-bottom: 1rem; color: var(--sunset-gold); opacity: 0.5;}
-    .empty-state p { font-weight: 600; font-size: 1.1rem;}
 
-    /* Charts */
-    .chart-container { background: var(--white); border: 1px solid var(--border-light); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; height: 300px; box-shadow: var(--shadow-sm);}
-    .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .app-layout { gap: 1.5rem; padding: 1rem;}
-      .sidebar { width: 240px; }
-      .search-container { margin: 0 1rem; }
-    }
     @media (max-width: 768px) {
       .header-content { padding: 0 1rem; }
       .brand-text { display: none; }
       .search-container { display: none; }
       .menu-toggle { display: flex; }
       .app-layout { flex-direction: column; }
-      .sidebar {
-        position: fixed; top: 70px; left: -280px; height: calc(100vh - 70px); width: 260px;
-        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); z-index: 1200; transition: var(--transition);
-        padding: 1rem; overflow-y: auto; box-shadow: var(--shadow-lg);
-      }
+      .sidebar { position: fixed; top: 70px; left: -280px; height: calc(100vh - 70px); width: 260px; background: rgba(255, 255, 255, 0.98); z-index: 1200; transition: var(--transition); padding: 1rem; box-shadow: var(--shadow-md); }
       .sidebar.active { left: 0; }
-      .sidebar-overlay { position: fixed; inset: 0; background: rgba(24, 18, 15, 0.6); backdrop-filter: blur(4px); z-index: 1100; display: none; }
-      .sidebar-overlay.active { display: block; }
       .main-content { padding: 0; }
-      .dashboard-title { font-size: 1.8rem; }
-      .stats-grid, .quick-actions, .charts-grid { grid-template-columns: 1fr; }
-      .card-header { flex-direction: column; align-items: flex-start; }
-      .modal-content { max-width: 95vw; padding: 0;}
+      .modal-content { max-width: 95vw; }
+      .modal-body { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <header class="header">
     <div class="header-content">
@@ -331,24 +210,17 @@
         <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
         <a href="#dashboard" class="brand">
           <div class="brand-icon"><i class="fas fa-shield-halved"></i></div>
-          <div class="brand-text">Baobab Admin</div>
+          <div class="brand-text">Baobab ERP</div>
         </a>
       </div>
-
       <div class="search-container">
         <div class="search-wrapper">
           <i class="fas fa-search search-icon"></i>
-          <input type="search" class="search-input" id="globalSearch" placeholder="Search users, lessons, reports...">
+          <input type="search" class="search-input" id="globalSearch" placeholder="Search directory...">
         </div>
       </div>
-
       <div class="header-right">
-        <button class="notification-btn" id="notificationBtn">
-          <i class="fas fa-bell"></i>
-          <span class="notification-badge" id="notificationCount" style="display: none;">0</span>
-        </button>
-        
-        <div class="user-profile" id="userProfile">
+        <div class="user-profile">
           <div class="user-avatar" id="userAvatar">A</div>
           <div class="user-info">
             <div class="user-name" id="userName">Administrator</div>
@@ -366,91 +238,29 @@
         <div class="nav-section">
           <div class="nav-section-title">Overview</div>
           <ul class="nav-list">
-            <li>
-              <a href="#dashboard" class="nav-link active" data-section="dashboard">
-                <i class="fas fa-chart-pie nav-icon"></i> Dashboard
-              </a>
-            </li>
-            <li>
-              <a href="#analytics" class="nav-link" data-section="analytics">
-                <i class="fas fa-chart-line nav-icon"></i> Analytics
-              </a>
-            </li>
-            <li>
-              <a href="#reports" class="nav-link" data-section="reports">
-                <i class="fas fa-file-invoice nav-icon"></i> Reports
-              </a>
-            </li>
+            <li><a href="#dashboard" class="nav-link active" data-section="dashboard"><i class="fas fa-chart-pie nav-icon"></i> Dashboard</a></li>
           </ul>
         </div>
-
         <div class="nav-section">
-          <div class="nav-section-title">User Management</div>
+          <div class="nav-section-title">Matchmaking & Ops</div>
           <ul class="nav-list">
-            <li>
-              <a href="#parents" class="nav-link" data-section="parents">
-                <i class="fas fa-user-group nav-icon"></i> Parents
-                <span class="nav-count" id="parentsCount">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#tutors" class="nav-link" data-section="tutors">
-                <i class="fas fa-chalkboard-user nav-icon"></i> Tutors
-                <span class="nav-count" id="tutorsCount">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#children" class="nav-link" data-section="children">
-                <i class="fas fa-child-reaching nav-icon"></i> Students
-                <span class="nav-count" id="childrenCount">0</span>
-              </a>
-            </li>
+            <li><a href="#lessons" class="nav-link" data-section="lessons"><i class="fas fa-calendar-day nav-icon"></i> Master Schedule <span class="nav-count" id="lessonsCount">0</span></a></li>
+            <li><a href="#billing" class="nav-link" data-section="billing"><i class="fas fa-wallet nav-icon"></i> Billing <span class="nav-count" id="billingCount">0</span></a></li>
+            <li><a href="#assessments" class="nav-link" data-section="assessments"><i class="fas fa-star-half-stroke nav-icon"></i> Assessment QC <span class="nav-count" id="assessmentsCount">0</span></a></li>
           </ul>
         </div>
-
         <div class="nav-section">
-          <div class="nav-section-title">Academic</div>
+          <div class="nav-section-title">Directory</div>
           <ul class="nav-list">
-            <li>
-              <a href="#subjects" class="nav-link" data-section="subjects">
-                <i class="fas fa-book-open nav-icon"></i> Subjects
-                <span class="nav-count" id="subjectsCount">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#lessons" class="nav-link" data-section="lessons">
-                <i class="fas fa-calendar-day nav-icon"></i> Lessons
-                <span class="nav-count" id="lessonsCount">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#assessments" class="nav-link" data-section="assessments">
-                <i class="fas fa-star-half-stroke nav-icon"></i> Assessments
-                <span class="nav-count" id="assessmentsCount">0</span>
-              </a>
-            </li>
+            <li><a href="#tutors" class="nav-link" data-section="tutors"><i class="fas fa-chalkboard-user nav-icon"></i> Tutors <span class="nav-count" id="tutorsCount">0</span></a></li>
+            <li><a href="#parents" class="nav-link" data-section="parents"><i class="fas fa-user-group nav-icon"></i> Parents <span class="nav-count" id="parentsCount">0</span></a></li>
+            <li><a href="#children" class="nav-link" data-section="children"><i class="fas fa-child-reaching nav-icon"></i> Students <span class="nav-count" id="childrenCount">0</span></a></li>
+            <li><a href="#subjects" class="nav-link" data-section="subjects"><i class="fas fa-book-open nav-icon"></i> Subjects <span class="nav-count" id="subjectsCount">0</span></a></li>
           </ul>
         </div>
-
         <div class="nav-section">
-          <div class="nav-section-title">Operations</div>
           <ul class="nav-list">
-            <li>
-              <a href="#billing" class="nav-link" data-section="billing">
-                <i class="fas fa-wallet nav-icon"></i> Billing
-                <span class="nav-count" id="billingCount">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#settings" class="nav-link" data-section="settings">
-                <i class="fas fa-sliders nav-icon"></i> Settings
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link" id="logoutLink" style="color: var(--danger);">
-                <i class="fas fa-right-from-bracket nav-icon"></i> Logout
-              </a>
-            </li>
+            <li><a href="#" class="nav-link" id="logoutLink" style="color: var(--danger);"><i class="fas fa-right-from-bracket nav-icon"></i> Logout</a></li>
           </ul>
         </div>
       </nav>
@@ -461,212 +271,30 @@
       <section id="dashboard" class="section active">
         <div class="dashboard-header">
           <h1 class="dashboard-title">Command Center</h1>
-          <p class="dashboard-subtitle">Here is what is happening across Baobab Digital Academy today.</p>
+          <p class="dashboard-subtitle">Manage matchmaking, financials, and academy growth.</p>
         </div>
 
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-header">
-              <div class="stat-title">Total Students</div>
+              <div class="stat-title">Active Students</div>
               <div class="stat-icon primary"><i class="fas fa-child-reaching"></i></div>
             </div>
             <div class="stat-number" id="totalStudents">0</div>
-            <div class="stat-change"><i class="fas fa-arrow-trend-up"></i><span>Active enrolled</span></div>
           </div>
-
           <div class="stat-card accent">
             <div class="stat-header">
-              <div class="stat-title">Active Lessons</div>
+              <div class="stat-title">Upcoming Lessons</div>
               <div class="stat-icon accent"><i class="fas fa-laptop-file"></i></div>
             </div>
             <div class="stat-number" id="activeLessons">0</div>
-            <div class="stat-change"><i class="fas fa-calendar-check"></i><span>Scheduled via portal</span></div>
           </div>
-
-          <div class="stat-card success">
+          <div class="stat-card" style="border-top: 4px solid var(--baobab-brown);">
             <div class="stat-header">
-              <div class="stat-title">Monthly Revenue</div>
-              <div class="stat-icon success"><i class="fas fa-sterling-sign"></i></div>
+              <div class="stat-title">Pending Approvals</div>
+              <div class="stat-icon" style="background: var(--baobab-brown);"><i class="fas fa-user-clock"></i></div>
             </div>
-            <div class="stat-number" id="monthlyRevenue">£0</div>
-            <div class="stat-change"><i class="fas fa-money-bill-trend-up"></i><span>Processed this month</span></div>
-          </div>
-
-          <div class="stat-card warning">
-            <div class="stat-header">
-              <div class="stat-title">Total Tutors</div>
-              <div class="stat-icon warning"><i class="fas fa-chalkboard-user"></i></div>
-            </div>
-            <div class="stat-number" id="totalTutors">0</div>
-            <div class="stat-change"><i class="fas fa-users-viewfinder"></i><span>Approved educators</span></div>
-          </div>
-        </div>
-
-        <div class="quick-actions">
-          <a href="#children" class="quick-action" data-section="children">
-            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));">
-              <i class="fas fa-user-plus"></i>
-            </div>
-            <div class="quick-action-title">Onboard Student</div>
-            <div class="quick-action-desc">Register a new student and assign them to an academic pathway.</div>
-          </a>
-
-          <a href="#tutors" class="quick-action" data-section="tutors">
-            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));">
-              <i class="fas fa-user-tie"></i>
-            </div>
-            <div class="quick-action-title">Manage Tutors</div>
-            <div class="quick-action-desc">Review applications, view schedules, and assign subjects.</div>
-          </a>
-
-          <a href="#lessons" class="quick-action" data-section="lessons">
-            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--baobab-brown-light), var(--baobab-brown));">
-              <i class="fas fa-calendar-plus"></i>
-            </div>
-            <div class="quick-action-title">Schedule Lesson</div>
-            <div class="quick-action-desc">Create direct calendar invites and manage class timings.</div>
-          </a>
-
-          <a href="#reports" class="quick-action" data-section="reports">
-            <div class="quick-action-icon" style="background: linear-gradient(135deg, var(--canopy-green-light), var(--canopy-green));">
-              <i class="fas fa-chart-pie"></i>
-            </div>
-            <div class="quick-action-title">Generate Reports</div>
-            <div class="quick-action-desc">Access high-level analytics, academic progress, and finance.</div>
-          </a>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));">
-                <i class="fas fa-bolt"></i>
-              </div>
-              Recent Portal Activity
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-secondary btn-sm" id="refreshActivity"><i class="fas fa-rotate"></i> Refresh</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <ul class="activity-list" id="activityList"></ul>
-          </div>
-        </div>
-
-        <div class="charts-grid">
-          <div class="chart-container"><canvas id="enrollmentChart"></canvas></div>
-          <div class="chart-container"><canvas id="revenueChart"></canvas></div>
-        </div>
-      </section>
-
-      <section id="reports" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));">
-                <i class="fas fa-file-invoice"></i>
-              </div>
-              Analytics & Reporting
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-secondary" id="refreshReportsBtn"><i class="fas fa-rotate"></i> Refresh Data</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="charts-grid">
-              <div class="chart-container"><canvas id="reportAvgBySubject"></canvas></div>
-              <div class="chart-container"><canvas id="reportLessonBySubject"></canvas></div>
-              <div class="chart-container"><canvas id="reportPerformanceTrend"></canvas></div>
-              <div class="chart-container"><canvas id="reportRevenueStatus"></canvas></div>
-            </div>
-
-            <div class="table-container" style="margin-top: 1rem;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Key Metric</th>
-                    <th>Current Value</th>
-                  </tr>
-                </thead>
-                <tbody id="reportsSummaryBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="parents" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));">
-                <i class="fas fa-user-group"></i>
-              </div>
-              Parent Directory
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addParentBtn"><i class="fas fa-plus"></i> Add Parent</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div id="parentsTableContainer"><div class="loading"><div class="spinner"></div> Loading parents...</div></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="tutors" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));">
-                <i class="fas fa-chalkboard-user"></i>
-              </div>
-              Educator Directory
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addTutorBtn"><i class="fas fa-plus"></i> Add Tutor</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div id="tutorsTableContainer"><div class="loading"><div class="spinner"></div> Loading educators...</div></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="children" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--baobab-brown-light), var(--baobab-brown));">
-                <i class="fas fa-child-reaching"></i>
-              </div>
-              Student Roster
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addChildBtn"><i class="fas fa-plus"></i> Enroll Student</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div id="childrenTableContainer"><div class="loading"><div class="spinner"></div> Loading roster...</div></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="subjects" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));">
-                <i class="fas fa-book-open"></i>
-              </div>
-              Curriculum Subjects
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addSubjectBtn"><i class="fas fa-plus"></i> Add Subject</button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div id="subjectsTableContainer"><div class="loading"><div class="spinner"></div> Loading curriculum...</div></div>
+            <div class="stat-number" id="pendingTutors">0</div>
           </div>
         </div>
       </section>
@@ -675,17 +303,83 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));">
-                <i class="fas fa-calendar-day"></i>
-              </div>
-              Master Schedule
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green), var(--canopy-green-dark));"><i class="fas fa-calendar-day"></i></div>
+              The Matchmaker (Master Schedule)
             </div>
             <div class="card-actions">
-              <button class="btn btn-primary" id="addLessonBtn"><i class="fas fa-plus"></i> Schedule Lesson</button>
+              <button class="btn btn-primary" onclick="openLessonModal()"><i class="fas fa-plus"></i> Schedule Class</button>
             </div>
           </div>
           <div class="card-content">
-            <div id="lessonsTableContainer"><div class="loading"><div class="spinner"></div> Loading schedule...</div></div>
+            <div id="lessonsTableContainer"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tutors" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--sunset-gold), var(--sunset-gold-warm));"><i class="fas fa-chalkboard-user"></i></div>
+              Tutor Directory & Vetting
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openTutorModal()"><i class="fas fa-plus"></i> Add Tutor</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="tutorsTableContainer"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="parents" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--baobab-brown-light), var(--baobab-brown));"><i class="fas fa-user-group"></i></div>
+              Parent Directory
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openParentModal()"><i class="fas fa-plus"></i> Add Parent</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="parentsTableContainer"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="children" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green-light), var(--canopy-green));"><i class="fas fa-child-reaching"></i></div>
+              Student Roster
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openChildModal()"><i class="fas fa-plus"></i> Enroll Student</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="childrenTableContainer"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="subjects" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background: var(--deep-charcoal);"><i class="fas fa-book-open"></i></div>
+              Curriculum Subjects
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary" onclick="openSubjectModal()"><i class="fas fa-plus"></i> Add Subject</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div id="subjectsTableContainer"><div class="loading"><div class="spinner"></div></div></div>
           </div>
         </div>
       </section>
@@ -694,132 +388,85 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--baobab-brown-light), var(--baobab-brown));">
-                <i class="fas fa-star-half-stroke"></i>
-              </div>
-              Academic Assessments
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addAssessmentBtn"><i class="fas fa-plus"></i> Log Assessment</button>
+              <div class="card-icon" style="background: var(--sunset-gold);"><i class="fas fa-star-half-stroke"></i></div>
+              Assessment QC
             </div>
           </div>
           <div class="card-content">
-            <div id="assessmentsTableContainer"><div class="loading"><div class="spinner"></div> Loading records...</div></div>
+            <div id="assessmentsTableContainer"><div class="loading"><div class="spinner"></div></div></div>
           </div>
         </div>
       </section>
-
+      
       <section id="billing" class="section">
         <div class="card">
           <div class="card-header">
             <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--canopy-green-light), var(--canopy-green));">
-                <i class="fas fa-wallet"></i>
-              </div>
-              Financial Records
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-primary" id="addBillingBtn"><i class="fas fa-plus"></i> Create Invoice</button>
+              <div class="card-icon" style="background: var(--canopy-green);"><i class="fas fa-wallet"></i></div>
+              Billing & Invoices
             </div>
           </div>
           <div class="card-content">
-            <div id="billingTableContainer"><div class="loading"><div class="spinner"></div> Loading ledger...</div></div>
+            <div id="billingTableContainer"><div class="loading"><div class="spinner"></div></div></div>
           </div>
         </div>
       </section>
 
-      <section id="settings" class="section">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">
-              <div class="card-icon" style="background: linear-gradient(135deg, var(--text-medium), var(--text-dark));">
-                <i class="fas fa-sliders"></i>
-              </div>
-              System Preferences
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Academy Name</label>
-                <input type="text" class="form-input" id="academyName" placeholder="Baobab Digital Academy">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Contact Email</label>
-                <input type="email" class="form-input" id="contactEmail" placeholder="admin@baobabonlineacademy.com">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Default Lesson Duration (minutes)</label>
-                <input type="number" class="form-input" id="defaultDuration" min="15" step="5" placeholder="60">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Time Zone</label>
-                <select class="form-select" id="timeZone">
-                  <option value="Europe/London">Europe/London (GMT)</option>
-                  <option value="Africa/Lagos">Africa/Lagos (WAT)</option>
-                  <option value="America/New_York">America/New_York (EST)</option>
-                </select>
-              </div>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <button class="btn btn-primary" id="saveSettingsBtn"><i class="fas fa-save"></i> Save Settings</button>
-            </div>
-            <div id="settingsInfo" style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-medium); font-weight:700;"></div>
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 
-  <div class="modal" id="parentModal">
+  <div class="modal" id="lessonModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="parentModalTitle"><i class="fas fa-user-plus"></i> Add New Parent</h3>
-        <button class="modal-close" data-close-modal="parentModal"><i class="fas fa-times"></i></button>
+        <h3 class="modal-title" id="lessonModalTitle"><i class="fas fa-calendar-plus" style="color:var(--canopy-green)"></i> Schedule Match</h3>
+        <button class="modal-close" onclick="hideModal('lessonModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="modal-body">
-        <form id="parentForm">
-          <input type="hidden" name="id" id="parentId">
-          <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" name="full_name" id="parentFullName" required></div>
-          <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" name="email" id="parentEmail" required></div>
-          <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" name="phone" id="parentPhone"></div>
-          <div class="form-group"><label class="form-label">Address</label><textarea class="form-input" name="address" id="parentAddress"></textarea></div>
-          <div class="form-group"><label class="form-label">Emergency Contact</label><input type="text" class="form-input" name="emergency_contact" id="parentEmergency"></div>
-          <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" name="notes" id="parentNotes"></textarea></div>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Record</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="parentModal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="childModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="childModalTitle"><i class="fas fa-child-reaching"></i> Add New Student</h3>
-        <button class="modal-close" data-close-modal="childModal"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <form id="childForm">
-          <input type="hidden" name="id" id="childId">
+        <form id="lessonForm">
+          <input type="hidden" id="lessonId">
           <div class="form-group">
-            <label class="form-label">Guardian / Parent *</label>
-            <select class="form-select" name="parent_id" id="childParentSelect" required></select>
+            <label class="form-label">Lesson Title/Topic</label>
+            <input type="text" class="form-input" id="lessonTitle" placeholder="e.g. Introduction to Algebra">
           </div>
-          <div class="form-group"><label class="form-label">Student Name *</label><input type="text" class="form-input" name="name" id="childName" required></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Date of Birth</label><input type="date" class="form-input" name="date_of_birth" id="childDOB"></div>
-            <div class="form-group"><label class="form-label">Grade Level</label><input type="text" class="form-input" name="grade_level" id="childGrade"></div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Select Student *</label>
+              <select class="form-select" id="lessonChild" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Assign Tutor *</label>
+              <select class="form-select" id="lessonTutor" required></select>
+            </div>
           </div>
-          <div class="form-group"><label class="form-label">School</label><input type="text" class="form-input" name="school" id="childSchool"></div>
-          <div class="form-group"><label class="form-label">Medical Info</label><textarea class="form-input" name="medical_info" id="childMedical"></textarea></div>
-          <div class="form-group"><label class="form-label">Learning Preferences</label><textarea class="form-input" name="learning_preferences" id="childPrefs"></textarea></div>
-          <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" name="notes" id="childNotes"></textarea></div>
+          <div class="form-group">
+            <label class="form-label">Subject *</label>
+            <select class="form-select" id="lessonSubject" required></select>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Date & Time *</label>
+              <input type="datetime-local" class="form-input" id="lessonScheduledAt" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duration (Mins)</label>
+              <input type="number" class="form-input" id="lessonDuration" value="60" min="15" step="5">
+            </div>
+          </div>
+          <div class="form-group meet-input-group">
+            <label class="form-label">Google Meet Link <i class="fas fa-video" style="color:var(--sunset-gold)"></i></label>
+            <input type="url" class="form-input" id="lessonMeetingUrl" placeholder="https://meet.google.com/xxx-xxxx-xxx">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="lessonStatus">
+              <option value="scheduled">Scheduled</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
           <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Record</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="childModal">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Match</button>
+            <button type="button" class="btn btn-secondary" onclick="hideModal('lessonModal')">Cancel</button>
           </div>
         </form>
       </div>
@@ -829,24 +476,94 @@
   <div class="modal" id="tutorModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="tutorModalTitle"><i class="fas fa-chalkboard-user"></i> Add New Tutor</h3>
-        <button class="modal-close" data-close-modal="tutorModal"><i class="fas fa-times"></i></button>
+        <h3 class="modal-title" id="tutorModalTitle"><i class="fas fa-user-tie" style="color:var(--sunset-gold)"></i> Tutor Profile</h3>
+        <button class="modal-close" onclick="hideModal('tutorModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="modal-body">
         <form id="tutorForm">
-          <input type="hidden" name="id" id="tutorId">
-          <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" name="full_name" id="tutorFullName" required></div>
-          <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" name="email" id="tutorEmail" required></div>
-          <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" name="phone" id="tutorPhone"></div>
-          <div class="form-group"><label class="form-label">Address</label><textarea class="form-input" name="address" id="tutorAddress"></textarea></div>
-          <div class="form-group"><label class="form-label">Qualifications</label><textarea class="form-input" name="qualifications" id="tutorQualifications"></textarea></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Hourly Rate (£)</label><input type="number" class="form-input" name="hourly_rate" id="tutorRate" step="0.01"></div>
-            <div class="form-group"><label class="form-label">Hire Date</label><input type="date" class="form-input" name="hire_date" id="tutorHireDate"></div>
+          <input type="hidden" id="tutorId">
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="tutorFullName" required></div>
+            <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" id="tutorEmail" required></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="tutorPhone"></div>
+            <div class="form-group">
+              <label class="form-label">Platform Status</label>
+              <select class="form-select" id="tutorStatus" style="font-weight: 700;">
+                <option value="pending">Pending Review</option>
+                <option value="active">Active (Approved)</option>
+                <option value="suspended">Suspended</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Qualifications</label><textarea class="form-input" id="tutorQualifications" rows="2"></textarea></div>
+          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Profile</button>
+            <button type="button" class="btn btn-secondary" onclick="hideModal('tutorModal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="parentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="parentModalTitle"><i class="fas fa-user-group" style="color:var(--baobab-brown)"></i> Parent Profile</h3>
+        <button class="modal-close" onclick="hideModal('parentModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="parentForm">
+          <input type="hidden" id="parentId">
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="parentFullName" required></div>
+            <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" id="parentEmail" required></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="parentPhone"></div>
+            <div class="form-group"><label class="form-label">Emergency Contact</label><input type="text" class="form-input" id="parentEmergency"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Address</label><textarea class="form-input" id="parentAddress" rows="2"></textarea></div>
+          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Profile</button>
+            <button type="button" class="btn btn-secondary" onclick="hideModal('parentModal')">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="childModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="childModalTitle"><i class="fas fa-child-reaching" style="color:var(--canopy-green-light)"></i> Student Profile</h3>
+        <button class="modal-close" onclick="hideModal('childModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="childForm">
+          <input type="hidden" id="childId">
+          <div class="form-group">
+            <label class="form-label">Select Parent/Guardian *</label>
+            <select class="form-select" id="childParentSelect" required></select>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Student Name *</label><input type="text" class="form-input" id="childName" required></div>
+            <div class="form-group"><label class="form-label">Date of Birth</label><input type="date" class="form-input" id="childDOB"></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Grade/Year Level</label><input type="text" class="form-input" id="childGrade"></div>
+            <div class="form-group">
+              <label class="form-label">Enrollment Status</label>
+              <select class="form-select" id="childStatus">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </div>
           <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Record</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="tutorModal">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Student</button>
+            <button type="button" class="btn btn-secondary" onclick="hideModal('childModal')">Cancel</button>
           </div>
         </form>
       </div>
@@ -856,819 +573,255 @@
   <div class="modal" id="subjectModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="subjectModalTitle"><i class="fas fa-book"></i> Add Subject</h3>
-        <button class="modal-close" data-close-modal="subjectModal"><i class="fas fa-times"></i></button>
+        <h3 class="modal-title" id="subjectModalTitle"><i class="fas fa-book" style="color:var(--deep-charcoal)"></i> Curriculum Subject</h3>
+        <button class="modal-close" onclick="hideModal('subjectModal')"><i class="fas fa-times"></i></button>
       </div>
       <div class="modal-body">
         <form id="subjectForm">
-          <input type="hidden" name="id" id="subjectId">
-          <div class="form-group"><label class="form-label">Subject Name *</label><input type="text" class="form-input" name="name" id="subjectName" required></div>
-          <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" name="description" id="subjectDescription"></textarea></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Theme Color</label><input type="color" class="form-input" name="color_code" id="subjectColor" value="#2D6A4F" style="padding:5px; height:45px;"></div>
-            <div class="form-group">
-                <label class="form-label">Status</label>
-                <select class="form-select" id="subjectActive">
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-                </select>
-            </div>
+          <input type="hidden" id="subjectId">
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Subject Name *</label><input type="text" class="form-input" id="subjectName" required></div>
+            <div class="form-group"><label class="form-label">Theme Color</label><input type="color" class="form-input" id="subjectColor" value="#2D6A4F" style="padding:5px; height:45px; cursor:pointer;"></div>
           </div>
           <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Record</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="subjectModal">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Subject</button>
+            <button type="button" class="btn btn-secondary" onclick="hideModal('subjectModal')">Cancel</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="modal" id="lessonModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="lessonModalTitle"><i class="fas fa-calendar-plus"></i> Schedule Lesson</h3>
-        <button class="modal-close" data-close-modal="lessonModal"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <form id="lessonForm">
-          <input type="hidden" id="lessonId">
-          <div class="form-group"><label class="form-label">Topic / Title</label><input type="text" class="form-input" id="lessonTitle"></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Student *</label><select class="form-select" id="lessonChild" required></select></div>
-            <div class="form-group"><label class="form-label">Tutor *</label><select class="form-select" id="lessonTutor" required></select></div>
-          </div>
-          <div class="form-group"><label class="form-label">Subject *</label><select class="form-select" id="lessonSubject" required></select></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Date & Time *</label><input type="datetime-local" class="form-input" id="lessonScheduledAt" required></div>
-            <div class="form-group"><label class="form-label">Duration (Mins)</label><input type="number" class="form-input" id="lessonDuration" min="15" step="5"></div>
-          </div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Status</label>
-                <select class="form-select" id="lessonStatus">
-                <option value="scheduled">Scheduled</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
-                </select>
-            </div>
-            <div class="form-group"><label class="form-label">Virtual Link</label><input type="url" class="form-input" id="lessonMeetingUrl" placeholder="https://zoom.us/..."></div>
-          </div>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Lesson</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="lessonModal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="assessmentModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="assessmentModalTitle"><i class="fas fa-star"></i> Log Assessment</h3>
-        <button class="modal-close" data-close-modal="assessmentModal"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <form id="assessmentForm">
-          <input type="hidden" id="assessmentId">
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Student *</label><select class="form-select" id="assessmentChild" required></select></div>
-            <div class="form-group"><label class="form-label">Subject *</label><select class="form-select" id="assessmentSubject" required></select></div>
-          </div>
-          <div class="form-group"><label class="form-label">Title / Topic *</label><input type="text" class="form-input" id="assessmentTitle" required></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Type</label><input type="text" class="form-input" id="assessmentType" placeholder="Quiz, Mock..."></div>
-            <div class="form-group"><label class="form-label">Score</label><input type="number" class="form-input" id="assessmentGrade" step="0.01"></div>
-            <div class="form-group"><label class="form-label">Out of</label><input type="number" class="form-input" id="assessmentMaxGrade" step="0.01"></div>
-          </div>
-          <div class="form-group"><label class="form-label">Date Conducted *</label><input type="datetime-local" class="form-input" id="assessmentConductedAt" required></div>
-          <div class="form-group"><label class="form-label">Tutor Feedback</label><textarea class="form-input" id="assessmentFeedback"></textarea></div>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Record</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="assessmentModal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="billingModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="billingModalTitle"><i class="fas fa-file-invoice-dollar"></i> Create Invoice</h3>
-        <button class="modal-close" data-close-modal="billingModal"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <form id="billingForm">
-          <input type="hidden" id="billingId">
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Bill To Parent *</label><select class="form-select" id="billingParent" required></select></div>
-            <div class="form-group"><label class="form-label">Related Student</label><select class="form-select" id="billingChild"><option value="">None</option></select></div>
-          </div>
-          <div class="form-group"><label class="form-label">Invoice Description *</label><input type="text" class="form-input" id="billingDescription" required></div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Amount *</label><input type="number" class="form-input" id="billingAmount" step="0.01" required></div>
-            <div class="form-group"><label class="form-label">Currency</label><input type="text" class="form-input" id="billingCurrency" value="GBP"></div>
-          </div>
-          <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div class="form-group"><label class="form-label">Status</label>
-                <select class="form-select" id="billingStatus">
-                <option value="pending">Pending</option>
-                <option value="paid">Paid</option>
-                <option value="overdue">Overdue</option>
-                <option value="failed">Failed</option>
-                </select>
-            </div>
-            <div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-input" id="billingDueDate"></div>
-          </div>
-          <div class="form-group"><label class="form-label">Transaction ID (If paid)</label><input type="text" class="form-input" id="billingTxnId"></div>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="submit" class="btn btn-primary" style="flex:1;"><i class="fas fa-save"></i> Save Invoice</button>
-            <button type="button" class="btn btn-secondary" data-close-modal="billingModal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-<script>
-    // ==========================================
-    // SUPABASE BACKEND (Corrected Variable Name)
-    // ==========================================
+  <script>
     const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
-    
-    // RENAMED TO supabaseClient
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // State
-    let currentUser = null;
-    let adminProfile = null;
-    let appData = {
-      parents: [], children: [], tutors: [], subjects: [], lessons: [], assessments: [], billing: []
-    };
-    let charts = { enrollment: null, revenue: null, avgBySubject: null, lessonBySubject: null, perfTrend: null, revenueStatus: null };
+    let appData = { parents: [], children: [], tutors: [], subjects: [], lessons: [], assessments: [], billing: [] };
 
-    // Sidebar
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-    function toggleSidebar(open) {
-      const show = open ?? !sidebar.classList.contains('active');
-      sidebar.classList.toggle('active', show);
-      sidebarOverlay.classList.toggle('active', show);
-      document.body.style.overflow = show ? 'hidden' : '';
-      menuToggle.innerHTML = show ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-    }
-    menuToggle?.addEventListener('click', () => toggleSidebar());
-    sidebarOverlay?.addEventListener('click', () => toggleSidebar(false));
-
-    // Navigation
-    function setActive(sectionId) {
-      document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === sectionId));
-      document.querySelectorAll('.nav-link').forEach(a => a.classList.toggle('active', a.dataset.section === sectionId));
-      loadSection(sectionId);
-      toggleSidebar(false);
-    }
-    function routeFromHash() { const id = (location.hash || '#dashboard').replace('#', ''); setActive(id); }
-    window.addEventListener('hashchange', routeFromHash);
-    document.querySelectorAll('[data-section]').forEach(link => {
-      link.addEventListener('click', (e) => { e.preventDefault(); const section = link.dataset.section; location.hash = '#' + section; });
+    // Sidebar Nav
+    document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        link.classList.add('active');
+        document.getElementById(link.dataset.section).classList.add('active');
+      });
     });
 
-    // Formatting
-    function formatCurrency(amount) { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(Number(amount||0)); }
-    function formatDate(date) { return date ? new Date(date).toLocaleDateString('en-GB') : 'N/A'; }
-    function formatDateTime(date) { return date ? new Date(date).toLocaleString('en-GB') : 'N/A'; }
-    function getInitials(name) { if (!name) return 'A'; return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2); }
-    function showError(message) { alert('Error: ' + message); }
-    function showSuccess(message) { alert('Success: ' + message); }
-
-    // Auth
-    async function ensureAuth() {
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      if (!session) { location.href = '/admin-index.html'; return null; }
-      currentUser = session.user;
-
-      const { data: ap, error } = await supabaseClient.from('admin_profiles').select('*').eq('user_id', currentUser.id).maybeSingle();
-      if (error || !ap) {
-        alert('Access denied. Admin privileges required.');
-        await supabaseClient.auth.signOut();
-        location.href = '/admin-index.html';
-        return null;
-      }
-      adminProfile = ap;
-      document.getElementById('userName').textContent = ap.full_name || 'Administrator';
-      document.getElementById('userAvatar').textContent = getInitials(ap.full_name || 'Admin');
-      return currentUser;
-    }
-
-    // Load Data
-    async function loadAllData() {
-      try {
-        const [ parentsRes, childrenRes, tutorsRes, subjectsRes, lessonsRes, assessmentsRes, billingRes ] = await Promise.all([
-          supabaseClient.from('parent_profiles').select('*').order('created_at', { ascending: false }),
-          supabaseClient.from('children').select(`*, parent_profiles:parent_id ( id, full_name )`).order('created_at', { ascending: false }),
-          supabaseClient.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
-          supabaseClient.from('subjects').select('*').order('name'),
-          supabaseClient.from('lessons').select(`id, title, scheduled_at, duration_minutes, status, meeting_url, child_id, tutor_id, subject_id, children:child_id ( id, name ), tutor_profiles:tutor_id ( id, full_name ), subjects:subject_id ( id, name )`).order('scheduled_at', { ascending: false }),
-          supabaseClient.from('assessments').select(`id, child_id, subject_id, title, type, grade, max_grade, feedback, conducted_at, children:child_id ( id, name ), subjects:subject_id ( id, name )`).order('conducted_at', { ascending: false }),
-          supabaseClient.from('billing_records').select(`*, parent_profiles:parent_id ( id, full_name ), children:child_id ( id, name )`).order('created_at', { ascending: false })
-        ]);
-
-        appData.parents = parentsRes.data || [];
-        appData.children = childrenRes.data || [];
-        appData.tutors  = tutorsRes.data  || [];
-        appData.subjects= subjectsRes.data|| [];
-        appData.lessons = lessonsRes.data || [];
-        appData.assessments = assessmentsRes.data || [];
-        appData.billing = billingRes.data || [];
-
-        updateCounts();
-      } catch (error) { console.error('Error loading data:', error); showError('Failed to load data.'); }
-    }
-
-    function updateCounts() {
-      document.getElementById('parentsCount').textContent = appData.parents.length;
-      document.getElementById('childrenCount').textContent = appData.children.length;
-      document.getElementById('tutorsCount').textContent = appData.tutors.length;
-      document.getElementById('subjectsCount').textContent = appData.subjects.length;
-      document.getElementById('lessonsCount').textContent = appData.lessons.length;
-      document.getElementById('assessmentsCount').textContent = appData.assessments.length;
-      document.getElementById('billingCount').textContent = appData.billing.filter(b => b.status === 'pending').length;
-    }
-
-    function loadSection(sectionId) {
-      if (sectionId === 'dashboard') { loadDashboardStats(); loadRecentActivity(); loadDashboardCharts(); }
-      else if (sectionId === 'reports') loadReports();
-      else if (sectionId === 'parents') renderParentsTable();
-      else if (sectionId === 'tutors') renderTutorsTable();
-      else if (sectionId === 'children') renderChildrenTable();
-      else if (sectionId === 'subjects') renderSubjectsTable();
-      else if (sectionId === 'lessons') renderLessonsTable();
-      else if (sectionId === 'assessments') renderAssessmentsTable();
-      else if (sectionId === 'billing') renderBillingTable();
-      else if (sectionId === 'settings') loadSettings();
-    }
-
-    // Dashboard
-    async function loadDashboardStats() {
-      document.getElementById('totalStudents').textContent = appData.children.length;
-      const nowIso = new Date().toISOString();
-      const activeLessons = appData.lessons.filter(l => l.scheduled_at > nowIso && l.status === 'scheduled').length;
-      document.getElementById('activeLessons').textContent = activeLessons;
-      const currentMonth = new Date().toISOString().slice(0, 7);
-      const monthlyRevenue = appData.billing
-        .filter(b => b.status === 'paid' && (b.paid_at || '').startsWith(currentMonth))
-        .reduce((sum, b) => sum + Number(b.amount || 0), 0);
-      document.getElementById('monthlyRevenue').textContent = formatCurrency(monthlyRevenue);
-      document.getElementById('totalTutors').textContent = appData.tutors.length;
-    }
-
-    async function loadRecentActivity() {
-      const activityList = document.getElementById('activityList');
-      const activities = [];
-
-      appData.lessons.slice(0, 3).forEach(lesson => {
-        activities.push({
-          user: lesson.tutor_profiles?.full_name || 'Tutor', action: `scheduled a lesson with ${lesson.children?.name || 'student'}`,
-          time: formatDateTime(lesson.scheduled_at), avatar: getInitials(lesson.tutor_profiles?.full_name || 'T')
-        });
-      });
-
-      appData.children.slice(0, 2).forEach(child => {
-        activities.push({
-          user: child.parent_profiles?.full_name || 'Parent', action: `enrolled ${child.name} to the academy`,
-          time: formatDateTime(child.created_at), avatar: getInitials(child.parent_profiles?.full_name || 'P')
-        });
-      });
-
-      activities.sort((a, b) => new Date(b.time) - new Date(a.time));
-
-      if (!activities.length) {
-        activityList.innerHTML = `<div class="empty-state"><i class="fas fa-history"></i><p>No recent activity</p></div>`; return;
-      }
-      activityList.innerHTML = activities.slice(0, 5).map(a => `
-        <li class="activity-item">
-          <div class="activity-avatar">${a.avatar}</div>
-          <div class="activity-content">
-            <div class="activity-text"><strong>${a.user}</strong> ${a.action}</div>
-            <div class="activity-time">${a.time}</div>
-          </div>
-        </li>`).join('');
-    }
-
-    // Chart.js Baobab Themed
-    function loadDashboardCharts() {
-      const last6Months = [];
-      for (let i = 5; i >= 0; i--) { const d = new Date(); d.setMonth(d.getMonth() - i); last6Months.push(d.toISOString().slice(0,7)); }
-      const labels = last6Months.map(m => new Date(m).toLocaleDateString('en-GB', { month: 'short' }));
-
-      // Enrollment
-      const enrollMap = {};
-      appData.children.forEach(c => { const month = (c.enrollment_date || c.created_at || new Date().toISOString()).slice(0,7); enrollMap[month] = (enrollMap[month] || 0) + 1; });
-      const enrollData = last6Months.map(m => enrollMap[m] || 0);
-
-      const enrollCtx = document.getElementById('enrollmentChart').getContext('2d');
-      charts.enrollment && charts.enrollment.destroy();
-      charts.enrollment = new Chart(enrollCtx, {
-        type: 'line',
-        data: { labels, datasets: [{ label: 'New Enrollments', data: enrollData, borderColor: '#2D6A4F', backgroundColor: 'rgba(45,106,79,0.1)', tension: 0.4, fill: true }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Monthly Enrollments', font: { family:'Playfair Display', size: 16 } }, legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-      });
-
-      // Revenue
-      const revMap = {};
-      appData.billing.filter(b => b.status === 'paid').forEach(b => { const month = (b.paid_at || b.created_at || new Date().toISOString()).slice(0,7); revMap[month] = (revMap[month] || 0) + Number(b.amount || 0); });
-      const revData = last6Months.map(m => revMap[m] || 0);
-
-      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-      charts.revenue && charts.revenue.destroy();
-      charts.revenue = new Chart(revenueCtx, {
-        type: 'bar',
-        data: { labels, datasets: [{ label: 'Revenue', data: revData, backgroundColor: '#F4A261', borderRadius: 6 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Monthly Revenue (£)', font: { family:'Playfair Display', size: 16 } }, legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => '£' + v } } } }
-      });
-    }
-
-    // Reports
-    function loadReports() {
-      // Avg by Subject
-      const subjAgg = {};
-      appData.assessments.forEach(a => {
-        const s = a.subjects?.name || 'Subject';
-        const pct = a.max_grade ? (Number(a.grade || 0) / Number(a.max_grade)) * 100 : Number(a.grade || 0);
-        subjAgg[s] = subjAgg[s] || { sum: 0, count: 0 }; subjAgg[s].sum += pct; subjAgg[s].count += 1;
-      });
-      const subjLabels = Object.keys(subjAgg);
-      const subjAvg = subjLabels.map(k => Math.round(subjAgg[k].sum / subjAgg[k].count || 0));
-
-      const avgCtx = document.getElementById('reportAvgBySubject').getContext('2d');
-      charts.avgBySubject && charts.avgBySubject.destroy();
-      charts.avgBySubject = new Chart(avgCtx, {
-        type: 'bar',
-        data: { labels: subjLabels, datasets: [{ label: 'Average %', data: subjAvg, backgroundColor: '#6B3A2A', borderRadius: 6 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Avg Assessment Score by Subject', font: { family:'Playfair Display', size: 14 } }, legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } } }
-      });
-
-      // Lessons by Subject Pie
-      const lessonSubjMap = {};
-      appData.lessons.forEach(l => { const s = l.subjects?.name || 'Subject'; lessonSubjMap[s] = (lessonSubjMap[s] || 0) + 1; });
-      const lessonSubjLabels = Object.keys(lessonSubjMap);
-      const lessonCounts = lessonSubjLabels.map(k => lessonSubjMap[k]);
-
-      const lessonCtx = document.getElementById('reportLessonBySubject').getContext('2d');
-      charts.lessonBySubject && charts.lessonBySubject.destroy();
-      charts.lessonBySubject = new Chart(lessonCtx, {
-        type: 'pie',
-        data: { labels: lessonSubjLabels, datasets: [{ data: lessonCounts, backgroundColor: ['#2D6A4F','#F4A261','#6B3A2A','#8C5442','#52B788','#E76F51'] }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Lessons by Subject', font: { family:'Playfair Display', size: 14 } } } }
-      });
-
-      // Perf Trend
-      const last = appData.assessments.slice(0, 12).reverse();
-      const perfLabels = last.map(a => new Date(a.conducted_at).toLocaleDateString('en-GB'));
-      const perfValues = last.map(a => Math.round((Number(a.grade || 0) / (Number(a.max_grade) || 100)) * 100));
-
-      const perfCtx = document.getElementById('reportPerformanceTrend').getContext('2d');
-      charts.perfTrend && charts.perfTrend.destroy();
-      charts.perfTrend = new Chart(perfCtx, {
-        type: 'line',
-        data: { labels: perfLabels, datasets: [{ label: 'Score %', data: perfValues, borderColor: '#52B788', backgroundColor: 'rgba(82,183,136,0.1)', tension: 0.4, fill: true }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Recent Performance Trend', font: { family:'Playfair Display', size: 14 } }, legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } } }
-      });
-
-      // Revenue Status
-      const revStatusMap = {};
-      appData.billing.forEach(b => { revStatusMap[b.status || 'unknown'] = (revStatusMap[b.status || 'unknown'] || 0) + Number(b.amount || 0); });
-      const revStatusLabels = Object.keys(revStatusMap);
-      const revStatusValues = revStatusLabels.map(k => revStatusMap[k]);
-
-      const revStatusCtx = document.getElementById('reportRevenueStatus').getContext('2d');
-      charts.revenueStatus && charts.revenueStatus.destroy();
-      charts.revenueStatus = new Chart(revStatusCtx, {
-        type: 'bar',
-        data: { labels: revStatusLabels, datasets: [{ label: '£', data: revStatusValues, backgroundColor: '#E76F51', borderRadius: 6 }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Revenue by Status', font: { family:'Playfair Display', size: 14 } }, legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => '£' + v } } } }
-      });
-
-      // Summary table
-      const summaryBody = document.getElementById('reportsSummaryBody');
-      const avgScore = (() => {
-        const vals = appData.assessments.map(a => (Number(a.grade || 0) / (Number(a.max_grade) || 100)) * 100);
-        return vals.length ? Math.round(vals.reduce((s, v) => s + v, 0) / vals.length) : 0;
-      })();
-      const paid = appData.billing.filter(b => b.status === 'paid').reduce((s, b) => s + Number(b.amount || 0), 0);
-      const pending = appData.billing.filter(b => b.status === 'pending').reduce((s, b) => s + Number(b.amount || 0), 0);
-      summaryBody.innerHTML = `
-        <tr><td><strong>Total Active Students</strong></td><td>${appData.children.length}</td></tr>
-        <tr><td><strong>Total Approved Tutors</strong></td><td>${appData.tutors.length}</td></tr>
-        <tr><td><strong>Total Lessons Scheduled</strong></td><td>${appData.lessons.length}</td></tr>
-        <tr><td><strong>Average Assessment Score</strong></td><td><span class="badge badge-success">${avgScore}%</span></td></tr>
-        <tr><td><strong>Revenue (Collected)</strong></td><td>${formatCurrency(paid)}</td></tr>
-        <tr><td><strong>Revenue (Pending)</strong></td><td>${formatCurrency(pending)}</td></tr>
-      `;
-    }
-
-    // Tables Rendering
-    function renderParentsTable() {
-      const container = document.getElementById('parentsTableContainer');
-      if (!appData.parents.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-user-group"></i><p>No parents found in directory.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Children</th><th>Enrolled Date</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.parents.map(parent => {
-                const childrenCount = appData.children.filter(c => c.parent_id === parent.id).length;
-                return `<tr>
-                    <td><strong>${parent.full_name || 'N/A'}</strong></td>
-                    <td>${parent.email || 'N/A'}</td>
-                    <td>${parent.phone || 'N/A'}</td>
-                    <td><span class="badge badge-primary">${childrenCount}</span></td>
-                    <td>${formatDate(parent.created_at)}</td>
-                    <td>
-                      <button class="btn btn-sm btn-secondary" onclick="editParent('${parent.id}')"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-danger" onclick="deleteParent('${parent.id}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                  </tr>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderChildrenTable() {
-      const container = document.getElementById('childrenTableContainer');
-      if (!appData.children.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-child-reaching"></i><p>No students enrolled yet.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Name</th><th>Parent</th><th>Grade Level</th><th>Status</th><th>Enrollment Date</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.children.map(child => `<tr>
-                  <td><strong>${child.name}</strong></td>
-                  <td>${child.parent_profiles?.full_name || 'N/A'}</td>
-                  <td>${child.grade_level || 'N/A'}</td>
-                  <td><span class="badge ${child.status === 'inactive' ? 'badge-secondary' : 'badge-success'}">${child.status || 'Active'}</span></td>
-                  <td>${formatDate(child.enrollment_date || child.created_at)}</td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editChild('${child.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteChild('${child.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderTutorsTable() {
-      const container = document.getElementById('tutorsTableContainer');
-      if (!appData.tutors.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-chalkboard-user"></i><p>No educators approved yet.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Name</th><th>Email</th><th>Rate</th><th>Status</th><th>Hire Date</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.tutors.map(tutor => `<tr>
-                  <td><strong>${tutor.full_name}</strong></td>
-                  <td>${tutor.email || 'N/A'}</td>
-                  <td>${tutor.hourly_rate ? formatCurrency(tutor.hourly_rate) : 'N/A'}</td>
-                  <td><span class="badge ${tutor.status === 'inactive' ? 'badge-secondary' : 'badge-success'}">${tutor.status || 'Active'}</span></td>
-                  <td>${tutor.hire_date ? formatDate(tutor.hire_date) : 'N/A'}</td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editTutor('${tutor.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteTutor('${tutor.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderSubjectsTable() {
-      const container = document.getElementById('subjectsTableContainer');
-      if (!appData.subjects.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-book-open"></i><p>No subjects in curriculum.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Name</th><th>Description</th><th>Color</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.subjects.map(subject => `<tr>
-                  <td><strong>${subject.name}</strong></td>
-                  <td>${subject.description || 'N/A'}</td>
-                  <td><div style="width:20px; height:20px; background:${subject.color_code}; border-radius:4px; display:inline-block; vertical-align:middle; margin-right:5px;"></div> ${subject.color_code || ''}</td>
-                  <td><span class="badge ${subject.is_active === false ? 'badge-secondary' : 'badge-success'}">${subject.is_active === false ? 'Inactive' : 'Active'}</span></td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editSubject('${subject.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteSubject('${subject.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderLessonsTable() {
-      const container = document.getElementById('lessonsTableContainer');
-      if (!appData.lessons.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-day"></i><p>No lessons scheduled.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Topic</th><th>Student</th><th>Tutor</th><th>Subject</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.lessons.map(lesson => `<tr>
-                  <td><strong>${lesson.title || 'Lesson'}</strong></td>
-                  <td>${lesson.children?.name || 'N/A'}</td>
-                  <td>${lesson.tutor_profiles?.full_name || 'N/A'}</td>
-                  <td>${lesson.subjects?.name || 'N/A'}</td>
-                  <td>${formatDateTime(lesson.scheduled_at)}</td>
-                  <td><span class="badge ${lesson.status==='completed'?'badge-success':(lesson.status==='cancelled'?'badge-danger':'badge-primary')}">${lesson.status || 'Scheduled'}</span></td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editLesson('${lesson.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteLesson('${lesson.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderAssessmentsTable() {
-      const container = document.getElementById('assessmentsTableContainer');
-      if (!appData.assessments.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-star-half-stroke"></i><p>No assessments logged.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Title</th><th>Student</th><th>Subject</th><th>Score</th><th>Conducted</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.assessments.map(a => `<tr>
-                  <td><strong>${a.title}</strong></td>
-                  <td>${a.children?.name || 'N/A'}</td>
-                  <td>${a.subjects?.name || 'N/A'}</td>
-                  <td>${a.grade !== null && a.grade !== undefined ? `<span class="badge badge-success">${a.grade}/${a.max_grade || 100}</span>` : '<span class="badge badge-secondary">Pending</span>'}</td>
-                  <td>${formatDateTime(a.conducted_at)}</td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editAssessment('${a.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteAssessment('${a.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    function renderBillingTable() {
-      const container = document.getElementById('billingTableContainer');
-      if (!appData.billing.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-wallet"></i><p>No invoices created.</p></div>`; return; }
-      container.innerHTML = `
-        <div class="table-container">
-          <table class="table">
-            <thead><tr><th>Description</th><th>Parent</th><th>Amount</th><th>Status</th><th>Due Date</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${appData.billing.map(b => `<tr>
-                  <td><strong>${b.description}</strong></td>
-                  <td>${b.parent_profiles?.full_name || 'N/A'}</td>
-                  <td>${formatCurrency(b.amount)}</td>
-                  <td><span class="badge ${b.status === 'paid' ? 'badge-success' : b.status === 'pending' ? 'badge-warning' : 'badge-danger'}">${b.status}</span></td>
-                  <td>${b.due_date ? formatDate(b.due_date) : 'N/A'}</td>
-                  <td>
-                    <button class="btn btn-sm btn-secondary" onclick="editBilling('${b.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteBilling('${b.id}')"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-
-    // Modal Logic & CRUD Helpers
+    // Formatting Helpers
+    function formatDate(iso) { return iso ? new Date(iso).toLocaleDateString('en-GB') : 'N/A'; }
+    function formatTime(iso) { return iso ? new Date(iso).toLocaleString('en-GB', { dateStyle:'short', timeStyle:'short' }) : 'N/A'; }
+    function formatMoney(num) { return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(num || 0); }
     function showModal(id) { document.getElementById(id).classList.add('active'); }
     function hideModal(id) { document.getElementById(id).classList.remove('active'); }
-    document.querySelectorAll('.modal-close, [data-close-modal]').forEach(btn => {
-      btn.addEventListener('click', (e) => { const id = e.currentTarget.getAttribute('data-close-modal') || e.currentTarget.closest('.modal')?.id; if (id) hideModal(id); });
-    });
-    function populateSelect(selectEl, items, getValue, getLabel, placeholder = 'Select...') {
-      selectEl.innerHTML = `<option value="">${placeholder}</option>` + items.map(it => `<option value="${getValue(it)}">${getLabel(it)}</option>`).join('');
+
+    // Load All Data from Unified DB
+    async function loadAllData() {
+      try {
+        const [ pRes, cRes, tRes, sRes, lRes, aRes, bRes ] = await Promise.all([
+          supabaseClient.from('parent_profiles').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('children').select('*, parent_profiles(full_name)').order('created_at', { ascending: false }),
+          supabaseClient.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('subjects').select('*').order('name'),
+          supabaseClient.from('lessons').select('*, children(name), tutor_profiles(full_name), subjects(name)').order('scheduled_at', { ascending: false }),
+          supabaseClient.from('assessments').select('*, children(name), tutor_profiles(full_name), subjects(name)').order('conducted_at', { ascending: false }),
+          supabaseClient.from('billing_records').select('*, parent_profiles(full_name)').order('created_at', { ascending: false })
+        ]);
+
+        appData.parents = pRes.data || [];
+        appData.children = cRes.data || [];
+        appData.tutors = tRes.data || [];
+        appData.subjects = sRes.data || [];
+        appData.lessons = lRes.data || [];
+        appData.assessments = aRes.data || [];
+        appData.billing = bRes.data || [];
+
+        updateDashboards();
+      } catch (e) { console.error("Data load error", e); alert("Failed to load data."); }
     }
 
-    // --- PARENT CRUD ---
-    document.getElementById('addParentBtn').addEventListener('click', () => {
-      document.getElementById('parentModalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add New Parent';
-      document.getElementById('parentForm').reset(); document.getElementById('parentId').value = ''; showModal('parentModal');
-    });
-    document.getElementById('parentForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('parentId').value;
-      const payload = { full_name: document.getElementById('parentFullName').value, email: document.getElementById('parentEmail').value, phone: document.getElementById('parentPhone').value, address: document.getElementById('parentAddress').value, emergency_contact: document.getElementById('parentEmergency').value, notes: document.getElementById('parentNotes').value };
-      try {
-        if (id) { const { error } = await supabaseClient.from('parent_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Parent updated!'); } 
-        else { const { error } = await supabaseClient.from('parent_profiles').insert([payload]); if (error) throw error; showSuccess('Parent added!'); }
-        hideModal('parentModal'); await loadAllData(); renderParentsTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editParent = (id) => {
-      const p = appData.parents.find(x => x.id === id); if (!p) return;
-      document.getElementById('parentModalTitle').innerHTML = '<i class="fas fa-user-pen"></i> Edit Parent';
-      document.getElementById('parentId').value = p.id; document.getElementById('parentFullName').value = p.full_name || ''; document.getElementById('parentEmail').value = p.email || ''; document.getElementById('parentPhone').value = p.phone || ''; document.getElementById('parentAddress').value = p.address || ''; document.getElementById('parentEmergency').value = p.emergency_contact || ''; document.getElementById('parentNotes').value = p.notes || '';
-      showModal('parentModal');
-    };
-    window.deleteParent = async (id) => {
-      if (!confirm('Delete this parent?')) return;
-      try { const { error } = await supabaseClient.from('parent_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderParentsTable(); } catch (err) { showError(err.message); }
-    };
+    function updateDashboards() {
+      // Counts
+      document.getElementById('parentsCount').innerText = appData.parents.length;
+      document.getElementById('childrenCount').innerText = appData.children.length;
+      document.getElementById('tutorsCount').innerText = appData.tutors.length;
+      document.getElementById('subjectsCount').innerText = appData.subjects.length;
+      document.getElementById('lessonsCount').innerText = appData.lessons.length;
+      document.getElementById('assessmentsCount').innerText = appData.assessments.length;
+      
+      // Dashboard Stats
+      document.getElementById('totalStudents').innerText = appData.children.filter(c => c.status === 'active').length;
+      const now = new Date().toISOString();
+      document.getElementById('activeLessons').innerText = appData.lessons.filter(l => l.status === 'scheduled' && l.scheduled_at > now).length;
+      document.getElementById('pendingTutors').innerText = appData.tutors.filter(t => t.status === 'pending').length;
 
-    // --- CHILD CRUD ---
-    document.getElementById('addChildBtn').addEventListener('click', () => {
-      document.getElementById('childModalTitle').innerHTML = '<i class="fas fa-child-reaching"></i> Add New Student';
-      document.getElementById('childForm').reset(); document.getElementById('childId').value = '';
-      populateSelect(document.getElementById('childParentSelect'), appData.parents, p => p.id, p => p.full_name, 'Select Guardian'); showModal('childModal');
-    });
-    document.getElementById('childForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('childId').value;
-      const payload = { parent_id: document.getElementById('childParentSelect').value, name: document.getElementById('childName').value, date_of_birth: document.getElementById('childDOB').value || null, grade_level: document.getElementById('childGrade').value, school: document.getElementById('childSchool').value, medical_info: document.getElementById('childMedical').value, learning_preferences: document.getElementById('childPrefs').value, notes: document.getElementById('childNotes').value };
-      try {
-        if (id) { const { error } = await supabaseClient.from('children').update(payload).eq('id', id); if (error) throw error; showSuccess('Student updated!'); } 
-        else { const { error } = await supabaseClient.from('children').insert([payload]); if (error) throw error; showSuccess('Student added!'); }
-        hideModal('childModal'); await loadAllData(); renderChildrenTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editChild = (id) => {
-      const c = appData.children.find(x => x.id === id); if (!c) return;
-      document.getElementById('childModalTitle').innerHTML = '<i class="fas fa-user-pen"></i> Edit Student';
-      document.getElementById('childId').value = c.id; populateSelect(document.getElementById('childParentSelect'), appData.parents, p => p.id, p => p.full_name, 'Select Guardian'); document.getElementById('childParentSelect').value = c.parent_id || ''; document.getElementById('childName').value = c.name || ''; document.getElementById('childDOB').value = (c.date_of_birth || '').slice(0,10); document.getElementById('childGrade').value = c.grade_level || ''; document.getElementById('childSchool').value = c.school || ''; document.getElementById('childMedical').value = c.medical_info || ''; document.getElementById('childPrefs').value = c.learning_preferences || ''; document.getElementById('childNotes').value = c.notes || '';
-      showModal('childModal');
-    };
-    window.deleteChild = async (id) => {
-      if (!confirm('Delete this student?')) return;
-      try { const { error } = await supabaseClient.from('children').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderChildrenTable(); } catch (err) { showError(err.message); }
-    };
+      renderTables();
+    }
 
-    // --- TUTOR CRUD ---
-    document.getElementById('addTutorBtn').addEventListener('click', () => {
-      document.getElementById('tutorModalTitle').innerHTML = '<i class="fas fa-chalkboard-user"></i> Add New Tutor';
-      document.getElementById('tutorForm').reset(); document.getElementById('tutorId').value = ''; showModal('tutorModal');
-    });
-    document.getElementById('tutorForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('tutorId').value;
-      const payload = { full_name: document.getElementById('tutorFullName').value, email: document.getElementById('tutorEmail').value, phone: document.getElementById('tutorPhone').value, address: document.getElementById('tutorAddress').value, qualifications: document.getElementById('tutorQualifications').value, hourly_rate: document.getElementById('tutorRate').value || null, hire_date: document.getElementById('tutorHireDate').value || null };
-      try {
-        if (id) { const { error } = await supabaseClient.from('tutor_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Tutor updated!'); } 
-        else { const { error } = await supabaseClient.from('tutor_profiles').insert([payload]); if (error) throw error; showSuccess('Tutor added!'); }
-        hideModal('tutorModal'); await loadAllData(); renderTutorsTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editTutor = (id) => {
-      const t = appData.tutors.find(x => x.id === id); if (!t) return;
-      document.getElementById('tutorModalTitle').innerHTML = '<i class="fas fa-user-pen"></i> Edit Tutor';
-      document.getElementById('tutorId').value = t.id; document.getElementById('tutorFullName').value = t.full_name || ''; document.getElementById('tutorEmail').value = t.email || ''; document.getElementById('tutorPhone').value = t.phone || ''; document.getElementById('tutorAddress').value = t.address || ''; document.getElementById('tutorQualifications').value = t.qualifications || ''; document.getElementById('tutorRate').value = t.hourly_rate || ''; document.getElementById('tutorHireDate').value = (t.hire_date || '').slice(0,10);
-      showModal('tutorModal');
-    };
-    window.deleteTutor = async (id) => {
-      if (!confirm('Delete this tutor?')) return;
-      try { const { error } = await supabaseClient.from('tutor_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderTutorsTable(); } catch (err) { showError(err.message); }
-    };
+    function renderTables() {
+      // Parents
+      document.getElementById('parentsTableContainer').innerHTML = `
+        <div class="table-container"><table class="table">
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead>
+          <tbody>${appData.parents.map(p => `
+            <tr>
+              <td><strong>${p.full_name}</strong></td>
+              <td>${p.email || '-'}</td><td>${p.phone || '-'}</td>
+              <td><button class="btn btn-sm btn-secondary" onclick="editParent('${p.id}')"><i class="fas fa-edit"></i> Edit</button></td>
+            </tr>`).join('')}
+          </tbody></table></div>`;
 
-    // --- SUBJECT CRUD ---
-    document.getElementById('addSubjectBtn').addEventListener('click', () => {
-      document.getElementById('subjectModalTitle').innerHTML = '<i class="fas fa-book"></i> Add Subject';
-      document.getElementById('subjectForm').reset(); document.getElementById('subjectId').value = ''; document.getElementById('subjectActive').value = 'true'; showModal('subjectModal');
-    });
-    document.getElementById('subjectForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('subjectId').value;
-      const payload = { name: document.getElementById('subjectName').value, description: document.getElementById('subjectDescription').value, color_code: document.getElementById('subjectColor').value, is_active: document.getElementById('subjectActive').value === 'true' };
-      try {
-        if (id) { const { error } = await supabaseClient.from('subjects').update(payload).eq('id', id); if (error) throw error; showSuccess('Subject updated!'); } 
-        else { const { error } = await supabaseClient.from('subjects').insert([payload]); if (error) throw error; showSuccess('Subject added!'); }
-        hideModal('subjectModal'); await loadAllData(); renderSubjectsTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editSubject = (id) => {
-      const s = appData.subjects.find(x => x.id === id); if (!s) return;
-      document.getElementById('subjectModalTitle').innerHTML = '<i class="fas fa-pen"></i> Edit Subject';
-      document.getElementById('subjectId').value = s.id; document.getElementById('subjectName').value = s.name || ''; document.getElementById('subjectDescription').value = s.description || ''; document.getElementById('subjectColor').value = s.color_code || '#2D6A4F'; document.getElementById('subjectActive').value = (s.is_active === false ? 'false' : 'true');
-      showModal('subjectModal');
-    };
-    window.deleteSubject = async (id) => {
-      if (!confirm('Delete this subject?')) return;
-      try { const { error } = await supabaseClient.from('subjects').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderSubjectsTable(); } catch (err) { showError(err.message); }
-    };
+      // Children
+      document.getElementById('childrenTableContainer').innerHTML = `
+        <div class="table-container"><table class="table">
+          <thead><tr><th>Student</th><th>Parent</th><th>Grade</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${appData.children.map(c => `
+            <tr>
+              <td><strong>${c.name}</strong></td>
+              <td>${c.parent_profiles?.full_name || '-'}</td>
+              <td>${c.grade_level || '-'}</td>
+              <td><span class="badge ${c.status==='active'?'badge-success':'badge-secondary'}">${c.status}</span></td>
+              <td><button class="btn btn-sm btn-secondary" onclick="editChild('${c.id}')"><i class="fas fa-edit"></i> Edit</button></td>
+            </tr>`).join('')}
+          </tbody></table></div>`;
 
-    // --- LESSON CRUD ---
-    document.getElementById('addLessonBtn').addEventListener('click', () => openLessonModal());
-    function openLessonModal(lesson = null) {
-      document.getElementById('lessonModalTitle').innerHTML = lesson ? '<i class="fas fa-pen"></i> Edit Lesson' : '<i class="fas fa-calendar-plus"></i> Schedule Lesson';
-      document.getElementById('lessonForm').reset(); document.getElementById('lessonId').value = lesson?.id || '';
-      populateSelect(document.getElementById('lessonChild'), appData.children, c => c.id, c => c.name, 'Select Student'); populateSelect(document.getElementById('lessonTutor'), appData.tutors, t => t.id, t => t.full_name, 'Select Tutor'); populateSelect(document.getElementById('lessonSubject'), appData.subjects, s => s.id, s => s.name, 'Select Subject');
-      if (lesson) { document.getElementById('lessonTitle').value = lesson.title || ''; document.getElementById('lessonChild').value = lesson.child_id || ''; document.getElementById('lessonTutor').value = lesson.tutor_id || ''; document.getElementById('lessonSubject').value = lesson.subject_id || ''; document.getElementById('lessonScheduledAt').value = lesson.scheduled_at ? new Date(lesson.scheduled_at).toISOString().slice(0,16) : ''; document.getElementById('lessonDuration').value = lesson.duration_minutes || ''; document.getElementById('lessonStatus').value = lesson.status || 'scheduled'; document.getElementById('lessonMeetingUrl').value = lesson.meeting_url || ''; }
+      // Tutors
+      document.getElementById('tutorsTableContainer').innerHTML = `
+        <div class="table-container"><table class="table">
+          <thead><tr><th>Tutor</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${appData.tutors.map(t => `
+            <tr>
+              <td><strong>${t.full_name}</strong></td><td>${t.email || '-'}</td>
+              <td><span class="badge ${t.status==='active'?'badge-success':(t.status==='pending'?'badge-warning':'badge-danger')}">${t.status}</span></td>
+              <td><button class="btn btn-sm btn-secondary" onclick="editTutor('${t.id}')"><i class="fas fa-edit"></i> Manage</button></td>
+            </tr>`).join('')}
+          </tbody></table></div>`;
+
+      // Subjects
+      document.getElementById('subjectsTableContainer').innerHTML = `
+        <div class="table-container"><table class="table">
+          <thead><tr><th>Subject</th><th>Theme</th><th>Actions</th></tr></thead>
+          <tbody>${appData.subjects.map(s => `
+            <tr>
+              <td><strong>${s.name}</strong></td>
+              <td><div style="width:20px;height:20px;border-radius:4px;background:${s.color_code}"></div></td>
+              <td><button class="btn btn-sm btn-secondary" onclick="editSubject('${s.id}')"><i class="fas fa-edit"></i> Edit</button></td>
+            </tr>`).join('')}
+          </tbody></table></div>`;
+
+      // Lessons (Matchmaker)
+      document.getElementById('lessonsTableContainer').innerHTML = `
+        <div class="table-container"><table class="table">
+          <thead><tr><th>Student</th><th>Tutor</th><th>Subject</th><th>Date/Time</th><th>Status</th><th>Meet Link</th><th>Actions</th></tr></thead>
+          <tbody>${appData.lessons.map(l => `
+            <tr>
+              <td><strong>${l.children?.name || '-'}</strong></td>
+              <td>${l.tutor_profiles?.full_name || '-'}</td>
+              <td><span class="badge badge-secondary">${l.subjects?.name || '-'}</span></td>
+              <td>${formatTime(l.scheduled_at)}</td>
+              <td><span class="badge ${l.status==='completed'?'badge-success':(l.status==='scheduled'?'badge-warning':'badge-danger')}">${l.status}</span></td>
+              <td>${l.meeting_url ? `<a href="${l.meeting_url}" target="_blank" style="color:var(--canopy-green); font-weight:700;"><i class="fas fa-video"></i> Link</a>` : '-'}</td>
+              <td><button class="btn btn-sm btn-secondary" onclick="editLesson('${l.id}')"><i class="fas fa-edit"></i> Edit</button></td>
+            </tr>`).join('')}
+          </tbody></table></div>`;
+          
+      // Assessments & Billing (Basic render for now)
+      document.getElementById('assessmentsTableContainer').innerHTML = `<div class="table-container"><table class="table"><thead><tr><th>Student</th><th>Subject</th><th>Score</th><th>Date</th></tr></thead><tbody>${appData.assessments.map(a => `<tr><td>${a.children?.name}</td><td>${a.subjects?.name}</td><td><strong>${a.grade}/${a.max_grade}</strong></td><td>${formatDate(a.conducted_at)}</td></tr>`).join('')}</tbody></table></div>`;
+      document.getElementById('billingTableContainer').innerHTML = `<div class="table-container"><table class="table"><thead><tr><th>Parent</th><th>Desc</th><th>Amount</th><th>Status</th></tr></thead><tbody>${appData.billing.map(b => `<tr><td>${b.parent_profiles?.full_name}</td><td>${b.description}</td><td>${formatMoney(b.amount)}</td><td><span class="badge ${b.status==='paid'?'badge-success':'badge-warning'}">${b.status}</span></td></tr>`).join('')}</tbody></table></div>`;
+    }
+
+    // ==========================================
+    // CRUD OPERATIONS (Matchmaker ERP Logic)
+    // ==========================================
+
+    function populateSelect(selectId, arr, valKey, textKey) {
+      const el = document.getElementById(selectId);
+      el.innerHTML = '<option value="">Select...</option>' + arr.map(i => `<option value="${i[valKey]}">${i[textKey]}</option>`).join('');
+    }
+
+    // --- PARENTS ---
+    window.openParentModal = () => { document.getElementById('parentForm').reset(); document.getElementById('parentId').value=''; showModal('parentModal'); }
+    window.editParent = (id) => { const p = appData.parents.find(x=>x.id===id); if(!p)return;
+      document.getElementById('parentId').value = p.id; document.getElementById('parentFullName').value = p.full_name||''; document.getElementById('parentEmail').value = p.email||''; document.getElementById('parentPhone').value = p.phone||''; document.getElementById('parentEmergency').value = p.emergency_contact||''; document.getElementById('parentAddress').value = p.address||''; showModal('parentModal');
+    }
+    document.getElementById('parentForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { full_name: document.getElementById('parentFullName').value, email: document.getElementById('parentEmail').value, phone: document.getElementById('parentPhone').value, emergency_contact: document.getElementById('parentEmergency').value, address: document.getElementById('parentAddress').value };
+      const id = document.getElementById('parentId').value;
+      if(id) await supabaseClient.from('parent_profiles').update(payload).eq('id', id);
+      else await supabaseClient.from('parent_profiles').insert([payload]);
+      hideModal('parentModal'); loadAllData();
+    });
+
+    // --- CHILDREN ---
+    window.openChildModal = () => { document.getElementById('childForm').reset(); document.getElementById('childId').value=''; populateSelect('childParentSelect', appData.parents, 'id', 'full_name'); showModal('childModal'); }
+    window.editChild = (id) => { const c = appData.children.find(x=>x.id===id); if(!c)return;
+      populateSelect('childParentSelect', appData.parents, 'id', 'full_name');
+      document.getElementById('childId').value = c.id; document.getElementById('childParentSelect').value = c.parent_id||''; document.getElementById('childName').value = c.name||''; document.getElementById('childDOB').value = c.date_of_birth||''; document.getElementById('childGrade').value = c.grade_level||''; document.getElementById('childStatus').value = c.status||'active'; showModal('childModal');
+    }
+    document.getElementById('childForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { parent_id: document.getElementById('childParentSelect').value, name: document.getElementById('childName').value, date_of_birth: document.getElementById('childDOB').value||null, grade_level: document.getElementById('childGrade').value, status: document.getElementById('childStatus').value };
+      const id = document.getElementById('childId').value;
+      if(id) await supabaseClient.from('children').update(payload).eq('id', id);
+      else await supabaseClient.from('children').insert([payload]);
+      hideModal('childModal'); loadAllData();
+    });
+
+    // --- TUTORS ---
+    window.openTutorModal = () => { document.getElementById('tutorForm').reset(); document.getElementById('tutorId').value=''; document.getElementById('tutorStatus').value='pending'; showModal('tutorModal'); }
+    window.editTutor = (id) => { const t = appData.tutors.find(x=>x.id===id); if(!t)return;
+      document.getElementById('tutorId').value = t.id; document.getElementById('tutorFullName').value = t.full_name||''; document.getElementById('tutorEmail').value = t.email||''; document.getElementById('tutorPhone').value = t.phone||''; document.getElementById('tutorStatus').value = t.status||'pending'; document.getElementById('tutorQualifications').value = t.qualifications||''; showModal('tutorModal');
+    }
+    document.getElementById('tutorForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { full_name: document.getElementById('tutorFullName').value, email: document.getElementById('tutorEmail').value, phone: document.getElementById('tutorPhone').value, status: document.getElementById('tutorStatus').value, qualifications: document.getElementById('tutorQualifications').value };
+      const id = document.getElementById('tutorId').value;
+      if(id) await supabaseClient.from('tutor_profiles').update(payload).eq('id', id);
+      else await supabaseClient.from('tutor_profiles').insert([payload]);
+      hideModal('tutorModal'); loadAllData();
+    });
+
+    // --- SUBJECTS ---
+    window.openSubjectModal = () => { document.getElementById('subjectForm').reset(); document.getElementById('subjectId').value=''; showModal('subjectModal'); }
+    window.editSubject = (id) => { const s = appData.subjects.find(x=>x.id===id); if(!s)return;
+      document.getElementById('subjectId').value = s.id; document.getElementById('subjectName').value = s.name||''; document.getElementById('subjectColor').value = s.color_code||'#2D6A4F'; showModal('subjectModal');
+    }
+    document.getElementById('subjectForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { name: document.getElementById('subjectName').value, color_code: document.getElementById('subjectColor').value };
+      const id = document.getElementById('subjectId').value;
+      if(id) await supabaseClient.from('subjects').update(payload).eq('id', id);
+      else await supabaseClient.from('subjects').insert([payload]);
+      hideModal('subjectModal'); loadAllData();
+    });
+
+    // --- LESSONS (THE MATCHMAKER) ---
+    window.openLessonModal = () => { 
+      document.getElementById('lessonForm').reset(); document.getElementById('lessonId').value=''; 
+      populateSelect('lessonChild', appData.children, 'id', 'name');
+      // Only show Active Tutors in the Matchmaker
+      const activeTutors = appData.tutors.filter(t => t.status === 'active');
+      populateSelect('lessonTutor', activeTutors, 'id', 'full_name');
+      populateSelect('lessonSubject', appData.subjects, 'id', 'name');
+      showModal('lessonModal'); 
+    }
+    window.editLesson = (id) => { const l = appData.lessons.find(x=>x.id===id); if(!l)return;
+      populateSelect('lessonChild', appData.children, 'id', 'name');
+      populateSelect('lessonTutor', appData.tutors, 'id', 'full_name');
+      populateSelect('lessonSubject', appData.subjects, 'id', 'name');
+      
+      document.getElementById('lessonId').value = l.id; document.getElementById('lessonTitle').value = l.title||''; document.getElementById('lessonChild').value = l.child_id||''; document.getElementById('lessonTutor').value = l.tutor_id||''; document.getElementById('lessonSubject').value = l.subject_id||''; document.getElementById('lessonScheduledAt').value = l.scheduled_at ? new Date(l.scheduled_at).toISOString().slice(0,16) : ''; document.getElementById('lessonDuration').value = l.duration_minutes||60; document.getElementById('lessonMeetingUrl').value = l.meeting_url||''; document.getElementById('lessonStatus').value = l.status||'scheduled';
       showModal('lessonModal');
     }
-    document.getElementById('lessonForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('lessonId').value;
-      const payload = { title: document.getElementById('lessonTitle').value, child_id: document.getElementById('lessonChild').value, tutor_id: document.getElementById('lessonTutor').value, subject_id: document.getElementById('lessonSubject').value, scheduled_at: document.getElementById('lessonScheduledAt').value ? new Date(document.getElementById('lessonScheduledAt').value).toISOString() : null, duration_minutes: document.getElementById('lessonDuration').value || null, status: document.getElementById('lessonStatus').value, meeting_url: document.getElementById('lessonMeetingUrl').value || null };
-      try {
-        if (id) { const { error } = await supabaseClient.from('lessons').update(payload).eq('id', id); if (error) throw error; showSuccess('Lesson updated!'); } 
-        else { const { error } = await supabaseClient.from('lessons').insert([payload]); if (error) throw error; showSuccess('Lesson created!'); }
-        hideModal('lessonModal'); await loadAllData(); renderLessonsTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editLesson = (id) => { const l = appData.lessons.find(x => x.id === id); if (l) openLessonModal(l); };
-    window.deleteLesson = async (id) => {
-      if (!confirm('Delete this lesson?')) return;
-      try { const { error } = await supabaseClient.from('lessons').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderLessonsTable(); } catch (err) { showError(err.message); }
-    };
-
-    // --- ASSESSMENT CRUD ---
-    document.getElementById('addAssessmentBtn').addEventListener('click', () => openAssessmentModal());
-    function openAssessmentModal(assessment = null) {
-      document.getElementById('assessmentModalTitle').innerHTML = assessment ? '<i class="fas fa-pen"></i> Edit Assessment' : '<i class="fas fa-star"></i> Log Assessment';
-      document.getElementById('assessmentForm').reset(); document.getElementById('assessmentId').value = assessment?.id || '';
-      populateSelect(document.getElementById('assessmentChild'), appData.children, c => c.id, c => c.name, 'Select Student'); populateSelect(document.getElementById('assessmentSubject'), appData.subjects, s => s.id, s => s.name, 'Select Subject');
-      if (assessment) { document.getElementById('assessmentChild').value = assessment.child_id || ''; document.getElementById('assessmentSubject').value = assessment.subject_id || ''; document.getElementById('assessmentTitle').value = assessment.title || ''; document.getElementById('assessmentType').value = assessment.type || ''; document.getElementById('assessmentGrade').value = assessment.grade || ''; document.getElementById('assessmentMaxGrade').value = assessment.max_grade || ''; document.getElementById('assessmentConductedAt').value = assessment.conducted_at ? new Date(assessment.conducted_at).toISOString().slice(0,16) : ''; document.getElementById('assessmentFeedback').value = assessment.feedback || ''; }
-      showModal('assessmentModal');
-    }
-    document.getElementById('assessmentForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('assessmentId').value;
-      const payload = { child_id: document.getElementById('assessmentChild').value, subject_id: document.getElementById('assessmentSubject').value, title: document.getElementById('assessmentTitle').value, type: document.getElementById('assessmentType').value || null, grade: document.getElementById('assessmentGrade').value || null, max_grade: document.getElementById('assessmentMaxGrade').value || null, conducted_at: document.getElementById('assessmentConductedAt').value ? new Date(document.getElementById('assessmentConductedAt').value).toISOString() : null, feedback: document.getElementById('assessmentFeedback').value || null };
-      try {
-        if (id) { const { error } = await supabaseClient.from('assessments').update(payload).eq('id', id); if (error) throw error; showSuccess('Assessment updated!'); } 
-        else { const { error } = await supabaseClient.from('assessments').insert([payload]); if (error) throw error; showSuccess('Assessment added!'); }
-        hideModal('assessmentModal'); await loadAllData(); renderAssessmentsTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editAssessment = (id) => { const a = appData.assessments.find(x => x.id === id); if (a) openAssessmentModal(a); };
-    window.deleteAssessment = async (id) => {
-      if (!confirm('Delete this assessment?')) return;
-      try { const { error } = await supabaseClient.from('assessments').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderAssessmentsTable(); } catch (err) { showError(err.message); }
-    };
-
-    // --- BILLING CRUD ---
-    document.getElementById('addBillingBtn').addEventListener('click', () => openBillingModal());
-    function openBillingModal(bill = null) {
-      document.getElementById('billingModalTitle').innerHTML = bill ? '<i class="fas fa-pen"></i> Edit Invoice' : '<i class="fas fa-file-invoice-dollar"></i> Create Invoice';
-      document.getElementById('billingForm').reset(); document.getElementById('billingId').value = bill?.id || '';
-      populateSelect(document.getElementById('billingParent'), appData.parents, p => p.id, p => p.full_name, 'Select Parent'); populateSelect(document.getElementById('billingChild'), appData.children, c => c.id, c => c.name, 'Select Student (Optional)');
-      if (bill) { document.getElementById('billingParent').value = bill.parent_id || ''; document.getElementById('billingChild').value = bill.child_id || ''; document.getElementById('billingDescription').value = bill.description || ''; document.getElementById('billingAmount').value = bill.amount || ''; document.getElementById('billingCurrency').value = bill.currency || 'GBP'; document.getElementById('billingStatus').value = bill.status || 'pending'; document.getElementById('billingDueDate').value = (bill.due_date || '').slice(0,10); document.getElementById('billingTxnId').value = bill.transaction_id || ''; }
-      showModal('billingModal');
-    }
-    document.getElementById('billingForm').addEventListener('submit', async (e) => {
-      e.preventDefault(); const id = document.getElementById('billingId').value;
-      const payload = { parent_id: document.getElementById('billingParent').value, child_id: document.getElementById('billingChild').value || null, description: document.getElementById('billingDescription').value, amount: document.getElementById('billingAmount').value, currency: document.getElementById('billingCurrency').value || 'GBP', status: document.getElementById('billingStatus').value, due_date: document.getElementById('billingDueDate').value || null, transaction_id: document.getElementById('billingTxnId').value || null };
-      try {
-        if (id) { const { error } = await supabaseClient.from('billing_records').update(payload).eq('id', id); if (error) throw error; showSuccess('Invoice updated!'); } 
-        else { const { error } = await supabaseClient.from('billing_records').insert([payload]); if (error) throw error; showSuccess('Invoice created!'); }
-        hideModal('billingModal'); await loadAllData(); renderBillingTable();
-      } catch (err) { showError(err.message); }
-    });
-    window.editBilling = (id) => { const b = appData.billing.find(x => x.id === id); if (b) openBillingModal(b); };
-    window.deleteBilling = async (id) => {
-      if (!confirm('Delete this invoice?')) return;
-      try { const { error } = await supabaseClient.from('billing_records').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderBillingTable(); } catch (err) { showError(err.message); }
-    };
-
-    // --- SETTINGS ---
-    async function loadSettings() {
-      const info = document.getElementById('settingsInfo');
-      try {
-        const { data, error } = await supabaseClient.from('admin_settings').select('*').eq('id', 'default').maybeSingle();
-        if (error) throw error;
-        if (data) {
-          document.getElementById('academyName').value = data.academy_name || ''; document.getElementById('contactEmail').value = data.contact_email || ''; document.getElementById('defaultDuration').value = data.default_duration || 60; document.getElementById('timeZone').value = data.time_zone || 'Europe/London';
-          info.textContent = `Last updated: ${formatDateTime(data.updated_at)}`;
-        }
-      } catch (err) { console.warn('Settings load error:', err.message); }
-    }
-    document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
-      const payload = { id: 'default', academy_name: document.getElementById('academyName').value || null, contact_email: document.getElementById('contactEmail').value || null, default_duration: Number(document.getElementById('defaultDuration').value || 60), time_zone: document.getElementById('timeZone').value || 'Europe/London', updated_at: new Date().toISOString() };
-      try {
-        const { error } = await supabaseClient.from('admin_settings').upsert(payload, { onConflict: 'id' });
-        if (error) throw error; showSuccess('Settings saved!'); await loadSettings();
-      } catch (err) { showError('Failed to save settings.'); }
+    document.getElementById('lessonForm').addEventListener('submit', async(e) => { e.preventDefault();
+      const payload = { title: document.getElementById('lessonTitle').value, child_id: document.getElementById('lessonChild').value, tutor_id: document.getElementById('lessonTutor').value, subject_id: document.getElementById('lessonSubject').value, scheduled_at: new Date(document.getElementById('lessonScheduledAt').value).toISOString(), duration_minutes: document.getElementById('lessonDuration').value, meeting_url: document.getElementById('lessonMeetingUrl').value, status: document.getElementById('lessonStatus').value };
+      const id = document.getElementById('lessonId').value;
+      if(id) await supabaseClient.from('lessons').update(payload).eq('id', id);
+      else await supabaseClient.from('lessons').insert([payload]);
+      hideModal('lessonModal'); loadAllData();
     });
 
-    // Misc
-    document.getElementById('logoutLink')?.addEventListener('click', async (e) => {
-      e.preventDefault(); await supabaseClient.auth.signOut(); location.href = '/admin-index.html';
-    });
-    document.getElementById('refreshActivity')?.addEventListener('click', loadRecentActivity);
-    document.getElementById('refreshReportsBtn')?.addEventListener('click', loadReports);
-    document.getElementById('globalSearch')?.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim(); if (!q) return;
-      location.hash = '#children'; const container = document.getElementById('childrenTableContainer');
-      const filtered = appData.children.filter(c => [c.name, c.parent_profiles?.full_name, c.grade_level, c.school].some(v => String(v || '').toLowerCase().includes(q)) );
-      if (!filtered.length) { container.innerHTML = `<div class="empty-state"><i class="fas fa-search"></i><p>No matches found</p></div>`; return; }
-      const save = appData.children; appData.children = filtered; renderChildrenTable(); appData.children = save;
-    });
-
-    supabaseClient.auth.onAuthStateChange((event, session) => { if (event === 'SIGNED_OUT' || !session) location.href = '/admin-index.html'; });
-
-    // Initialize
-    (async function init() {
-      const user = await ensureAuth();
-      if (!user) return;
-      await loadAllData();
-      routeFromHash();
-      loadDashboardCharts();
-    })();
+    // Boot Up
+    loadAllData();
   </script>
 </body>
 </html>
