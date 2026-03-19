@@ -990,13 +990,15 @@
     </div>
   </div>
 
-  <script>
+<script>
     // ==========================================
-    // SUPABASE BACKEND (Unchanged Logic)
+    // SUPABASE BACKEND (Corrected Variable Name)
     // ==========================================
     const SUPABASE_URL = 'https://vcxdkacxbjsgaoxbhsip.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjeGRrYWN4YmpzZ2FveGJoc2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MDQ5ODMsImV4cCI6MjA2ODQ4MDk4M30.T9KhHWzHZWyaZvyeFXtBu8tPLY9JOn6_wCHcH8B46FU';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // RENAMED TO supabaseClient
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // State
     let currentUser = null;
@@ -1044,15 +1046,15 @@
 
     // Auth
     async function ensureAuth() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) { location.href = '/admin-login.html'; return null; }
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) { location.href = '/admin-index.html'; return null; }
       currentUser = session.user;
 
-      const { data: ap, error } = await supabase.from('admin_profiles').select('*').eq('user_id', currentUser.id).maybeSingle();
+      const { data: ap, error } = await supabaseClient.from('admin_profiles').select('*').eq('user_id', currentUser.id).maybeSingle();
       if (error || !ap) {
         alert('Access denied. Admin privileges required.');
-        await supabase.auth.signOut();
-        location.href = '/admin-login.html';
+        await supabaseClient.auth.signOut();
+        location.href = '/admin-index.html';
         return null;
       }
       adminProfile = ap;
@@ -1065,13 +1067,13 @@
     async function loadAllData() {
       try {
         const [ parentsRes, childrenRes, tutorsRes, subjectsRes, lessonsRes, assessmentsRes, billingRes ] = await Promise.all([
-          supabase.from('parent_profiles').select('*').order('created_at', { ascending: false }),
-          supabase.from('children').select(`*, parent_profiles:parent_id ( id, full_name )`).order('created_at', { ascending: false }),
-          supabase.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
-          supabase.from('subjects').select('*').order('name'),
-          supabase.from('lessons').select(`id, title, scheduled_at, duration_minutes, status, meeting_url, child_id, tutor_id, subject_id, children:child_id ( id, name ), tutor_profiles:tutor_id ( id, full_name ), subjects:subject_id ( id, name )`).order('scheduled_at', { ascending: false }),
-          supabase.from('assessments').select(`id, child_id, subject_id, title, type, grade, max_grade, feedback, conducted_at, children:child_id ( id, name ), subjects:subject_id ( id, name )`).order('conducted_at', { ascending: false }),
-          supabase.from('billing_records').select(`*, parent_profiles:parent_id ( id, full_name ), children:child_id ( id, name )`).order('created_at', { ascending: false })
+          supabaseClient.from('parent_profiles').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('children').select(`*, parent_profiles:parent_id ( id, full_name )`).order('created_at', { ascending: false }),
+          supabaseClient.from('tutor_profiles').select('*').order('created_at', { ascending: false }),
+          supabaseClient.from('subjects').select('*').order('name'),
+          supabaseClient.from('lessons').select(`id, title, scheduled_at, duration_minutes, status, meeting_url, child_id, tutor_id, subject_id, children:child_id ( id, name ), tutor_profiles:tutor_id ( id, full_name ), subjects:subject_id ( id, name )`).order('scheduled_at', { ascending: false }),
+          supabaseClient.from('assessments').select(`id, child_id, subject_id, title, type, grade, max_grade, feedback, conducted_at, children:child_id ( id, name ), subjects:subject_id ( id, name )`).order('conducted_at', { ascending: false }),
+          supabaseClient.from('billing_records').select(`*, parent_profiles:parent_id ( id, full_name ), children:child_id ( id, name )`).order('created_at', { ascending: false })
         ]);
 
         appData.parents = parentsRes.data || [];
@@ -1094,6 +1096,19 @@
       document.getElementById('lessonsCount').textContent = appData.lessons.length;
       document.getElementById('assessmentsCount').textContent = appData.assessments.length;
       document.getElementById('billingCount').textContent = appData.billing.filter(b => b.status === 'pending').length;
+    }
+
+    function loadSection(sectionId) {
+      if (sectionId === 'dashboard') { loadDashboardStats(); loadRecentActivity(); loadDashboardCharts(); }
+      else if (sectionId === 'reports') loadReports();
+      else if (sectionId === 'parents') renderParentsTable();
+      else if (sectionId === 'tutors') renderTutorsTable();
+      else if (sectionId === 'children') renderChildrenTable();
+      else if (sectionId === 'subjects') renderSubjectsTable();
+      else if (sectionId === 'lessons') renderLessonsTable();
+      else if (sectionId === 'assessments') renderAssessmentsTable();
+      else if (sectionId === 'billing') renderBillingTable();
+      else if (sectionId === 'settings') loadSettings();
     }
 
     // Dashboard
@@ -1446,8 +1461,8 @@
       e.preventDefault(); const id = document.getElementById('parentId').value;
       const payload = { full_name: document.getElementById('parentFullName').value, email: document.getElementById('parentEmail').value, phone: document.getElementById('parentPhone').value, address: document.getElementById('parentAddress').value, emergency_contact: document.getElementById('parentEmergency').value, notes: document.getElementById('parentNotes').value };
       try {
-        if (id) { const { error } = await supabase.from('parent_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Parent updated!'); } 
-        else { const { error } = await supabase.from('parent_profiles').insert([payload]); if (error) throw error; showSuccess('Parent added!'); }
+        if (id) { const { error } = await supabaseClient.from('parent_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Parent updated!'); } 
+        else { const { error } = await supabaseClient.from('parent_profiles').insert([payload]); if (error) throw error; showSuccess('Parent added!'); }
         hideModal('parentModal'); await loadAllData(); renderParentsTable();
       } catch (err) { showError(err.message); }
     });
@@ -1459,7 +1474,7 @@
     };
     window.deleteParent = async (id) => {
       if (!confirm('Delete this parent?')) return;
-      try { const { error } = await supabase.from('parent_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderParentsTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('parent_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderParentsTable(); } catch (err) { showError(err.message); }
     };
 
     // --- CHILD CRUD ---
@@ -1472,8 +1487,8 @@
       e.preventDefault(); const id = document.getElementById('childId').value;
       const payload = { parent_id: document.getElementById('childParentSelect').value, name: document.getElementById('childName').value, date_of_birth: document.getElementById('childDOB').value || null, grade_level: document.getElementById('childGrade').value, school: document.getElementById('childSchool').value, medical_info: document.getElementById('childMedical').value, learning_preferences: document.getElementById('childPrefs').value, notes: document.getElementById('childNotes').value };
       try {
-        if (id) { const { error } = await supabase.from('children').update(payload).eq('id', id); if (error) throw error; showSuccess('Student updated!'); } 
-        else { const { error } = await supabase.from('children').insert([payload]); if (error) throw error; showSuccess('Student added!'); }
+        if (id) { const { error } = await supabaseClient.from('children').update(payload).eq('id', id); if (error) throw error; showSuccess('Student updated!'); } 
+        else { const { error } = await supabaseClient.from('children').insert([payload]); if (error) throw error; showSuccess('Student added!'); }
         hideModal('childModal'); await loadAllData(); renderChildrenTable();
       } catch (err) { showError(err.message); }
     });
@@ -1485,7 +1500,7 @@
     };
     window.deleteChild = async (id) => {
       if (!confirm('Delete this student?')) return;
-      try { const { error } = await supabase.from('children').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderChildrenTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('children').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderChildrenTable(); } catch (err) { showError(err.message); }
     };
 
     // --- TUTOR CRUD ---
@@ -1497,8 +1512,8 @@
       e.preventDefault(); const id = document.getElementById('tutorId').value;
       const payload = { full_name: document.getElementById('tutorFullName').value, email: document.getElementById('tutorEmail').value, phone: document.getElementById('tutorPhone').value, address: document.getElementById('tutorAddress').value, qualifications: document.getElementById('tutorQualifications').value, hourly_rate: document.getElementById('tutorRate').value || null, hire_date: document.getElementById('tutorHireDate').value || null };
       try {
-        if (id) { const { error } = await supabase.from('tutor_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Tutor updated!'); } 
-        else { const { error } = await supabase.from('tutor_profiles').insert([payload]); if (error) throw error; showSuccess('Tutor added!'); }
+        if (id) { const { error } = await supabaseClient.from('tutor_profiles').update(payload).eq('id', id); if (error) throw error; showSuccess('Tutor updated!'); } 
+        else { const { error } = await supabaseClient.from('tutor_profiles').insert([payload]); if (error) throw error; showSuccess('Tutor added!'); }
         hideModal('tutorModal'); await loadAllData(); renderTutorsTable();
       } catch (err) { showError(err.message); }
     });
@@ -1510,7 +1525,7 @@
     };
     window.deleteTutor = async (id) => {
       if (!confirm('Delete this tutor?')) return;
-      try { const { error } = await supabase.from('tutor_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderTutorsTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('tutor_profiles').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderTutorsTable(); } catch (err) { showError(err.message); }
     };
 
     // --- SUBJECT CRUD ---
@@ -1522,8 +1537,8 @@
       e.preventDefault(); const id = document.getElementById('subjectId').value;
       const payload = { name: document.getElementById('subjectName').value, description: document.getElementById('subjectDescription').value, color_code: document.getElementById('subjectColor').value, is_active: document.getElementById('subjectActive').value === 'true' };
       try {
-        if (id) { const { error } = await supabase.from('subjects').update(payload).eq('id', id); if (error) throw error; showSuccess('Subject updated!'); } 
-        else { const { error } = await supabase.from('subjects').insert([payload]); if (error) throw error; showSuccess('Subject added!'); }
+        if (id) { const { error } = await supabaseClient.from('subjects').update(payload).eq('id', id); if (error) throw error; showSuccess('Subject updated!'); } 
+        else { const { error } = await supabaseClient.from('subjects').insert([payload]); if (error) throw error; showSuccess('Subject added!'); }
         hideModal('subjectModal'); await loadAllData(); renderSubjectsTable();
       } catch (err) { showError(err.message); }
     });
@@ -1535,7 +1550,7 @@
     };
     window.deleteSubject = async (id) => {
       if (!confirm('Delete this subject?')) return;
-      try { const { error } = await supabase.from('subjects').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderSubjectsTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('subjects').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderSubjectsTable(); } catch (err) { showError(err.message); }
     };
 
     // --- LESSON CRUD ---
@@ -1551,15 +1566,15 @@
       e.preventDefault(); const id = document.getElementById('lessonId').value;
       const payload = { title: document.getElementById('lessonTitle').value, child_id: document.getElementById('lessonChild').value, tutor_id: document.getElementById('lessonTutor').value, subject_id: document.getElementById('lessonSubject').value, scheduled_at: document.getElementById('lessonScheduledAt').value ? new Date(document.getElementById('lessonScheduledAt').value).toISOString() : null, duration_minutes: document.getElementById('lessonDuration').value || null, status: document.getElementById('lessonStatus').value, meeting_url: document.getElementById('lessonMeetingUrl').value || null };
       try {
-        if (id) { const { error } = await supabase.from('lessons').update(payload).eq('id', id); if (error) throw error; showSuccess('Lesson updated!'); } 
-        else { const { error } = await supabase.from('lessons').insert([payload]); if (error) throw error; showSuccess('Lesson created!'); }
+        if (id) { const { error } = await supabaseClient.from('lessons').update(payload).eq('id', id); if (error) throw error; showSuccess('Lesson updated!'); } 
+        else { const { error } = await supabaseClient.from('lessons').insert([payload]); if (error) throw error; showSuccess('Lesson created!'); }
         hideModal('lessonModal'); await loadAllData(); renderLessonsTable();
       } catch (err) { showError(err.message); }
     });
     window.editLesson = (id) => { const l = appData.lessons.find(x => x.id === id); if (l) openLessonModal(l); };
     window.deleteLesson = async (id) => {
       if (!confirm('Delete this lesson?')) return;
-      try { const { error } = await supabase.from('lessons').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderLessonsTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('lessons').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderLessonsTable(); } catch (err) { showError(err.message); }
     };
 
     // --- ASSESSMENT CRUD ---
@@ -1575,15 +1590,15 @@
       e.preventDefault(); const id = document.getElementById('assessmentId').value;
       const payload = { child_id: document.getElementById('assessmentChild').value, subject_id: document.getElementById('assessmentSubject').value, title: document.getElementById('assessmentTitle').value, type: document.getElementById('assessmentType').value || null, grade: document.getElementById('assessmentGrade').value || null, max_grade: document.getElementById('assessmentMaxGrade').value || null, conducted_at: document.getElementById('assessmentConductedAt').value ? new Date(document.getElementById('assessmentConductedAt').value).toISOString() : null, feedback: document.getElementById('assessmentFeedback').value || null };
       try {
-        if (id) { const { error } = await supabase.from('assessments').update(payload).eq('id', id); if (error) throw error; showSuccess('Assessment updated!'); } 
-        else { const { error } = await supabase.from('assessments').insert([payload]); if (error) throw error; showSuccess('Assessment added!'); }
+        if (id) { const { error } = await supabaseClient.from('assessments').update(payload).eq('id', id); if (error) throw error; showSuccess('Assessment updated!'); } 
+        else { const { error } = await supabaseClient.from('assessments').insert([payload]); if (error) throw error; showSuccess('Assessment added!'); }
         hideModal('assessmentModal'); await loadAllData(); renderAssessmentsTable();
       } catch (err) { showError(err.message); }
     });
     window.editAssessment = (id) => { const a = appData.assessments.find(x => x.id === id); if (a) openAssessmentModal(a); };
     window.deleteAssessment = async (id) => {
       if (!confirm('Delete this assessment?')) return;
-      try { const { error } = await supabase.from('assessments').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderAssessmentsTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('assessments').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderAssessmentsTable(); } catch (err) { showError(err.message); }
     };
 
     // --- BILLING CRUD ---
@@ -1599,22 +1614,22 @@
       e.preventDefault(); const id = document.getElementById('billingId').value;
       const payload = { parent_id: document.getElementById('billingParent').value, child_id: document.getElementById('billingChild').value || null, description: document.getElementById('billingDescription').value, amount: document.getElementById('billingAmount').value, currency: document.getElementById('billingCurrency').value || 'GBP', status: document.getElementById('billingStatus').value, due_date: document.getElementById('billingDueDate').value || null, transaction_id: document.getElementById('billingTxnId').value || null };
       try {
-        if (id) { const { error } = await supabase.from('billing_records').update(payload).eq('id', id); if (error) throw error; showSuccess('Invoice updated!'); } 
-        else { const { error } = await supabase.from('billing_records').insert([payload]); if (error) throw error; showSuccess('Invoice created!'); }
+        if (id) { const { error } = await supabaseClient.from('billing_records').update(payload).eq('id', id); if (error) throw error; showSuccess('Invoice updated!'); } 
+        else { const { error } = await supabaseClient.from('billing_records').insert([payload]); if (error) throw error; showSuccess('Invoice created!'); }
         hideModal('billingModal'); await loadAllData(); renderBillingTable();
       } catch (err) { showError(err.message); }
     });
     window.editBilling = (id) => { const b = appData.billing.find(x => x.id === id); if (b) openBillingModal(b); };
     window.deleteBilling = async (id) => {
       if (!confirm('Delete this invoice?')) return;
-      try { const { error } = await supabase.from('billing_records').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderBillingTable(); } catch (err) { showError(err.message); }
+      try { const { error } = await supabaseClient.from('billing_records').delete().eq('id', id); if (error) throw error; showSuccess('Deleted!'); await loadAllData(); renderBillingTable(); } catch (err) { showError(err.message); }
     };
 
     // --- SETTINGS ---
     async function loadSettings() {
       const info = document.getElementById('settingsInfo');
       try {
-        const { data, error } = await supabase.from('admin_settings').select('*').eq('id', 'default').maybeSingle();
+        const { data, error } = await supabaseClient.from('admin_settings').select('*').eq('id', 'default').maybeSingle();
         if (error) throw error;
         if (data) {
           document.getElementById('academyName').value = data.academy_name || ''; document.getElementById('contactEmail').value = data.contact_email || ''; document.getElementById('defaultDuration').value = data.default_duration || 60; document.getElementById('timeZone').value = data.time_zone || 'Europe/London';
@@ -1625,14 +1640,14 @@
     document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
       const payload = { id: 'default', academy_name: document.getElementById('academyName').value || null, contact_email: document.getElementById('contactEmail').value || null, default_duration: Number(document.getElementById('defaultDuration').value || 60), time_zone: document.getElementById('timeZone').value || 'Europe/London', updated_at: new Date().toISOString() };
       try {
-        const { error } = await supabase.from('admin_settings').upsert(payload, { onConflict: 'id' });
+        const { error } = await supabaseClient.from('admin_settings').upsert(payload, { onConflict: 'id' });
         if (error) throw error; showSuccess('Settings saved!'); await loadSettings();
       } catch (err) { showError('Failed to save settings.'); }
     });
 
     // Misc
     document.getElementById('logoutLink')?.addEventListener('click', async (e) => {
-      e.preventDefault(); await supabase.auth.signOut(); location.href = '/admin-index.html';
+      e.preventDefault(); await supabaseClient.auth.signOut(); location.href = '/admin-index.html';
     });
     document.getElementById('refreshActivity')?.addEventListener('click', loadRecentActivity);
     document.getElementById('refreshReportsBtn')?.addEventListener('click', loadReports);
@@ -1644,7 +1659,7 @@
       const save = appData.children; appData.children = filtered; renderChildrenTable(); appData.children = save;
     });
 
-    supabase.auth.onAuthStateChange((event, session) => { if (event === 'SIGNED_OUT' || !session) location.href = '/admin-index.html'; });
+    supabaseClient.auth.onAuthStateChange((event, session) => { if (event === 'SIGNED_OUT' || !session) location.href = '/admin-index.html'; });
 
     // Initialize
     (async function init() {
