@@ -532,7 +532,8 @@
             TEMPLATE_ID: 'template_vjpcg6o'
         };
         
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // RENAMED TO supabaseClient TO PREVENT CRASH
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
 
         let pendingAdminData = null;
@@ -540,7 +541,7 @@
         // ===== RPC FUNCTIONS =====
         async function checkEmailAuthorization(email) {
             try {
-                const { data, error } = await supabase.rpc('is_admin_email_authorized', { p_email: email });
+                const { data, error } = await supabaseClient.rpc('is_admin_email_authorized', { p_email: email });
                 if (error) throw error;
                 return data === true;
             } catch (error) { throw new Error('Authorization check failed.'); }
@@ -548,14 +549,14 @@
 
         async function markEmailAsUsed(email) {
             try {
-                const { data } = await supabase.rpc('mark_admin_email_used', { p_email: email });
+                const { data } = await supabaseClient.rpc('mark_admin_email_used', { p_email: email });
                 return data === true;
             } catch (error) { return false; }
         }
 
         async function createAdminProfile(userData) {
             try {
-                const { data, error } = await supabase.rpc('create_admin_profile', {
+                const { data, error } = await supabaseClient.rpc('create_admin_profile', {
                     p_user_id: userData.userId, p_email: userData.email, p_full_name: userData.fullName,
                     p_phone: userData.phone, p_role: 'admin', p_department: userData.department, p_access_level: 'admin'
                 });
@@ -607,7 +608,7 @@
                 const isAuthorized = await checkEmailAuthorization(email);
                 if (!isAuthorized) throw new Error('This email is not authorized for administrative access.');
                 
-                const { data: authData, error: signUpError } = await supabase.auth.signUp({
+                const { data: authData, error: signUpError } = await supabaseClient.auth.signUp({
                     email, password, options: {
                         emailRedirectTo: `${window.location.origin}/admin-dashboard.html`,
                         data: { full_name: fullName, phone, department, role: 'admin' }
@@ -641,14 +642,14 @@
             
             try {
                 const formData = new FormData(event.target);
-                const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
+                const { data: authData, error: signInError } = await supabaseClient.auth.signInWithPassword({
                     email: formData.get('email').toLowerCase().trim(), password: formData.get('password')
                 });
                 
                 if (signInError) throw new Error(signInError.message);
                 if (!authData.user.email_confirmed_at) throw new Error('Please verify your administrative email address first.');
                 
-                const { data: adminProfile, error: adminCheckError } = await supabase.from('admin_profiles').select('*').eq('user_id', authData.user.id).single();
+                const { data: adminProfile, error: adminCheckError } = await supabaseClient.from('admin_profiles').select('*').eq('user_id', authData.user.id).single();
                 if (adminCheckError || !adminProfile) throw new Error('Administrative privileges not found.');
                 
                 showSuccess('loginSuccessMessage', 'Access granted! Redirecting...');
@@ -664,7 +665,7 @@
 
         // Check if already logged in
         (async function checkAuthStatus() {
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { user } } = await supabaseClient.auth.getUser();
             if (user && user.email_confirmed_at) console.log('Admin user is logged in:', user.email);
         })();
     </script>
